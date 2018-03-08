@@ -14,28 +14,106 @@
 <body>
   <div class="row">
 
-      <div class="navbar col l9 m9 s12">
-          <nav>
-              <div class="nav-wrapper">
-                  <a href="#" class="brand-logo">Logo</a>
-                  <ul id="nav-mobile" class="right hide-on-med-and-down">
-                      <li><a href="sass.html">Sass</a></li>
-                      <li><a href="badges.html">Components</a></li>
-                      <li><a href="collapsible.html">JavaScript</a></li>
-                  </ul>
-              </div>
-          </nav>
-          <h1 class="center-align">Reproduciendo ahora</h1><br>
-          <h1 class="center-align">Reproduciendo ahora</h1><br>
-          <h1 class="center-align">Reproduciendo ahora</h1><br>
-          <h1 class="center-align">Reproduciendo ahora</h1><br>
-          <h1 class="center-align">Reproduciendo ahora</h1><br>
-          <h1 class="center-align">Reproduciendo ahora</h1><br>
-          <h1 class="center-align">Reproduciendo ahora</h1><br>
+
+
+
+      <!-- BARRA DE NAVEGACION-->
+      <div class="navb col l9 m9 s12" style="padding-left: 0px; margin:0px;padding-right: 0px">
+        <nav class="nav-extended light-blue lighten-1" role="navigation" >
+          <div class="nav-wrapper container"  style="padding-left: 23px; margin:0px; padding-right: 0px;width: 99%"><a id="logo-container" href="#" class="brand-logo"  >Logo</a>
+
+          <form class="right hide-on-med-and-down" id="form1" >
+            <div class="input-field" style="max-width: 200pt;padding-left: 0px;">
+              <input id="search" type="search">
+              <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+              <i class="material-icons">close</i>
+              <div id="searchResults" ></div>
+            </div>
+          </form>
+
+          </div>
+
+            <div class="nav-content hide-on-small-only" style="overflow: hidden;">
+              <ul class="tabs tabs-transparent tabs-fixed-width">
+                <li class="tab left" > 
+                  <a target="_self" href="https://github.com/UNIZAR-30226-2018-05">
+                    <div class="chip">
+                        <img src="images/logo.png" alt="Contact Person">
+                        PEPE
+                    </div>
+                  </a>
+                </li>
+                <li class="tab"><a href="#test1">PlayLists</a></li>
+                <li class="tab"><a class="active" href="#test2">Songs</a></li>
+                <li class="tab"><a href="#test3">Albums</a></li>
+                <li class="tab"><a href="#test4">Artists</a></li>
+                <li class="tab"><a href="#test4">Genres</a></li>
+                <li class="tab"><a href="#test4">People</a></li>
+                
+              </ul>
+            </div>
+
+            <div class="center hide-on-med-and-up" style="max-width: 100%;">
+                <form>
+                  <div class="center input-field" >
+                    <input id="search" type="search" required>
+                    <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                    <i class="material-icons">close</i>
+                  </div>
+                </form>
+            </div>
+
 
 
       </div>
 
+
+      <!-- CONTENIDO PAGINA PRINCIPAL-->
+      <div class="section no-pad-bot" id="index-banner">
+        <br>
+        <br>
+        <br>
+          <div class="center hide-on-med-and-up">
+            <hr/>
+
+            <a target="_self" href="https://github.com/UNIZAR-30226-2018-05">
+                    <div class="chip">
+                        <img src="images/logo.png" alt="Contact Person">
+                        PEPE
+                    </div>
+                  </a>
+            
+            <a class="waves-effect waves-light btn" style="padding: 5px">Playlist</a>
+            <a class="waves-effect waves-light btn" style="padding: 5px">Songs</a>
+            <a class="waves-effect waves-light btn" style="padding: 5px">Albums</a>
+            <a class="waves-effect waves-light btn" style="padding: 5px">Artists</a>
+            <a class="waves-effect waves-light btn" style="padding: 5px">Genres</a>
+            <a class="waves-effect waves-light btn" style="padding: 5px">People</a>
+
+          </div>
+
+
+
+
+          <div class="col l9 m9 s12">
+              <h1 class="center-align">Reproduciendo ahora</h1><br>
+              <h1 class="center-align">Reproduciendo ahora</h1><br>
+              <h1 class="center-align">Reproduciendo ahora</h1><br>
+              <h1 class="center-align">Reproduciendo ahora</h1><br>
+              <h1 class="center-align">Reproduciendo ahora</h1><br>
+              <h1 class="center-align">Reproduciendo ahora</h1><br>
+              <h1 class="center-align">Reproduciendo ahora</h1><br>
+          </div>
+      </div>
+
+
+
+
+
+
+
+
+      <!-- REPRODUCTOR-->
       <div class="reproductor col l3 m3 s12">  <!--  Reproductor de la pagina principal -->
           <div id="reproductorIndex">
             <div class="hide-on-small-only">     <!--  Reproductor para WEB Y TABLET-->
