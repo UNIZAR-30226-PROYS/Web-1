@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-  <title>Starter Template - Materialize</title>
+  <title>Cierzo</title>
 
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -19,41 +19,49 @@
 
       <!-- BARRA DE NAVEGACION-->
       <div class="navb col l9 m9 s12" style="padding-left: 0px; margin:0px;padding-right: 0px">
-        <nav class="nav-extended light-blue lighten-1" role="navigation" >
-          <div class="nav-wrapper container"  style="padding-left: 23px; margin:0px; padding-right: 0px;width: 99%"><a id="logo-container" href="#" class="brand-logo"  >Logo</a>
+        <nav class="nav-extended  " role="navigation" style="background-color: #0091EA">
 
-          <form class="right hide-on-med-and-down" id="form1" >
-            <div class="input-field" style="max-width: 200pt;padding-left: 0px;">
-              <input id="search" type="search">
-              <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-              <i class="material-icons">close</i>
-              <div id="searchResults" ></div>
-            </div>
-          </form>
+          <div class="nav-wrapper"  style="padding-left: 23px; margin:0px; padding-right: 0px;width: 99%">
+            <a id="logo-container" href="#" class=" left brand-logo"  >
+              <img  src="images/logo_cierzo_1_white.png" style="display: inline-block;vertical-align: top;width: 180px;height: 50px;margin-right: 20px;margin-top: 15px; ">
+            </a>
 
+            
+            <!-- BARRA DE BUSQUEDA -->
+
+            <ul id="nav-mobile" class="right hide-on-small-only" style="max-height: 60px">
+              <li>
+                <input type="text" name="Search" class="header-search-input z-depth-2" placeholder="Búsqueda" />
+              </li>
+              <li>
+                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+              </li>
+            </ul>
+            
+
+            
           </div>
 
-            <div class="nav-content hide-on-small-only" style="overflow: hidden;">
-              <ul class="tabs tabs-transparent tabs-fixed-width">
-                <li class="tab left" > 
-                  <a target="_self" href="https://github.com/UNIZAR-30226-2018-05">
-                    <div class="chip">
-                        <img src="images/logo.png" alt="Contact Person">
-                        PEPE
-                    </div>
-                  </a>
-                </li>
-                <li class="tab"><a href="#test1">PlayLists</a></li>
-                <li class="tab"><a class="active" href="#test2">Songs</a></li>
-                <li class="tab"><a href="#test3">Albums</a></li>
-                <li class="tab"><a href="#test4">Artists</a></li>
-                <li class="tab"><a href="#test4">Genres</a></li>
-                <li class="tab"><a href="#test4">People</a></li>
-                
-              </ul>
-            </div>
-
-            <div class="center hide-on-med-and-up" style="max-width: 100%;">
+          <div class="nav-content hide-on-small-only" style="overflow: hidden;">
+            <ul class="tabs tabs-transparent tabs-fixed-width">
+              <li class="tab left" > 
+                <a target="_self" href="https://github.com/UNIZAR-30226-2018-05">
+                  <div class="chip">
+                      PEPE
+                  </div>
+                </a>
+              </li>
+              <li class="tab"><a href="#test1">PlayLists</a></li>
+              <li class="tab"><a class="active" href="#test2">Songs</a></li>
+              <li class="tab"><a href="#test3">Albums</a></li>
+              <li class="tab"><a href="#test4">Artists</a></li>
+              <li class="tab"><a href="#test4">Genres</a></li>
+              <li class="tab"><a href="#test4">People</a></li>
+              
+            </ul>
+          </div>
+            
+            <div class="center hide-on-med-and-up" style="max-width: 90%; padding: 10px;margin-left: 20px">
                 <form>
                   <div class="center input-field" >
                     <input id="search" type="search" required>
@@ -62,9 +70,6 @@
                   </div>
                 </form>
             </div>
-
-
-
       </div>
 
 
@@ -75,10 +80,8 @@
         <br>
           <div class="center hide-on-med-and-up">
             <hr/>
-
             <a target="_self" href="https://github.com/UNIZAR-30226-2018-05">
                     <div class="chip">
-                        <img src="images/logo.png" alt="Contact Person">
                         PEPE
                     </div>
                   </a>
@@ -123,35 +126,56 @@
                       <h5 class="center-align">Reproduciendo ahora</h5><br>
                   </div>
 
+                  <!--PORTADA -->
                   <div class="col s8 offset-s2">
                       <div class="card">
                         <div class="card-image">
-                            <img class="responsive-img" src="images/cover.jpg">
+                            <img class="responsive-img" src="" id="art">
                         </div>
                       </div>
                   </div>
 
+                  <!--BARRA DE PROGRESO-->
                   <div class="col s12">
-                      <h3 class="truncate center-align">Despacito</h3>
-                      <h5 class="truncate center-align">Luis Fonsi</h5>
+                      <div id="track">
+                        <div id="progress"></div>
+                        <div id="handler"></div>
+                      </div>
                   </div>
 
+                  <!--ARTISTA Y CANCION-->
+                  <div class="col s12">
+                      <h3 class="truncate center-align" id="title"></h3>
+                      <h5 class="truncate center-align" id="artist"></h5>
+                  </div>
+
+
+
+
+                   <!--BOTONES: PLAY/STOP ADELANTE Y ATRAS-->
                   <div class="col s8 offset-s2">
                       <div class="col s2">
-                          <a class="btn-floating btn-medium waves-effect waves-light"><i class="material-icons">fast_rewind</i></a>
+                          <a class="btn-floating btn-medium waves-effect waves-light" id="prev">
+                            <i class="material-icons">fast_rewind</i>
+                          </a>
                       </div>
                       <div class="col s2 offset-s2">
-                          <a class="btn-floating btn-medium waves-effect waves-light"><i class="material-icons">play_arrow</i></a>
+                          <a class="btn-floating btn-medium waves-effect waves-light" id="play">
+                            <i class="material-icons">play_arrow</i>
+                          </a>
                       </div>
                       <div class="col s2 offset-s2">
-                          <a class="btn-floating btn-small waves-effect waves-light"><i class="material-icons">fast_forward</i></a>
+                          <a class="btn-floating btn-small waves-effect waves-light" id="next">
+                            <i class="material-icons">fast_forward</i>
+                          </a>
                       </div>
                   </div>
 
-                  <div class="col s12">
-                      <h5 class="center-align">BARRA PROGRESO</h5>
-                  </div>
 
+
+                  
+
+                  <!--BOTONES: REPETIR Y RANDOM-->
                   <div class="col s8 offset-s2">
                       <div class="col s2">
                           <a class="btn-floating btn-medium waves-effect waves-light"><i class="large material-icons">repeat</i></a>
@@ -205,6 +229,8 @@
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="js/materialize.js"></script>
   <script src="js/init.js"></script>
+  <script src="js/musica.js"></script>
+
 
   </body>
 </html>
