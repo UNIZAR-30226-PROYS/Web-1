@@ -137,6 +137,10 @@ function updateTrack() {
     percent = Math.round((curtime * 100) / duration);
     progress.style.width = percent + '%';
     handler.style.left = percent + '%';
+
+    if(audio.currentTime==audio.duration){
+        nextTrack();
+    }
 }
 
 function seekTrack(e) {

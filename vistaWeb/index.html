@@ -14,9 +14,6 @@
 <body>
   <div class="row">
 
-
-
-
       <!-- BARRA DE NAVEGACION-->
       <div class="navb col l9 m9 s12" style="padding-left: 0px; margin:0px;padding-right: 0px">
         <nav class="nav-extended  " role="navigation" style="background-color: #0091EA">
@@ -37,9 +34,6 @@
                 <label class="label-icon" for="search"><i class="material-icons">search</i></label>
               </li>
             </ul>
-            
-
-            
           </div>
 
           <div class="nav-content hide-on-small-only" style="overflow: hidden;">
@@ -144,13 +138,11 @@
                       <div class="col s12 offset-s1">
                         <div class="col s1">
                             <p id="final">
-                              
                             </p>
                         </div>
                         
                         <div class="col s2 offset-s6">
                             <p id="current">
-                              
                             </p>
                         </div>
                    </div>
@@ -203,21 +195,40 @@
               <div class="hide-on-med-and-up">     
               <!--  Reproductor para MOVIL-->
                   <div class="col s12">
+                            <!--  BARRA DE PROGRESO -->
+                            <div class="col s12">
+                                <div id="track2">
+                                  <div id="progress2"></div>
+                                  <div id="handler2"></div>
+                                </div>
+                                <div class="col s12 offset-s1">
+                                  <div class="col s1">
+                                      <p id="final2">
+                                      </p>
+                                  </div>
+                                  
+                                  <div class="col s2 offset-s6">
+                                      <p id="current2">
+                                      </p>
+                                  </div>
+                                </div>
+                            </div>
+
                           <div class="col s10 offset-s1">
                               <!--TITULO CANCION -->
                               <div class="col s5">
-                                  <h5 class="truncate center-align">Despacito y la madre que lo pario</h5>
+                                  <h5 class="truncate center-align" id="title2"></h5>
                               </div>
                               
                               <!--BOTONES: PLAY/STOP ADELANTE Y ATRAS-->
                               <div class="col s1 offset-s2">
-                                  <a class="btn-floating btn-medium waves-effect waves-light"><i class="material-icons">fast_rewind</i></a>
+                                  <a class="btn-floating btn-medium waves-effect waves-light" id="prev2"><i class="material-icons">fast_rewind</i></a>
                               </div>
                               <div class="col s1 offset-s1">
-                                  <a class="btn-floating btn-medium waves-effect waves-light"><i class="material-icons">play_arrow</i></a>
+                                  <a class="btn-floating btn-medium waves-effect waves-light" id="play2"><i class="material-icons">play_arrow</i></a>
                               </div>
                               <div class="col s1 offset-s1">
-                                  <a class="btn-floating btn-medium waves-effect waves-light"><i class="material-icons">fast_forward</i></a>
+                                  <a class="btn-floating btn-medium waves-effect waves-light" id="next2"><i class="material-icons">fast_forward</i></a>
                               </div>
                           </div>
                   </div>
@@ -225,7 +236,7 @@
                       <div class="col s10 offset-s1">
                           <!--ARTISTA-->
                           <div class="col s5">
-                              <h5 class="truncate center-align">El luis fonsi ese</h5>
+                              <h5 class="truncate center-align" id="artist2"></h5>
                           </div>
                           <!--BOTONES: REPETIR Y RANDOM-->
                           <div class="col s1 offset-s2">
@@ -249,6 +260,7 @@
   <script src="js/materialize.js"></script>
   <script src="js/init.js"></script>
   <script src="js/musica.js"></script>
+  <script src="js/musica2.js"></script>
 
 
   </body>
