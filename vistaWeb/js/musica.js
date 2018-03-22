@@ -230,7 +230,8 @@ function actualizarInfoWeb() {
     wArtist.textContent = song.artist;
     wArt.src = song.art;
     wArt.onload = function() {
-        audio.play();
+        if(playing) audio.play();
+        else        audio.pause();
     }
 }
 
