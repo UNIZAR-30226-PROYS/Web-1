@@ -3,18 +3,18 @@
  *************************************************************************/
 
 
-var holding = false;
-var track = document.getElementById('track');
-var progress = document.getElementById('progress');
-var wPlay = document.getElementById('wPlay');
-var wNext = document.getElementById('wNext');
-var wPrev = document.getElementById('wPrev');
-var wTitle = document.getElementById('wTitle');
-var wArtist = document.getElementById('wArtist');
-var wArt = document.getElementById('wArt');
+var wHolding   = false;
+var wTrack     = document.getElementById('track');
+var wProgress  = document.getElementById('progress');
+var wPlay     = document.getElementById('wPlay');
+var wNext     = document.getElementById('wNext');
+var wPrev     = document.getElementById('wPrev');
+var wTitle    = document.getElementById('wTitle');
+var wArtist   = document.getElementById('wArtist');
+var wArt      = document.getElementById('wArt');
 
-var cur = document.getElementById('current');
-var final = document.getElementById('final');
+var cur       = document.getElementById('current');
+var final     = document.getElementById('final');
 
 var current_track = 0;
 var song, audio, duration;
@@ -98,18 +98,18 @@ audio.addEventListener('loadedmetadata', function () {
 
 window.onmousemove = function (e) {
     e.preventDefault();
-    if (holding) moverTrackWeb(e);
+    if (wHolding) moverTrackWeb(e);
 }
 
 window.onmouseup = function (e) {
-    holding = false;
-    console.log(holding);
+    wHolding = false;
+    console.log(wHolding);
 }
 
-track.onmousedown = function (e) {
-    holding = true;
+wTrack.onmousedown = function (e) {
+    wHolding = true;
     moverTrackWeb(e);
-    console.log(holding);
+    console.log(wHolding);
 }
 
 /**
@@ -133,11 +133,19 @@ wPlay.onclick = function () {
 
 }
 
+
+/**
+ * Cuando el audio es pausado, se cambia el boton a play
+ */
 audio.addEventListener("pause", function () {
     wPlay.innerHTML = '<i class="material-icons">play_arrow</i>';
     playing = false;
 }, false);
 
+
+/**
+ * Cuando el audio es encendido, se cambia el boton a pause
+ */
 audio.addEventListener("play", function () {
     wPlay.innerHTML = '<i class="material-icons">pause</i>';
     playing = true;
@@ -159,7 +167,6 @@ wPrev.addEventListener("click", anteriorTrackWeb, false);
  * Funcion que actualiza el nuevo estado de la cancion, tras haberla movido
  */
 function actualizarTrackWeb() {
-
     var tfin='0'+Math.floor(audio.currentTime/60)+':';
     var resto=Math.floor(audio.currentTime%60);
     if(resto<10){
@@ -174,7 +181,7 @@ function actualizarTrackWeb() {
 
     curtime = audio.currentTime;
     percent = Math.round((curtime * 100) / duration);
-    progress.style.width = percent + '%';
+    wProgress.style.width = percent + '%';
     handler.style.left = percent + '%';
 
     if(audio.currentTime==audio.duration){
@@ -190,7 +197,7 @@ function moverTrackWeb(e) {
     percent = Math.round((x * 100) / track.offsetWidth);
     if (percent > 100) percent = 100;
     if (percent < 0) percent = 0;
-    progress.style.width = percent + '%';
+    wProgress.style.width = percent + '%';
     handler.style.left = percent + '%';
     audio.play();
     audio.currentTime = (percent * duration) / 100
