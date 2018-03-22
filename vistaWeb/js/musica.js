@@ -1,14 +1,17 @@
+/*************************************************************************
+ * Script que controla el reproductor de musica de la Web
+ *************************************************************************/
+
 
 var holding = false;
-var play=false;
 var track = document.getElementById('track');
 var progress = document.getElementById('progress');
-var play = document.getElementById('play');
-var next = document.getElementById('next');
-var prev = document.getElementById('prev');
-var title = document.getElementById('title');
-var artist = document.getElementById('artist');
-var art = document.getElementById('art');
+var wPlay = document.getElementById('wPlay');
+var wNext = document.getElementById('wNext');
+var wPrev = document.getElementById('wPrev');
+var wTitle = document.getElementById('wTitle');
+var wArtist = document.getElementById('wArtist');
+var wArt = document.getElementById('wArt');
 
 var cur = document.getElementById('current');
 var final = document.getElementById('final');
@@ -16,6 +19,8 @@ var final = document.getElementById('final');
 var current_track = 0;
 var song, audio, duration;
 var playing = false;
+
+/* Canciones para probar */
 var songs = [{
     title: 'La llamada',
     artist: 'Leiva',
@@ -44,25 +49,37 @@ var context,src;
 var analyser,canvas,ctx,bufferLength,dataArray,WIDTH,HEIGHT,barWidth,barHeight,x;
 
 
-window.addEventListener('load', init(), false);
+/**
+ * Tras cargar la pagina por completo, llama a la funcion iniciarWeb
+ */
+window.addEventListener('load', iniciarWeb(), false);
 
 
-
-function init() {
+/**
+ * Funcion inicializadora de la pagina Web
+ */
+function iniciarWeb() {
     console.log("HOI");
     song = songs[current_track];
     audio = new Audio();
     audio.src = song.url;
-    title.textContent = song.title;
-    artist.textContent = song.artist;
-    art.src = song.art;
+    wTitle.textContent = song.title;
+    wArtist.textContent = song.artist;
+    wArt.src = song.art;
     playing=false;
 
 
 }
 
+/**
+ * Cada x tiempo, llama a la funcion actualizarTrackWeb para que actualize el estado
+ */
+audio.addEventListener('timeupdate', actualizarTrackWeb, false);
 
-audio.addEventListener('timeupdate', updateTrack, false);
+
+/**
+ * Cuando halla cargado los datos de la cancion
+ */
 audio.addEventListener('loadedmetadata', function () {
     var tfin='0'+Math.floor(audio.duration/60)+':';
     var resto=Math.floor(audio.duration%60);
@@ -78,48 +95,70 @@ audio.addEventListener('loadedmetadata', function () {
     console.log(audio.duration);
     duration = this.duration;
 }, false);
+
 window.onmousemove = function (e) {
     e.preventDefault();
-    if (holding) seekTrack(e);
+    if (holding) moverTrackWeb(e);
 }
+
 window.onmouseup = function (e) {
     holding = false;
     console.log(holding);
 }
+
 track.onmousedown = function (e) {
     holding = true;
-    seekTrack(e);
+    moverTrackWeb(e);
     console.log(holding);
 }
-play.onclick = function () {
+
+/**
+ * Cuando el boton Play es pulsado, pausa/reproduce la cancion actual
+ */
+wPlay.onclick = function () {
 
     if(playing){
         audio.pause();
         console.log("Parar")
         playing=false;
+        wPlay.innerHTML = '<i class="material-icons">play_arrow</i>';
     }
     else{
         audio.play();
         console.log("Reproducir")
         playing=true;
+        wPlay.innerHTML = '<i class="material-icons">pause</i>';
     }
 
 
 }
+
 audio.addEventListener("pause", function () {
-    play.innerHTML = '<i class="material-icons">play_arrow</i>';
+    wPlay.innerHTML = '<i class="material-icons">play_arrow</i>';
     playing = false;
 }, false);
 
-audio.addEventListener("playing", function () {
-    play.innerHTML = '<i class="material-icons">pause</i>';
+audio.addEventListener("play", function () {
+    wPlay.innerHTML = '<i class="material-icons">pause</i>';
     playing = true;
 }, false);
-next.addEventListener("click", nextTrack, false);
-prev.addEventListener("click", prevTrack, false);
 
 
-function updateTrack() {
+/**
+ * Cuando el boton Next es pulsado, llama a la funcion siguienteTrackWeb
+ */
+wNext.addEventListener("click", siguienteTrackWeb, false);
+
+/**
+ * Cuando el boton Prev es pulsado, llama a la funcion anteriorTrackWeb
+ */
+wPrev.addEventListener("click", anteriorTrackWeb, false);
+
+
+/**
+ * Funcion que actualiza el nuevo estado de la cancion, tras haberla movido
+ */
+function actualizarTrackWeb() {
 
     var tfin='0'+Math.floor(audio.currentTime/60)+':';
     var resto=Math.floor(audio.currentTime%60);
@@ -139,11 +178,13 @@ function updateTrack() {
     handler.style.left = percent + '%';
 
     if(audio.currentTime==audio.duration){
-        nextTrack();
+        siguienteTrackWeb();
     }
 }
 
-function seekTrack(e) {
+/** Funcion que pone a mueve el tiempo que se esta escuchando del track actual
+ */
+function moverTrackWeb(e) {
     event = e || window.event;
     var x = e.pageX - reproductorIndex.offsetLeft - track.offsetLeft;
     percent = Math.round((x * 100) / track.offsetWidth);
@@ -154,31 +195,41 @@ function seekTrack(e) {
     audio.play();
     audio.currentTime = (percent * duration) / 100
 }
-function nextTrack() {
+
+/** Funcion que pone a reproducir el track siguiente a la actualmente
+ *  reproducida
+ */
+function siguienteTrackWeb() {
     current_track++;
     current_track = current_track % (songs.length);
     song = songs[current_track];
     audio.src = song.url;
     audio.onloadeddata = function() {
-      updateInfo();
+      actualizarInfoWeb();
     }
 }
 
-function prevTrack() {
+/** Funcion que pone a reproducir el track anterior a la actualmente
+ *  reproducida
+ */
+function anteriorTrackWeb() {
     current_track--;
     current_track = (current_track == -1 ? (songs.length - 1) : current_track);
     song = songs[current_track];
     audio.src = song.url;
     audio.onloadeddata = function() {
-      updateInfo();
+      actualizarInfoWeb();
     }
 }
 
-function updateInfo() {
-    title.textContent = song.title;
-    artist.textContent = song.artist;
-    art.src = song.art;
-    art.onload = function() {
+/**
+ * Funcion que actualiza la info del track seleccionado
+ */
+function actualizarInfoWeb() {
+    wTitle.textContent = song.title;
+    wArtist.textContent = song.artist;
+    wArt.src = song.art;
+    wArt.onload = function() {
         audio.play();
     }
 }
