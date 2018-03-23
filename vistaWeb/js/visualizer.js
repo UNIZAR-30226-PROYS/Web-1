@@ -1,42 +1,45 @@
 //Note: bins needs to be a power of 2
-let displayBins = 2048;
-let backgroundColour = "#ffffff";
-let barColour = "#EC1A55";
-let songFont = "15px 'Open Sans'";
+var displayBins = 2048;
+var backgroundColour = "#ffffff";
+var barColour = "#EC1A55";
+var songFont = "15px 'Open Sans'";
 //Where the bottom of the waveform is rendered at (out of 255). I recommend
 //leaving it at 96 since it seems to work well, basically any volume will push
 //it past 96. If your audio stream is quiet though, you'll want to reduce this.
-let floorLevel = 96;
+var floorLevel = 96;
 
 //Whether to draw the frequencies directly, or scale the x-axis logarithmically and show pitch instead.
-let drawPitch = true;
+var drawPitch = true;
 //Whether to draw the visualisation as a curve instead of discrete bars
-let drawCurved = true;
+var drawCurved = true;
 //If drawCurved is enabled, this flag fills the area beneath the curve (the same colour as the line)
-let drawFilled = false;
+var drawFilled = false;
 //Whether to draw text the songText on top of the visualisation
-let drawText = false;
+var drawText = false;
 
 //Can't touch this
-let audioContext;
-let audioBuffer;
-let audioAnalyserNode;
-let audioVisualizerInitialized = false;
-let songText = "";
-let textSize;
-let canvasContext;
-let canvasWidth;
-let canvasHeight;
-let multiplier;
-let finalBins = [];
-let logLookupTable = [];
-let logBinLengths = [];
-let binWidth;
-let magicConstant = 42; //Meaning of everything. I don't know why this works.
+var audioContext;
+var audioBuffer;
+var audioAnalyserNode;
+var audioVisualizerInitialized = false;
+var songText = "";
+var textSize;
+var canvasContext;
+var canvasWidth;
+var canvasHeight;
+var multiplier;
+var finalBins = [];
+var logLookupTable = [];
+var logBinLengths = [];
+var binWidth;
+var magicConstant = 42; //Meaning of everything. I don't know why this works.
 
+/**
+ *  Inicializador del visualizador
+ */
 function initializeVisualizer(canvasElement, audioElement) {
 	try {
-		let ctxt = window.AudioContext || window.webkitAudioContext;
+		var ctxt = window.AudioContext || window.webkitAudioContext;
 		if (ctxt) {
 			initCanvas(canvasElement);
 			audioContext = new ctxt();
@@ -54,7 +57,7 @@ function updateSongText(newText) {
 }
 
 function setupAudioApi(audioElement) {
-	let src = audioContext.createMediaElementSource(audioElement);
+	var src = audioContext.createMediaElementSource(audioElement);
 
 	audioAnalyserNode = audioContext.createAnalyser();
 	//FFT node takes in 2 samples per bin, and we internally use 2 samples per bin
@@ -63,7 +66,7 @@ function setupAudioApi(audioElement) {
 	finalBins = [];
 	logLookupTable = [];
 	logBinLengths = [];
-	for (let i = 0; i < displayBins; i++) {
+	for (var i = 0; i < displayBins; i++) {
 		finalBins.push(0);
 		logLookupTable.push(0);
 	}
@@ -97,8 +100,8 @@ function paint() {
 	canvasContext.fillStyle = backgroundColour;
 	canvasContext.fillRect(0, 0, canvasWidth, canvasHeight);
 
-	let bins = audioAnalyserNode.frequencyBinCount;
-	let data = new Uint8Array(bins);
+	var bins = audioAnalyserNode.frequencyBinCount;
+	var data = new Uint8Array(bins);
 	audioAnalyserNode.getByteFrequencyData(data);
 	canvasContext.fillStyle = barColour;
 
@@ -108,14 +111,14 @@ function paint() {
 		updateBins(bins, logBinLengths, data);
 
 	if (!drawCurved) {
-		for (let i = 0; i < displayBins; i++) {
+		for (var i = 0; i < displayBins; i++) {
 			paintSingleBin(i);
 		}
 	} else {
 		canvasContext.fillStyle = barColour;
 		canvasContext.beginPath();
 		canvasContext.moveTo(0, canvasHeight - getBinHeight(0));
-		let i;
+		var i;
 		for (i = 0; i < displayBins - 2;) {
 			var thisX = i * binWidth;
 			var nextX = (i + logBinLengths[i]) * binWidth; //First subbin of the next bin
@@ -151,19 +154,19 @@ function averageRegion(data, start, stop) {
 	if (stop <= start)
 		return data[start];
 
-	let sum = 0;
-	for (let i = start; i < stop; i++) {
+	var sum = 0;
+	for (var i = start; i < stop; i++) {
 		sum += data[i];
 	}
 	return sum / (stop - start);
 }
 
 function updateBins(bins, binLengths, data) {
-	let step = bins / displayBins;
-	for (let i = 0; i < displayBins; i++) {
-		let lower = i * step;
-		let upper = (i + 1) * step - 1;
-		let binValue = averageRegion(data, lower, upper);
+	var step = bins / displayBins;
+	for (var i = 0; i < displayBins; i++) {
+		var lower = i * step;
+		var upper = (i + 1) * step - 1;
+		var binValue = averageRegion(data, lower, upper);
 		binLengths.push(1);
 		finalBins[i] = binValue;
 	}
@@ -171,18 +174,18 @@ function updateBins(bins, binLengths, data) {
 
 function createLookupTable(bins, binLengths, lookupTable) {
 	if (drawPitch) {
-		let lastFrequency = magicConstant / multiplier;
-		let currentLength = 0;
-		let lastBinIndex = 0;
-		for (let i = 0; i < displayBins; i++) {
-			let thisFreq = lastFrequency * multiplier;
+		var lastFrequency = magicConstant / multiplier;
+		var currentLength = 0;
+		var lastBinIndex = 0;
+		for (var i = 0; i < displayBins; i++) {
+			var thisFreq = lastFrequency * multiplier;
 			lastFrequency = thisFreq;
-			let binIndex = Math.floor(bins * thisFreq / 22050);
+			var binIndex = Math.floor(bins * thisFreq / 22050);
 			lookupTable[i] = binIndex;
 			currentLength++;
 
 			if (binIndex != lastBinIndex) {
-				for (let j = 0; j < currentLength; j++)
+				for (var j = 0; j < currentLength; j++)
 					binLengths.push(currentLength);
 				currentLength = 0;
 			}
@@ -190,24 +193,24 @@ function createLookupTable(bins, binLengths, lookupTable) {
 			lastBinIndex = binIndex;
 		}
 	} else {
-		for (let i = 0; i < displayBins; i++) {
+		for (var i = 0; i < displayBins; i++) {
 			lookupTable[i] = i;
 		}
 	}
 }
 
 function updateBinsLog(lookupTable, data) {
-	for (let i = 0; i < displayBins; i++) {
+	for (var i = 0; i < displayBins; i++) {
 		finalBins[i] = data[lookupTable[i]];
 	}
 }
 
 function getBinHeight(i) {
-	let binValue = finalBins[i];
+	var binValue = finalBins[i];
 
 	//Pretty much any volume will push it over [floorLevel] so we set that as the bottom threshold
 	//I suspect I should be doing a logarithmic space for the volume as well
-	let height = Math.max(0, (binValue - floorLevel));
+	var height = Math.max(0, (binValue - floorLevel));
 	//Scale to the height of the bar
 	//Since we change the base level in the previous operations, 256 should be changed to 160 (i think) if we want it to go all the way to the top
 	height = (height / (256 - floorLevel)) * canvasHeight * 0.8;
@@ -215,6 +218,6 @@ function getBinHeight(i) {
 }
 
 function paintSingleBin(i) {
-	let height = getBinHeight(i);
+	var height = getBinHeight(i);
 	canvasContext.fillRect(i * binWidth, canvasHeight - height, binWidth, height);
 }
