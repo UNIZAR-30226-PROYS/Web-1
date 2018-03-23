@@ -59,7 +59,8 @@ window.addEventListener('load', iniciarWeb(), false);
  * Funcion inicializadora de la pagina Web
  */
 function iniciarWeb() {
-    console.log("HOI");
+
+    console.log("HOI1");
     song = songs[current_track];
     audio = new Audio();
     audio.src = song.url;
@@ -92,25 +93,29 @@ audio.addEventListener('loadedmetadata', function () {
 
     cur.innerHTML=tfin;
     final.innerHTML='00:00'
-    console.log(audio.duration);
     duration = this.duration;
 }, false);
 
+/*
 window.onmousemove = function (e) {
     e.preventDefault();
-    if (wHolding) moverTrackWeb(e);
+    if (holding) moverTrackWeb(e);
 }
 
 window.onmouseup = function (e) {
-    wHolding = false;
-    console.log(wHolding);
+    holding = false;
+}
+*/
+wTrack.onmousedown = function (e) {
+    holding = true;
+    if(window.innerWidth>200){
+        moverTrackWeb(e);
+    }
+    else{
+        moverTrackMovil(e);
+    }
 }
 
-wTrack.onmousedown = function (e) {
-    wHolding = true;
-    moverTrackWeb(e);
-    console.log(wHolding);
-}
 
 /**
  * Cuando el boton Play es pulsado, pausa/reproduce la cancion actual
@@ -119,13 +124,11 @@ wPlay.onclick = function () {
 
     if(playing){
         audio.pause();
-        console.log("Parar")
         playing=false;
         wPlay.innerHTML = '<i class="material-icons">play_arrow</i>';
     }
     else{
         audio.play();
-        console.log("Reproducir")
         playing=true;
         wPlay.innerHTML = '<i class="material-icons">pause</i>';
     }
@@ -193,8 +196,8 @@ function actualizarTrackWeb() {
  */
 function moverTrackWeb(e) {
     event = e || window.event;
-    var x = e.pageX - reproductorIndex.offsetLeft - track.offsetLeft;
-    percent = Math.round((x * 100) / track.offsetWidth);
+    var x = e.pageX - reproductorIndex.offsetLeft - wTrack.offsetLeft;
+    percent = Math.round((x * 100) / wTrack.offsetWidth);
     if (percent > 100) percent = 100;
     if (percent < 0) percent = 0;
     wProgress.style.width = percent + '%';
@@ -213,6 +216,7 @@ function siguienteTrackWeb() {
     audio.src = song.url;
     audio.onloadeddata = function() {
       actualizarInfoWeb();
+      actualizarInfoMovil();
     }
 }
 
@@ -226,6 +230,7 @@ function anteriorTrackWeb() {
     audio.src = song.url;
     audio.onloadeddata = function() {
       actualizarInfoWeb();
+      actualizarInfoMovil();
     }
 }
 
@@ -236,10 +241,7 @@ function actualizarInfoWeb() {
     wTitle.textContent = song.title;
     wArtist.textContent = song.artist;
     wArt.src = song.art;
-    wArt.onload = function() {
-        if(playing) audio.play();
-        else        audio.pause();
-    }
+    
 }
 
 

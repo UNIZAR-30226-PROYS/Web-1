@@ -12,10 +12,9 @@ var mPrev          = document.getElementById('mPrev');
 var mTitle         = document.getElementById('mTitle');
 var mArtist        = document.getElementById('mArtist');
 
-var cur = document.getElementById('current2');
-var final = document.getElementById('final2');
+var mcur = document.getElementById('current2');
+var mfinal = document.getElementById('final2');
 
-var current_track = 0;
 
 
 var context,src;
@@ -34,14 +33,9 @@ window.addEventListener('load', iniciarMovil(), false);
  * Funcion inicializadora de la pagina Web
  */
 function iniciarMovil() {
-    console.log("HOI");
-    song = songs[current_track];
-    audio = new Audio();
-    audio.src = song.url;
+    console.log("HOI2");  
     mTitle.textContent = song.title;
     mArtist.textContent = song.artist;
-    playing=false;
-
 
 }
 
@@ -54,35 +48,50 @@ audio.addEventListener('timeupdate', actualizarTrackMovil, false);
  * Cuando halla cargado los datos de la cancion
  */
 audio.addEventListener('loadedmetadata', function () {
-    var tfin='0'+Math.floor(audio.duration/60)+':';
-    var resto=Math.floor(audio.duration%60);
-    if(resto<10){
-        tfin=tfin+'0'+resto;
+    console.log("cargo2");
+    var tfin2='0'+Math.floor(audio.duration/60)+':';
+    var resto2=Math.floor(audio.duration%60);
+    if(resto2<10){
+        tfin2=tfin2+'0'+resto2;
     }
     else{
-        tfin=tfin+resto;
+        tfin2=tfin2+resto2;
     }
 
-    cur.innerHTML=tfin;
-    final.innerHTML='00:00'
-    console.log(audio.duration);
+    console.log(tfin2);
+    mcur.innerHTML=tfin2;
+    mfinal.innerHTML='00:00'
     duration = this.duration;
 }, false);
 
 
 window.onmousemove = function (e) {
     e.preventDefault();
-    if (holding) moverTrackMovil(e);
+    if (holding){
+        if(window.innerWidth>600){
+            moverTrackWeb(e);
+        }
+        else{
+            moverTrackMovil(e);
+        }
+        
+        
+    } 
 }
 window.onmouseup = function (e) {
     holding = false;
-    console.log(holding);
 }
+
 track.onmousedown = function (e) {
     holding = true;
-    moverTrackMovil(e);
-    console.log(holding);
+    if(window.innerWidth>600){
+        moverTrackWeb(e);
+    }
+    else{
+        moverTrackMovil(e);
+    }
 }
+
 
 /**
  * Cuando el boton Play es pulsado, pausa/reproduce la cancion actual
@@ -90,12 +99,10 @@ track.onmousedown = function (e) {
 mPlay.onclick = function () {
     if(playing){
         audio.pause();
-        console.log("Parar")
         playing=false;
     }
     else{
         audio.play();
-        console.log("Reproducir")
         playing=true;
     }
 
@@ -142,7 +149,7 @@ function actualizarTrackMovil() {
         tfin=tfin+resto;
     }
 
-    final.innerHTML=tfin;
+    mfinal.innerHTML=tfin;
 
 
     curtime = audio.currentTime;
@@ -159,7 +166,7 @@ function actualizarTrackMovil() {
  */
 function moverTrackMovil(e) {
     event = e || window.event;
-    var x = e.pageX - reproductorIndex.offsetLeft - track.offsetLeft;
+    var x = e.pageX - reproductorMovilIndex.offsetLeft - track.offsetLeft;
     percent = Math.round((x * 100) / track.offsetWidth);
     if (percent > 100) percent = 100;
     if (percent < 0) percent = 0;
@@ -179,6 +186,7 @@ function siguienteTrackMovil() {
     audio.src = song.url;
     audio.onloadeddata = function() {
       actualizarInfoMovil();
+      actualizarInfoWeb();
     }
 }
 
@@ -192,6 +200,7 @@ function anteriorTrackMovil() {
     audio.src = song.url;
     audio.onloadeddata = function() {
       actualizarInfoMovil();
+      actualizarInfoWeb();
     }
 }
 
@@ -199,9 +208,10 @@ function anteriorTrackMovil() {
  * Funcion que actualiza la info del track seleccionado
  */
 function actualizarInfoMovil() {
+    console.log("actualizo2");
     mTitle.textContent = song.title;
     mArtist.textContent = song.artist;
-    if(playing) audio.play();
+    if(!playing) audio.play();
     else        audio.pause();
 }
 
