@@ -17,6 +17,8 @@
                 var files = this.files;
                 var file = URL.createObjectURL(files[0]);
                 player.src = file;
+                console.log(files[0]);
+                //console.log(file);
                 player.play();
 
                 if (!initialized) {
@@ -75,7 +77,7 @@
 
 
 
-
+    <button type="button" onclick="pruebaVisualizer($('canvas')[0]);">Click Me!</button>
     <input id="fileinput" style="color:white;" type="file" accept="audio/*" />
     <audio id="player"></audio>
     <div class="col l12 m12 s12">

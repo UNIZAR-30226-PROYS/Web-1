@@ -33,7 +33,6 @@ window.addEventListener('load', iniciarMovil(), false);
  * Funcion inicializadora de la pagina Web
  */
 function iniciarMovil() {
-    console.log("HOI2");  
     mTitle.textContent = song.title;
     mArtist.textContent = song.artist;
 
@@ -48,7 +47,6 @@ audio.addEventListener('timeupdate', actualizarTrackMovil, false);
  * Cuando halla cargado los datos de la cancion
  */
 audio.addEventListener('loadedmetadata', function () {
-    console.log("cargo2");
     var tfin2='0'+Math.floor(audio.duration/60)+':';
     var resto2=Math.floor(audio.duration%60);
     if(resto2<10){
@@ -57,8 +55,6 @@ audio.addEventListener('loadedmetadata', function () {
     else{
         tfin2=tfin2+resto2;
     }
-
-    console.log(tfin2);
     mcur.innerHTML=tfin2;
     mfinal.innerHTML='00:00'
     duration = this.duration;
@@ -208,11 +204,9 @@ function anteriorTrackMovil() {
  * Funcion que actualiza la info del track seleccionado
  */
 function actualizarInfoMovil() {
-    console.log("actualizo2");
     mTitle.textContent = song.title;
     mArtist.textContent = song.artist;
-    if(!playing) audio.play();
-    else        audio.pause();
+        audio.play();    
 }
 
 

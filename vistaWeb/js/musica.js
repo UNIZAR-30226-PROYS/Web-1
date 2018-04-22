@@ -40,7 +40,16 @@ var songs = [{
     artist: 'Extremoduro',
     url: 'songs/Deltoya.mp3',
     art: 'http://abarcarodriguez.com/365/files/rainbow.jpg'
-}];
+},
+    
+{
+    title: 'Felices los 4',
+    artist: 'Maluma',
+    url: 'songs/felise.mp3',
+    art: 'http://abarcarodriguez.com/365/files/anamanaguchi.jpg'
+}
+
+];
 
 var context,src;
 
@@ -59,8 +68,6 @@ window.addEventListener('load', iniciarWeb(), false);
  * Funcion inicializadora de la pagina Web
  */
 function iniciarWeb() {
-
-    console.log("HOI1");
     song = songs[current_track];
     audio = new Audio();
     audio.src = song.url;
@@ -242,6 +249,16 @@ function actualizarInfoWeb() {
     wArtist.textContent = song.artist;
     wArt.src = song.art;
     
+}
+
+
+function playSong(num){
+    song = songs[num];
+    audio.src = song.url;
+    audio.onloadeddata = function() {
+      actualizarInfoWeb();
+      actualizarInfoMovil();
+    }
 }
 
 
