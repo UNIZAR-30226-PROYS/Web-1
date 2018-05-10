@@ -1,0 +1,29 @@
+#reproductorMovilIndex{
+    position: fixed;
+    bottom:   0px;
+    left:     0px;
+    rigth:    0px;
+    width:    100%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: #FFFFFF;
+}
+
+#reproductorIndex{
+    position: fixed;
+    top:      0px;
+    rigth:    0px;
+    bottom:   0px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: #FFFFFF;
+
+}
+
+#visualizador{
+    position: fixed;
+    bottom:   0px;
+    left:     0px;
+    rigth:    0px;
+    width:    100%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: #FFFFFF;
+}

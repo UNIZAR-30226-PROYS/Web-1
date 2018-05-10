@@ -1,0 +1,20 @@
+{
+  "name": "cierzoang",
+  "description": "Aplicación web de reproducción de musica en streaming",
+  "main": "index.js",
+  "authors": [
+    "Jorge Blazquez <jorgeblazher@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "angular": "^1.6.10"
+  }
+}

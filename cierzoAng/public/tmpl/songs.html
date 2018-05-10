@@ -1,0 +1,20 @@
+<div>
+    <!-- SONGS -->
+    <ul class="collection with-header">
+        <li class="collection-header"><h4>Todas<a href="#!" class="secondary-content"><i class="material-icons medium">arrow_back</i></a></h4></li>
+        
+        
+        <li ng-repeat="cancion in canciones" class="collection-item">
+            <div>{{cancion.title}} - {{cancion.artist}} 
+                <a class="secondary-content" href="javascript:"  ng-click="prueba(cancion.position)">
+                    <i class="material-icons">play_circle_outline</i>
+                </a>
+            </div>
+        </li>
+        
+        
+    </ul>
+
+
+    <!-- FIN SONGS -->
+</div>
