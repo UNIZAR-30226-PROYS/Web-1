@@ -3,14 +3,18 @@
 cierzoApp.config(function($routeProvider) {
     $routeProvider
     .when("/", {
-        templateUrl : "tmpl/songs.html",
-        controller: 'songsController'
+        templateUrl : "tmpl/listas.html",
+        controller: 'listasRepController'
     })
     .when("/artists", {
         templateUrl : "tmpl/artists.html",
         controller: 'artistsController'
     })
     .when("/songs", {
+        templateUrl : "tmpl/songs.html",
+        controller: 'songsController'
+    })
+    .when("/songs/:param1", {
         templateUrl : "tmpl/songs.html",
         controller: 'songsController'
     })

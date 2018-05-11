@@ -21,6 +21,7 @@ var song, audio, duration;
 var playing = false;
 
 /* Canciones para probar */
+
 var songs = [{
     title: 'La llamada',
     artist: 'Leiva',
@@ -260,6 +261,7 @@ function playSong(num){
       actualizarInfoMovil();
     }
 }
+
 
 
 

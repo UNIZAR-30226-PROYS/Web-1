@@ -1,20 +1,22 @@
-cierzoApp.controller("principalController", ['datos', '$scope', function (datos, $scope) {
+cierzoApp.controller("principalController", ['$scope', function ($scope) {
     $scope.headerSrc = "tmpl/navbar.html";
 }]);
 
 
 
-cierzoApp.controller("songsController", ['datos', '$scope', function (datos, $scope) {
+cierzoApp.controller("songsController", ['$scope', '$routeParams', function($scope, $routeParams) {
     $scope.headerSrc = "tmpl/navbar.html";
 
-    /*
-    var x = document.getElementById("artists");   
-    x.classList.add("active"); 
 
-    */
-
-    var dato=datos.getData();
-    console.log(dato);
+    var param = $routeParams.param1;
+    if(param==undefined){
+        param='canciones';
+        $scope.titulo='Todas';
+    }
+    else{
+        $scope.titulo='Lista: '+ param;
+    }
+    var dato='http://localhost:2595/'+param;
 
     //CONSULTA A LA API
     var xhr = new XMLHttpRequest();
@@ -27,6 +29,8 @@ cierzoApp.controller("songsController", ['datos', '$scope', function (datos, $sc
     for(var i=0;i<canciones.length;i++){
         canciones[i]["position"]=i;
     }
+
+    songs=canciones;
 
     $scope.prueba = function(num) {
         song = canciones[num];
@@ -43,22 +47,22 @@ cierzoApp.controller("songsController", ['datos', '$scope', function (datos, $sc
     console.log("songs");
 }]);
 
-cierzoApp.controller("artistsController", ['datos', '$scope', function (datos, $scope) {
+cierzoApp.controller("artistsController", ['$scope', function ($scope) {
     $scope.headerSrc = "tmpl/navbar.html";
     console.log("artists");
 }]);
 
-cierzoApp.controller("albumsController", ['datos', '$scope', function (datos, $scope) {
+cierzoApp.controller("albumsController", ['$scope', function ($scope) {
     $scope.headerSrc = "tmpl/navbar.html";
     console.log("albums");
 }]);
 
-cierzoApp.controller("genresController", ['datos', '$scope', function (datos, $scope) {
+cierzoApp.controller("genresController", ['$scope', function ($scope) {
     $scope.headerSrc = "tmpl/navbar.html";
     console.log("genres");
 }]);
 
-cierzoApp.controller("listasRepController", ['datos', '$scope', function (datos, $scope) {
+cierzoApp.controller("listasRepController", ['$scope', function ($scope) {
     $scope.headerSrc = "tmpl/navbar.html";
 
     var xhr = new XMLHttpRequest();
@@ -68,19 +72,14 @@ cierzoApp.controller("listasRepController", ['datos', '$scope', function (datos,
     
     listas=JSON.parse(xhr.responseText);
 
-    //$scope.setLista = datos.setLista;
-
-    $scope.setLista = function(num) {
-        datos.setListaS(num);
-    }
-
+    
     $scope.listas=listas;
 
 }]);
 
 
 
-cierzoApp.controller("peopleController",['datos', '$scope', function (datos, $scope) {
+cierzoApp.controller("peopleController",['$scope', function ( $scope) {
     $scope.headerSrc = "tmpl/navbar.html";
 }]);
 
