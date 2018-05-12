@@ -94,6 +94,63 @@ app.get('/lista', function (req, res) {
     
     ]); 
 });
+
+
+app.get('/albums', function (req, res) {
+    res.json([{
+        img: 'https://st-listas.20minutos.es/images/2008-04/13429/182301_640px.jpg?1223584667',
+        autor: 'Extremoduro',
+        titulo: 'Agila'
+    },
+        
+    {
+        img: 'https://i.pinimg.com/originals/c0/bd/df/c0bddf69fc8fa8cc2bdbe8283aa6615e.jpg',
+        autor: 'Extremoduro',
+        titulo: 'Deltoya'
+    },
+    
+    {
+        img: 'https://www.elquintobeatle.com/wp-content/uploads/2015/02/extremoduro-la-ley-innata-1.jpg',
+        autor: 'Extremoduro',
+        titulo: 'La ley innata'
+    },
+        
+    {
+        img: 'https://img.discogs.com/dfvL1Qt5Ed9wuaqXAwX55bI4oAQ=/fit-in/600x587/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-1412225-1513096916-6051.jpeg.jpg',
+        autor: 'Extremoduro',
+        titulo: 'Yo, minoría absoluta'
+    }
+    
+    ]); 
+    
+});
+
+
+
+app.get('/artists', function (req, res) {
+    res.json([{
+        img: 'https://i0.wp.com/www.informavalencia.com/wp-content/uploads/2017/08/extremoduro2.jpg?fit=915%2C585&ssl=1',
+        name: 'Extremoduro'
+    },
+        
+    {
+        img: 'http://www.artistasyorquestas.com/fotografiasservicios/fito_y_fitipaldis.jpg',
+        name: 'Fito y los fitipaldis'
+    },
+    
+    {
+        img: 'https://todoindie.com/wp-content/uploads/2018/01/la-raiz-copia.jpg',
+        name: 'La raíz'
+    },
+        
+    {
+        img: 'https://ep01.epimg.net/elpais/imagenes/2017/09/19/icon/1505810414_437848_1505820319_noticia_normal.jpg',
+        name: 'Maluma'
+    }
+    
+    ]); 
+    
+});
  
 app.listen(port);
 console.log('Express server running at http://localhost:' + port);

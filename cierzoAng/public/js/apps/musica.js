@@ -12,6 +12,7 @@ var wPrev     = document.getElementById('wPrev');
 var wTitle    = document.getElementById('wTitle');
 var wArtist   = document.getElementById('wArtist');
 var wArt      = document.getElementById('wArt');
+var wList      = document.getElementById('wLista');
 
 var cur       = document.getElementById('current');
 var final     = document.getElementById('final');
@@ -52,6 +53,7 @@ var songs = [{
 
 ];
 
+
 var context,src;
 
 
@@ -75,6 +77,7 @@ function iniciarWeb() {
     wTitle.textContent = song.title;
     wArtist.textContent = song.artist;
     wArt.src = song.art;
+    wList.textContent = 'Lista: todas';
     playing=false;
 
 
