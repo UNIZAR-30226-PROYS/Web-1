@@ -6,6 +6,14 @@ cierzoApp.config(function($routeProvider) {
         templateUrl : "tmpl/listas.html",
         controller: 'listasRepController'
     })
+    .when("/login", {
+        templateUrl : "tmpl/login.html",
+        controller: 'loginController'
+    })
+    .when("/sign", {
+        templateUrl : "tmpl/signup.html",
+        controller: ''
+    })
     .when("/artists", {
         templateUrl : "tmpl/artists.html",
         controller: 'artistsController'

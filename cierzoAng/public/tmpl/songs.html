@@ -5,8 +5,8 @@
         
         
         <li ng-repeat="cancion in canciones" class="collection-item">
-            <div>{{cancion.title}} - {{cancion.artist}} 
-                <a class="secondary-content" href="javascript:"  ng-click="prueba(cancion.position)">
+            <div>{{cancion.name}} - {{cancion.authorName}} - {{cancion.lenght}} s
+                <a class="secondary-content" href="javascript:"  ng-click="prueba(cancion.id)">
                     <i class="material-icons">play_circle_outline</i>
                 </a>
             </div>

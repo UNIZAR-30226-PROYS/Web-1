@@ -21,187 +21,200 @@
 
 </head>
 <body data-ng-controller="principalController" ng-app="cierzoApp">
-  <div class="row">
+
+
+
+    <div ng-switch on={{repro}}>
+        <div ng-switch-when="true">
+            <!-- code to render a large video block-->
+
+            <div ng-view></div>
+        </div>
+        <div ng-switch-default>
+            <!-- code to render the regular video block -->
+            <div class="row">
 
     
 
-      <!-- BARRA DE NAVEGACION-->
-      <div class="navb col l9 m9 s12" style="padding-left: 0px; margin:0px;padding-right: 0px">
-            <div ng-include src="'tmpl/navbar.html'"></div> 
-      </div>
-
-
-      
-      <div class="section no-pad-bot" id="index-banner">
-        
-        <div ng-include src="'tmpl/barraOculta.html'"></div>
-
-
-
-        
-          <div class="col l9 m9 s12">
-            <!-- CONTENIDO PAGINA PRINCIPAL-->
-            <div ng-view></div>
-            
-          </div>
-      </div>
-
-
-
-
-
-
-
-
-      <!-- REPRODUCTOR-->
-      <div class="reproductor col l3 m3 s12">  <!--  Reproductor de la pagina principal -->
-          <div id="reproductorIndex">
-            <div class="hide-on-small-only">     <!--  Reproductor para WEB Y TABLET-->
-
-                  <div class="col s12">
-                      <h5 class="center-align">Reproduciendo ahora</h5><br>
-                  </div>
-
-                  <!--PORTADA -->
-                  <div class="col s8 offset-s2">
-                      <div class="card">
-                        <div class="card-image">
-                            <a href="song.html">
-                                <img class="responsive-img" src="" id="wArt">
-                            </a>
-                        </div>
-                      </div>
-                  </div>
-
-
-                  <!--ARTISTA Y CANCION-->
-                  <div class="col s12">
-                        
-                      <h3 class="truncate center-align" id="wTitle"></h3>
-                      <h5 class="truncate center-align" id="wArtist"></h5>
-                      <h5 class="truncate center-align" id="wLista"></h5>
-                  </div>
-
-
-
-
-                   <!--BOTONES: PLAY/STOP ADELANTE Y ATRAS-->
-                  <div class="col s8 offset-l1 valign-wrapper">
-                      <div class="col s2">
-                          <a class="btn-floating btn-medium waves-effect waves-light light-green accent-4" id="wPrev">
-                            <i class="material-icons">fast_rewind</i>
-                          </a>
-                      </div>
-                      <div class="col s2 offset-s2">
-                          <a class="btn-floating btn-large waves-effect waves-light light-green accent-4" id="wPlay">
-                            <i class="material-icons">play_arrow</i>
-                          </a>
-                      </div>
-                      <div class="col s2 offset-s3">
-                          <a class="btn-floating btn-medium waves-effect waves-light light-green accent-4" id="wNext">
-                            <i class="material-icons">fast_forward</i>
-                          </a>
-                      </div>
-                  </div>
-
-                <!--BARRA DE PROGRESO-->
-
-                <div class="col s12">
-                    <br><br>
-                    <div id="track">
-                        <div id="progress"></div>
-                        <div id="handler"></div>
+                    <!-- BARRA DE NAVEGACION-->
+                    <div class="navb col l9 m9 s12" style="padding-left: 0px; margin:0px;padding-right: 0px">
+                          <div ng-include src="'tmpl/navbar.html'"></div> 
                     </div>
-                    <div class="col s12 offset-s1">
-                        <div class="col s1">
-                            <p id="final">
-                            </p>
-                        </div>
-
-                        <div class="col s2 offset-s6">
-                            <p id="current">
-                            </p>
+              
+              
+                    
+                    <div class="section no-pad-bot" id="index-banner">
+                      
+                      <div ng-include src="'tmpl/barraOculta.html'"></div>
+              
+              
+              
+                      
+                        <div class="col l9 m9 s12">
+                          <!-- CONTENIDO PAGINA PRINCIPAL-->
+                          <div ng-view></div>
+                          
                         </div>
                     </div>
-                    <br><br>
-                </div>
-
-                  
-
-                  <!--BOTONES: REPETIR Y RANDOM-->
-                  <div class="col s8 offset-l1 valign-wrapper">
-
-                      <div class="col s2 offset-s3">
-                          <a class="btn-floating btn-medium waves-effect waves-light light-green accent-4"><i class="large material-icons">repeat</i></a>
-                      </div>
-                      <div class="col s2 offset-s3">
-                          <a class="btn-floating btn-medium waves-effect waves-light light-green accent-4"><i class="large material-icons">shuffle</i></a>
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <div id="reproductorMovilIndex">
-              <div class="hide-on-med-and-up">     
-              <!--  Reproductor para MOVIL-->
-                  <div class="col s12">
-                            <!--  BARRA DE PROGRESO -->
-                            <div class="col s12">
-                                <div id="track2">
-                                  <div id="progress2"></div>
-                                  <div id="handler2"></div>
+              
+              
+              
+              
+              
+              
+              
+              
+                    <!-- REPRODUCTOR-->
+                    <div class="reproductor col l3 m3 s12">  <!--  Reproductor de la pagina principal -->
+                        <div id="reproductorIndex">
+                          <div class="hide-on-small-only">     <!--  Reproductor para WEB Y TABLET-->
+              
+                                <div class="col s12">
+                                    <h5 class="center-align">Reproduciendo ahora</h5><br>
                                 </div>
-                                <div class="col s12 offset-s1">
-                                  <div class="col s1">
-                                      <p id="final2">
-                                      </p>
+              
+                                <!--PORTADA -->
+                                <div class="col s8 offset-s2">
+                                    <div class="card">
+                                      <div class="card-image">
+                                          <a href="song.html">
+                                              <img class="responsive-img" src="" id="wArt">
+                                          </a>
+                                      </div>
+                                    </div>
+                                </div>
+              
+              
+                                <!--ARTISTA Y CANCION-->
+                                <div class="col s12">
+                                      
+                                    <h3 class="truncate center-align" id="wTitle"></h3>
+                                    <h5 class="truncate center-align" id="wArtist"></h5>
+                                    <h5 class="truncate center-align" id="wLista"></h5>
+                                </div>
+              
+              
+              
+              
+                                 <!--BOTONES: PLAY/STOP ADELANTE Y ATRAS-->
+                                <div class="col s8 offset-l1 valign-wrapper">
+                                    <div class="col s2">
+                                        <a class="btn-floating btn-medium waves-effect waves-light light-green accent-4" id="wPrev">
+                                          <i class="material-icons">fast_rewind</i>
+                                        </a>
+                                    </div>
+                                    <div class="col s2 offset-s2">
+                                        <a class="btn-floating btn-large waves-effect waves-light light-green accent-4" id="wPlay">
+                                          <i class="material-icons">play_arrow</i>
+                                        </a>
+                                    </div>
+                                    <div class="col s2 offset-s3">
+                                        <a class="btn-floating btn-medium waves-effect waves-light light-green accent-4" id="wNext">
+                                          <i class="material-icons">fast_forward</i>
+                                        </a>
+                                    </div>
+                                </div>
+              
+                              <!--BARRA DE PROGRESO-->
+              
+                              <div class="col s12">
+                                  <br><br>
+                                  <div id="track">
+                                      <div id="progress"></div>
+                                      <div id="handler"></div>
                                   </div>
-
-                                  <div class="col s2 offset-s6">
-                                      <p id="current2">
-                                      </p>
+                                  <div class="col s12 offset-s1">
+                                      <div class="col s1">
+                                          <p id="final">
+                                          </p>
+                                      </div>
+              
+                                      <div class="col s2 offset-s6">
+                                          <p id="current">
+                                          </p>
+                                      </div>
                                   </div>
+                                  <br><br>
+                              </div>
+              
+                                
+              
+                                <!--BOTONES: REPETIR Y RANDOM-->
+                                <div class="col s8 offset-l1 valign-wrapper">
+              
+                                    <div class="col s2 offset-s3">
+                                        <a class="btn-floating btn-medium waves-effect waves-light light-green accent-4"><i class="large material-icons">repeat</i></a>
+                                    </div>
+                                    <div class="col s2 offset-s3">
+                                        <a class="btn-floating btn-medium waves-effect waves-light light-green accent-4"><i class="large material-icons">shuffle</i></a>
+                                    </div>
                                 </div>
                             </div>
+                        </div>
+                        <div id="reproductorMovilIndex">
+                            <div class="hide-on-med-and-up">     
+                            <!--  Reproductor para MOVIL-->
+                                <div class="col s12">
+                                          <!--  BARRA DE PROGRESO -->
+                                          <div class="col s12">
+                                              <div id="track2">
+                                                <div id="progress2"></div>
+                                                <div id="handler2"></div>
+                                              </div>
+                                              <div class="col s12 offset-s1">
+                                                <div class="col s1">
+                                                    <p id="final2">
+                                                    </p>
+                                                </div>
+              
+                                                <div class="col s2 offset-s6">
+                                                    <p id="current2">
+                                                    </p>
+                                                </div>
+                                              </div>
+                                          </div>
+              
+                                        <div class="col s10 offset-s1">
+                                            <!--TITULO CANCION -->
+                                            <div class="col s5">
+                                                <h6 class="truncate center-align" id="mTitle"></h6>
+                                            </div>
+                                            
+                                            <!--BOTONES: PLAY/STOP ADELANTE Y ATRAS-->
+                                            <div class="col s1 offset-s2">
+                                                <a class="btn-floating btn-medium waves-effect waves-light light-green accent-4" id="mPrev"><i class="material-icons">fast_rewind</i></a>
+                                            </div>
+                                            <div class="col s1 offset-s1">
+                                                <a class="btn-floating btn-medium waves-effect waves-light light-green accent-4" id="mPlay"><i class="material-icons">play_arrow</i></a>
+                                            </div>
+                                            <div class="col s1 offset-s1">
+                                                <a class="btn-floating btn-medium waves-effect waves-light light-green accent-4" id="mNext"><i class="material-icons">fast_forward</i></a>
+                                            </div>
+                                        </div>
+                                </div>
+                                <div class="col s12">
+                                    <div class="col s10 offset-s1">
+                                        <!--ARTISTA-->
+                                        <div class="col s5">
+                                            <h5 class="truncate center-align" id="mArtist"></h5>
+                                        </div>
+                                        <!--BOTONES: REPETIR Y RANDOM-->
+                                        <div class="col s1 offset-s2">
+                                            <a class="btn-floating btn-medium waves-effect waves-light light-green accent-4"><i class="material-icons">repeat</i></a>
+                                        </div>
+                                        <div class="col s1 offset-s3">
+                                            <a class="btn-floating btn-medium waves-effect waves-light light-green accent-4"><i class="material-icons">shuffle</i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+              
+                    </div>
+                </div>
 
-                          <div class="col s10 offset-s1">
-                              <!--TITULO CANCION -->
-                              <div class="col s5">
-                                  <h6 class="truncate center-align" id="mTitle"></h6>
-                              </div>
-                              
-                              <!--BOTONES: PLAY/STOP ADELANTE Y ATRAS-->
-                              <div class="col s1 offset-s2">
-                                  <a class="btn-floating btn-medium waves-effect waves-light light-green accent-4" id="mPrev"><i class="material-icons">fast_rewind</i></a>
-                              </div>
-                              <div class="col s1 offset-s1">
-                                  <a class="btn-floating btn-medium waves-effect waves-light light-green accent-4" id="mPlay"><i class="material-icons">play_arrow</i></a>
-                              </div>
-                              <div class="col s1 offset-s1">
-                                  <a class="btn-floating btn-medium waves-effect waves-light light-green accent-4" id="mNext"><i class="material-icons">fast_forward</i></a>
-                              </div>
-                          </div>
-                  </div>
-                  <div class="col s12">
-                      <div class="col s10 offset-s1">
-                          <!--ARTISTA-->
-                          <div class="col s5">
-                              <h5 class="truncate center-align" id="mArtist"></h5>
-                          </div>
-                          <!--BOTONES: REPETIR Y RANDOM-->
-                          <div class="col s1 offset-s2">
-                              <a class="btn-floating btn-medium waves-effect waves-light light-green accent-4"><i class="material-icons">repeat</i></a>
-                          </div>
-                          <div class="col s1 offset-s3">
-                              <a class="btn-floating btn-medium waves-effect waves-light light-green accent-4"><i class="material-icons">shuffle</i></a>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-
-      </div>
-  </div>
-
+        </div>
+    </div>
 
 
   <!--  Scripts-->

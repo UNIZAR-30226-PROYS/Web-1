@@ -10,12 +10,12 @@
                         </div>
                         <div class="card-content">
                             <span class="card-title activator grey-text text-darken-4">{{lista.name}}<i class="material-icons right">more_vert</i></span>
-                            <p><a href="#songs/cancion">Ir a la lista</a></p>
-                            <p>{{lista.num}} canciones</p>
+                            <p><a href="#songs/{{lista.id}}">Ir a la lista</a></p>
+                            <p>{{lista.songs.length}} canciones</p>
                         </div>
                         <div class="card-reveal">
                             <span class="card-title grey-text text-darken-4">{{lista.name}}<i class="material-icons right">close</i></span>
-                            <p>{{lista.desc}}</p>
+                            <p>{{lista.description}}</p>
                         </div>
                     </div>
                 </div>
