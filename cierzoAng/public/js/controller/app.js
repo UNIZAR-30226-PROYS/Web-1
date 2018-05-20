@@ -1,5 +1,21 @@
-cierzoApp.controller("principalController", ['$scope', function ($scope) {
+cierzoApp.controller("principalController", ['$scope','$location', function ($scope,$location) {
     $scope.headerSrc = "tmpl/navbar.html";
+
+    
+
+   $scope.$on('$locationChangeSuccess', function(event){
+        console.log($location.url());
+        if($location.url()=='/login' || $location.url()=='/' || $location.url()=='/sign' ){
+            $scope.repro=true;
+            //console.log($location.url());
+        }
+        else{
+            $scope.repro=false;
+            //console.log($location.url());
+        }
+    })
+
+
 }]);
 
 var canciones=[];
@@ -140,11 +156,13 @@ cierzoApp.controller("peopleController",['$scope', function ( $scope) {
 
 
 
-cierzoApp.controller("loginController",['$scope', function ( $scope) {
-    console.log("joder");
+cierzoApp.controller("loginController",['$scope', function ($scope) {
+    console.log("login");
     $scope.repro=true;
+}]);
 
-
+cierzoApp.controller("signController",['$scope', function ($scope) {
+    console.log("sign");
 }]);
 
 

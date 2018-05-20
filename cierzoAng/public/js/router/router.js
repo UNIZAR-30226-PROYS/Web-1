@@ -3,8 +3,8 @@
 cierzoApp.config(function($routeProvider) {
     $routeProvider
     .when("/", {
-        templateUrl : "tmpl/listas.html",
-        controller: 'listasRepController'
+        templateUrl : "tmpl/entrada.html",
+        controller: 'entradaController'
     })
     .when("/login", {
         templateUrl : "tmpl/login.html",
@@ -12,7 +12,7 @@ cierzoApp.config(function($routeProvider) {
     })
     .when("/sign", {
         templateUrl : "tmpl/signup.html",
-        controller: ''
+        controller: 'signController'
     })
     .when("/artists", {
         templateUrl : "tmpl/artists.html",
