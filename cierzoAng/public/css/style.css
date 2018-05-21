@@ -62,3 +62,31 @@
     cursor: pointer;
     z-index: 5;
 }
+#track3{
+    width: 90%;
+    height: 5px;
+    background-color: #A6A7A9;
+    left: 17px;
+    z-index: 10;
+    cursor: pointer;
+}
+#progress3 {
+    float: left;
+    height: 5px;
+    width: 0%;
+    background: #00CC99;
+    cursor: pointer;
+}
+#handler3 {
+  float: left;
+    width: 20px;
+    height: 20px;
+    background-color: #00CC99;
+    top: 50%;
+    left: 0%;
+    margin-left: -10px;
+    margin-top: -10px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 5;
+}
