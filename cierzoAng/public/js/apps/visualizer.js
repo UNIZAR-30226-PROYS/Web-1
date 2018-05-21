@@ -39,13 +39,14 @@ var magicConstant = 42; //Meaning of everything. I don't know why this works.
  *  Inicializador del visualizador
  */
 function pruebaVisualizer(canvasElement) {
-		//var file = URL.createObjectURL(files[0]);
+		//var file = URL.createObjectURL(files[0])
+		/*
 		audioElemen=new Audio();
 		audioElemen.crossOrigin = "anonymous";
-		audioElemen.src = 'C:\Users\jorge\Desktop\PrSw\git\Web\vistaWeb\songs\llamada.mp3';
-        audioElemen.play();
-
-		initializeVisualizer(canvasElement, audioElemen);
+		audioElemen.src = '/home/sherrero/Escritorio/Proyecto/Web/cierzoAng/public/songs/llamada.mp3';
+        audioElemen.play();*/
+		audio.play();
+		initializeVisualizer(canvasElement, audio);
 
 
 }
@@ -77,9 +78,9 @@ function updateSongText(newText) {
 }
 
 function setupAudioApi(audioElement) {
-	
+
 	var src = audioContext.createMediaElementSource(audioElement);
-	
+
 
 	audioAnalyserNode = audioContext.createAnalyser();
 	//FFT node takes in 2 samples per bin, and we internally use 2 samples per bin
@@ -96,9 +97,9 @@ function setupAudioApi(audioElement) {
 	binWidth = Math.ceil(canvasWidth / (displayBins - 1));
 
 	src.connect(audioAnalyserNode);
-	
+
 	audioAnalyserNode.connect(audioContext.destination);
-	
+
 
 	audioVisualizerInitialized = true;
 }
