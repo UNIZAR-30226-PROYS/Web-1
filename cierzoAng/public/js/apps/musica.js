@@ -23,6 +23,14 @@ var playing = false;
 
 /* Canciones para probar */
 
+var theUrl='http://192.168.44.128:8080/api/songs'
+var xmlHttp = new XMLHttpRequest();
+xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+xmlHttp.send( null );
+
+songs = JSON.parse(xmlHttp.responseText);
+
+/*
 var songs = [{
     title: 'La llamada',
     artist: 'Leiva',
@@ -51,7 +59,7 @@ var songs = [{
     art: 'http://abarcarodriguez.com/365/files/anamanaguchi.jpg'
 }
 
-];
+];*/
 
 
 var context,src;
@@ -74,9 +82,9 @@ function iniciarWeb() {
     song = songs[current_track];
     audio = new Audio();
     audio.src = song.url;
-    wTitle.textContent = song.title;
-    wArtist.textContent = song.artist;
-    wArt.src = song.art;
+    wTitle.textContent = song.name;
+    wArtist.textContent = song.authorName;
+    wArt.src = theUrl+'/'+song.id+'/image';
     wList.textContent = 'Lista: todas';
     playing=false;
 
@@ -249,9 +257,10 @@ function anteriorTrackWeb() {
  * Funcion que actualiza la info del track seleccionado
  */
 function actualizarInfoWeb() {
-    wTitle.textContent = song.title;
-    wArtist.textContent = song.artist;
+    wTitle.textContent = song.name;
+    wArtist.textContent = song.authorName;
     wArt.src = song.art;
+    console.log(wTitle);
     
 }
 

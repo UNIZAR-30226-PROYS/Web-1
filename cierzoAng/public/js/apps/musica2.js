@@ -206,7 +206,7 @@ function anteriorTrackMovil() {
 function actualizarInfoMovil() {
     mTitle.textContent = song.title;
     mArtist.textContent = song.artist;
-        audio.play();    
+    audio.play();    
 }
 
 

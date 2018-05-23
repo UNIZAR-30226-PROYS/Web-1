@@ -1,38 +1,31 @@
+var server='http://192.168.44.128:8080/api/';
+
 cierzoApp.controller("principalController", ['$scope','$location', function ($scope,$location) {
     $scope.headerSrc = "tmpl/navbar.html";
 
-    
-
-   $scope.$on('$locationChangeSuccess', function(event){
-        console.log($location.url());
+    $scope.$on('$locationChangeSuccess', function(event){
         if($location.url()=='/login' || $location.url()=='/' || $location.url()=='/sign' ){
             $scope.repro=true;
-            //console.log($location.url());
         }
         else{
             $scope.repro=false;
-            //console.log($location.url());
         }
     })
-
-
 }]);
 
 var canciones=[];
 
-cierzoApp.controller("songsController", ['$scope', '$routeParams','$http', function($scope, $routeParams,$http) {
+cierzoApp.controller("songsController", ['$scope', '$routeParams','$http','music', function($scope, $routeParams,$http,music) {
     $scope.headerSrc = "tmpl/navbar.html";
-    $scope.repro=false;
 
     var lis=''
     var param = $routeParams.param1;
     if(param==undefined){
-        param='canciones';
         $scope.titulo='Todas';
-        var url2='http://192.168.56.101:8080/api/playlists/4';
+        var url2=server+'songs';
     }
     else{
-        var url2='http://192.168.56.101:8080/api/playlists/'+param;
+        var url2=server+'playlists/'+param;
     }
 
 
@@ -40,43 +33,53 @@ cierzoApp.controller("songsController", ['$scope', '$routeParams','$http', funct
         method: 'GET',
         url: url2
     }).then(function successCallback(response) {
-        var lis=response.data;
+        
+        if(param==undefined){
+            //console.log(response.data);
+            canciones=response.data;
+            $scope.titulo='Lista: Todas';
 
-        $scope.titulo='Lista: '+lis.name;
-        canciones=lis.songs;
+        }
+        else{
+            var lis=response.data;
+
+            $scope.titulo='Lista: '+lis.name;
+            canciones=lis.songs;
+            
+        }
+    
         for(var i=0;i<canciones.length;i++){
             canciones[i]["position"]=i;
         }
 
         $scope.canciones=canciones;
 
-
-        $scope.prueba = function(num) {
-            //hacer llamada con num=id cancion y reproducir en funcion de la posicion.
-            
-            var url3='http://192.168.56.101:8080/api/songs/'+num;
+        /*
+        //reproducir cancion desde /songs
+        //hacer llamada con num=id cancion y reproducir en funcion de la posicion.  
+        $scope.prueba2 = function(num) {
+            var url3=server+'songs/'+num;
             $http({
                 method: 'GET',
                 url: url3
             }).then(function successCallback(response) {
                 console.log('Exito cargar cancion');
-                console.log(response.data.name);
-        
+                console.log(num);
+
+                song = response.data;
+                song["art"]=url3+'/image';
+                audio.src = url3+'/file';
+                songs=canciones;
+                wList.textContent = 'Lista: '+ param;
+                
+                audio.onloadeddata = function() {
+                    actualizarInfoWeb();
+                    actualizarInfoMovil();
+                } 
             }, function errorCallback(response) {
                 console.log('Fracaso');
             });
-    
-            //Antiguo uso
-            /*
-            song = canciones[num];
-            audio.src = song.url;
-            songs=canciones;
-            wList.textContent = 'Lista: '+param;
-            audio.onloadeddata = function() {
-                actualizarInfoWeb();
-                actualizarInfoMovil();
-            }*/
-        }
+        }*/
 
 
     }, function errorCallback(response) {
@@ -88,11 +91,10 @@ cierzoApp.controller("songsController", ['$scope', '$routeParams','$http', funct
 
 cierzoApp.controller("artistsController", ['$scope','$http', function ($scope,$http) {
     $scope.headerSrc = "tmpl/navbar.html";
-    $scope.repro=false;
 
     $http({
         method: 'GET',
-        url: 'http://192.168.56.101:8080/api/authors?name='
+        url: server+'authors?limit=20'
     }).then(function successCallback(response) {
         console.log('Exito');
         var artists=response.data;
@@ -108,11 +110,10 @@ cierzoApp.controller("artistsController", ['$scope','$http', function ($scope,$h
 
 cierzoApp.controller("albumsController", ['$scope','$http', function ($scope,$http) {
     $scope.headerSrc = "tmpl/navbar.html";
-    $scope.repro=false;
 
     $http({
         method: 'GET',
-        url: 'http://192.168.56.101:8080/api/albums?name='
+        url: server+'albums?limit=20'
     }).then(function successCallback(response) {
         console.log('Exito');
         var albums=response.data;
@@ -126,17 +127,15 @@ cierzoApp.controller("albumsController", ['$scope','$http', function ($scope,$ht
 
 cierzoApp.controller("genresController", ['$scope', function ($scope) {
     $scope.headerSrc = "tmpl/navbar.html";
-    $scope.repro=false;
     console.log("genres");
 }]);
 
 cierzoApp.controller("listasRepController", ['$scope','$http', function ($scope,$http) {
     $scope.headerSrc = "tmpl/navbar.html";
-    $scope.repro=false;
 
     $http({
         method: 'GET',
-        url: 'http://192.168.56.101:8080/api/playlists?name='
+        url: server+'playlists?limit=20'
     }).then(function successCallback(response) {
         console.log('Exito');
         var artists=response.data;
@@ -151,14 +150,31 @@ cierzoApp.controller("listasRepController", ['$scope','$http', function ($scope,
 
 cierzoApp.controller("peopleController",['$scope', function ( $scope) {
     $scope.headerSrc = "tmpl/navbar.html";
-    $scope.repro=false;
 }]);
 
 
 
-cierzoApp.controller("loginController",['$scope', function ($scope) {
+cierzoApp.controller("loginController",['$scope','$cookieStore', 'authProvider', '$location', function ($scope,$cookieStore,authProvider,$location) {
     console.log("login");
-    $scope.repro=true;
+    $scope.loginn = function() {
+
+
+        if($scope.nick2!=undefined && $scope.pass2!=undefined){
+            
+            if($scope.nick2=='root' && $scope.pass2=='toor' ){
+                console.log("va");
+                authProvider.setUser(true);
+                $location.path('/songs');
+                $cookieStore.put("conectado", true);
+                $cookieStore.put("id", 'id'+$scope.nick2);
+            }
+
+        }
+    }
+
+
+
+
 }]);
 
 cierzoApp.controller("signController",['$scope', function ($scope) {
