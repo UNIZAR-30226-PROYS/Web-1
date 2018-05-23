@@ -73,37 +73,6 @@ cierzoApp.service('music', function() {
 
     songs = JSON.parse(xmlHttp.responseText);
 
-    /*
-    var songs = [{
-        title: 'La llamada',
-        artist: 'Leiva',
-        url: 'songs/llamada.mp3',
-        art: 'http://abarcarodriguez.com/365/files/offspring.jpg'
-    },
-        
-    {
-        title: 'Bribriblibli',
-        artist: 'Extremoduro',
-        url: 'songs/bribri.mp3',
-        art: 'http://abarcarodriguez.com/365/files/anamanaguchi.jpg'
-    },
-
-    {
-        title: 'Deltoya',
-        artist: 'Extremoduro',
-        url: 'songs/Deltoya.mp3',
-        art: 'http://abarcarodriguez.com/365/files/rainbow.jpg'
-    },
-        
-    {
-        title: 'Felices los 4',
-        artist: 'Maluma',
-        url: 'songs/felise.mp3',
-        art: 'http://abarcarodriguez.com/365/files/anamanaguchi.jpg'
-    }
-
-    ];*/
-
 
     var context,src;
 
@@ -131,10 +100,8 @@ cierzoApp.service('music', function() {
         song.art= theUrl+'/'+song.id+'/image';
         wList.textContent = 'Lista: todas';
         playing=false;
-        console.log(theUrl+'/'+song.id+'/file');
         
         audio.src=theUrl+'/'+song.id+'/file';
-        console.log("eeeeeeeeeeeeiniciado");
         
 
     }
@@ -142,7 +109,10 @@ cierzoApp.service('music', function() {
     /**
      * Cada x tiempo, llama a la funcion actualizarTrackWeb para que actualize el estado
      */
-    audio.addEventListener('timeupdate', actualizarTrackWeb(), false);
+    //audio.addEventListener('timeupdate', this.actualizarTrackWeb, false);
+
+
+    audio.ontimeupdate = function() {actualizarTrackWeb()};
 
 
     /**
@@ -175,10 +145,12 @@ cierzoApp.service('music', function() {
     */
     wTrack.onmousedown = function (e) {
         holding = true;
+        console.log(e);
         if(window.innerWidth>200){
             moverTrackWeb(e);
         }
         else{
+            
             moverTrackMovil(e);
         }
     }
@@ -196,8 +168,6 @@ cierzoApp.service('music', function() {
         }
         else{
             playing=true;
-            console.log("Playeo");
-            console.log(audio.src);
             audio.play();
             wPlay.innerHTML = '<i class="material-icons">pause</i>';
         }
@@ -206,12 +176,10 @@ cierzoApp.service('music', function() {
     }
 
     wPrev.onclick = function () {
-        console.log("ejecuto ant1");
         current_track--;
         current_track = (current_track == -1 ? (songs.length - 1) : current_track);
         song = songs[current_track];
         song.art= theUrl+'/'+song.id+'/image';
-        console.log("ejecuto ant");
         audio.src = theUrl+'/'+song.id+'/file';
         audio.onloadeddata = function() {
             actualizarInfoWeb();
@@ -271,6 +239,8 @@ cierzoApp.service('music', function() {
 
 
         curtime = audio.currentTime;
+        console.log(curtime);
+
         percent = Math.round((curtime * 100) / duration);
         wProgress.style.width = percent + '%';
         handler.style.left = percent + '%';
@@ -286,44 +256,54 @@ cierzoApp.service('music', function() {
         event = e || window.event;
         var x = e.pageX - reproductorIndex.offsetLeft - wTrack.offsetLeft;
         percent = Math.round((x * 100) / wTrack.offsetWidth);
+        
         if (percent > 100) percent = 100;
         if (percent < 0) percent = 0;
         wProgress.style.width = percent + '%';
         handler.style.left = percent + '%';
+        
+        audio.currentTime = (percent * duration) / 100;
+
+        /*
+        console.log(percent);
+        console.log(audio.duration);
+        console.log((percent * duration) / 100);
+        console.log(audio.currentTime);*/
+
         audio.play();
-        audio.currentTime = (percent * duration) / 100
     }
 
+    
     /** Funcion que pone a reproducir el track siguiente a la actualmente
      *  reproducida
      */
+    /*
     this.siguienteTrackWeb=function () {
         current_track++;
         current_track = current_track % (songs.length);
         song = songs[current_track];
         song.art= theUrl+'/'+song.id+'/image';
-        console.log("ejecuto sig");
         audio.src = theUrl+'/'+song.id+'/image';
         audio.onloadeddata = function() {
             actualizarInfoWeb();
             //actualizarInfoMovil();
         }
-    }
+    }*/
 
     /** Funcion que pone a reproducir el track anterior a la actualmente
      *  reproducida
      */
+    /*
     this.anteriorTrackWeb=function () {
         current_track--;
         current_track = (current_track == -1 ? (songs.length - 1) : current_track);
         song = songs[current_track];
-        console.log("ejecuto sig");
         audio.src = song.url;
         audio.onloadeddata = function() {
             actualizarInfoWeb();
             //actualizarInfoMovil();
         }
-    }
+    }*/
 
 
     
@@ -334,9 +314,7 @@ cierzoApp.service('music', function() {
         current_track = current_track % (songs.length);
         song = songs[current_track];
         song.art= theUrl+'/'+song.id+'/image';
-        console.log("ejecuto sig");
         audio.src = theUrl+'/'+song.id+'/file';
-        console.log(wPrev);
         audio.onloadeddata = function() {
             actualizarInfoWeb();
             if(playing){
@@ -351,12 +329,42 @@ cierzoApp.service('music', function() {
     /**
      * Funcion que actualiza la info del track seleccionado
      */
-     function actualizarInfoWeb() {
+    function actualizarInfoWeb() {
         wTitle.textContent = song.name;
         wArtist.textContent = song.authorName;
         wArt.src = song.art;
-        console.log("eeeeeeeeeeeeeeeeeee22222");
         
     }
+
+
+    this.playSongId=function(id) {
+        for(var i=0;i<songs.length;i++){
+            if(songs[i].id==id){
+                song=songs[i];
+                current_track=i;
+                var esta=true;
+            }
+        }
+        if(esta){
+            song.art=theUrl+'/'+song.id+'/image';
+            audio.src=theUrl+'/'+song.id+'/file';
+            audio.onloadeddata = function() {
+                actualizarInfoWeb();
+                audio.play();
+                //actualizarInfoMovil();
+            }
+        }
+
+    }
+
+    this.cambiarSongs=function(canci,nombre) {
+        wList.textContent ='Lista: '+nombre;
+        songs=canci;
+
+    }
+
+
+
+
 
 });

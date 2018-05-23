@@ -14,6 +14,7 @@ cierzoApp.controller("principalController", ['$scope','$location', function ($sc
 }]);
 
 var canciones=[];
+var nLista='';
 
 cierzoApp.controller("songsController", ['$scope', '$routeParams','$http','music', function($scope, $routeParams,$http,music) {
     $scope.headerSrc = "tmpl/navbar.html";
@@ -36,50 +37,31 @@ cierzoApp.controller("songsController", ['$scope', '$routeParams','$http','music
         
         if(param==undefined){
             //console.log(response.data);
+            var lis=response.data;
             canciones=response.data;
             $scope.titulo='Lista: Todas';
+            nLista='Todas';
 
         }
         else{
             var lis=response.data;
 
-            $scope.titulo='Lista: '+lis.name;
+            nLista=lis.name;
             canciones=lis.songs;
+            $scope.titulo='Lista: '+nLista;
             
-        }
-    
-        for(var i=0;i<canciones.length;i++){
-            canciones[i]["position"]=i;
         }
 
         $scope.canciones=canciones;
 
-        /*
+        
         //reproducir cancion desde /songs
         //hacer llamada con num=id cancion y reproducir en funcion de la posicion.  
-        $scope.prueba2 = function(num) {
-            var url3=server+'songs/'+num;
-            $http({
-                method: 'GET',
-                url: url3
-            }).then(function successCallback(response) {
-                console.log('Exito cargar cancion');
-                console.log(num);
-
-                song = response.data;
-                song["art"]=url3+'/image';
-                audio.src = url3+'/file';
-                songs=canciones;
-                wList.textContent = 'Lista: '+ param;
-                
-                audio.onloadeddata = function() {
-                    actualizarInfoWeb();
-                    actualizarInfoMovil();
-                } 
-            }, function errorCallback(response) {
-                console.log('Fracaso');
-            });
-        }*/
+        $scope.prueba = function(num,lista) {
+            console.log(lista);
+            music.cambiarSongs(lista,nLista);
+            music.playSongId(num);
+        }
 
 
     }, function errorCallback(response) {
