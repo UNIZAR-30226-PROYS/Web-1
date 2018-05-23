@@ -4,9 +4,9 @@
         <div ng-repeat="album in albums">
             <div class="col s5 m3">
                 <div class="card z-depth-4" style="width: 95%;">
-                    <a href="#">
+                    <a href="#songs/album/{{album.id}}">
                         <div class="card-image">
-                            <img ng-src='http://www.mundodeportivo.com/r/GODO/MD/p5/MasQueDeporte/Imagenes/2018/03/15/Recortada/img_agalera_20180315-131101_imagenes_md_otras_fuentes_pepe-k5iF-U441540703880Z7B-980x554@MundoDeportivo-Web.JPG'}>
+                            <img ng-src={{album.imagen}}>
                             
                         </div>
                         <div class="card-content">

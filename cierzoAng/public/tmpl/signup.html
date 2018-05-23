@@ -54,21 +54,21 @@
 
                 <div class='row'>
                     <div class='input-field col s12'>
-                      <input class='validate' type='text' name='name' id='name' />
+                      <input class='validate' type='text' ng-model="name1" required=""/>
                       <label for='name'>Enter your name</label>
                     </div>
                 </div>
 
                 <div class='row'>
                     <div class='input-field col s12'>
-                        <input class='validate' type='text' name='surname' id='surname' />
-                        <label for='surname'>Enter your surname</label>
+                        <input class='validate' type='text' ng-model="sur1" />
+                        <label for='surname'>Enter your bio</label>
                     </div>
                 </div>
 
                 <div class='row'>
                     <div class='input-field col s12'>
-                        <input class='validate' type='email' name='mail' id='mail' />
+                        <input class='validate' type='email' ng-model="mail1" required=""/>
                         <label for='mail'>Enter your mail</label>
                     </div>
                 </div>
@@ -77,14 +77,14 @@
   
                 <div class='row'>
                     <div class='input-field col s12'>
-                        <input class='validate' type='password' name='password' id='password' />
+                        <input class='validate' type='password' ng-model="pass1" required=""/>
                         <label for='password'>Enter your password</label>
                     </div>
                 </div>
 
                 <div class='row'>
                     <div class='input-field col s12'>
-                        <input class='validate' type='password' name='password2' id='password2' />
+                        <input class='validate' type='password' ng-model="pass12" required=""/>
                         <label for='password2'>Repeat your password</label>
                     </div>
                 </div>
@@ -93,13 +93,13 @@
               <br />
               <center>
                 <div class='row'>
-                  <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect indigo'>Login</button>
+                  <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect indigo'>Create</button>
                 </div>
               </center>
             </form>
           </div>
         </div>
-        <a href="#!">Create account</a>
+        <a href="#/login">Login</a>
       </center>
   
       <div class="section"></div>

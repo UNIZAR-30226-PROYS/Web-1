@@ -25,6 +25,10 @@ cierzoApp.controller("songsController", ['$scope', '$routeParams','$http','music
         $scope.titulo='Todas';
         var url2=server+'songs';
     }
+    else if(param=='album'){
+        var param2 = $routeParams.param2;
+        var url2=server+'albums/'+param2;
+    }
     else{
         var url2=server+'playlists/'+param;
     }
@@ -42,6 +46,14 @@ cierzoApp.controller("songsController", ['$scope', '$routeParams','$http','music
             $scope.titulo='Lista: Todas';
             nLista='Todas';
 
+        }
+        else if(param=='album'){
+            //console.log(response.data);
+            var lis=response.data;
+            canciones=lis.songs;
+            
+            nLista=lis.name;
+            $scope.titulo='Album: '+nLista+' de '+lis.authorName;
         }
         else{
             var lis=response.data;
@@ -80,6 +92,11 @@ cierzoApp.controller("artistsController", ['$scope','$http', function ($scope,$h
     }).then(function successCallback(response) {
         console.log('Exito');
         var artists=response.data;
+        for(var i=0;i<artists.length;i++){
+            artists[i]['imagen']=server+'authors/'+artists[i].id+'/image';
+        }
+
+
         $scope.artists=artists;
     }, function errorCallback(response) {
         console.log('Fracaso');
@@ -90,15 +107,39 @@ cierzoApp.controller("artistsController", ['$scope','$http', function ($scope,$h
     console.log("artists");
 }]);
 
-cierzoApp.controller("albumsController", ['$scope','$http', function ($scope,$http) {
+cierzoApp.controller("albumsController", ['$scope','$http','$routeParams', function ($scope,$http,$routeParams) {
     $scope.headerSrc = "tmpl/navbar.html";
+
+
+
+    var param = $routeParams.param1;
+    if(param==undefined){
+        $scope.titulo='Todas';
+        var urlb=server+'albums?limit=20';
+    }
+    else{
+        var urlb=server+'authors/'+param;
+    }
 
     $http({
         method: 'GET',
-        url: server+'albums?limit=20'
+        url: urlb
     }).then(function successCallback(response) {
         console.log('Exito');
-        var albums=response.data;
+
+        if(param==undefined){
+            var albums=response.data;
+        }
+        else{
+            console.log(response.data);
+            var albums=response.data.albums;
+        }
+
+        for(var i=0;i<albums.length;i++){
+            albums[i]['imagen']=server+'albums/'+albums[i].id+'/image';
+        }
+
+
         $scope.albums=albums;
     }, function errorCallback(response) {
         console.log('Fracaso');
@@ -120,8 +161,19 @@ cierzoApp.controller("listasRepController", ['$scope','$http', function ($scope,
         url: server+'playlists?limit=20'
     }).then(function successCallback(response) {
         console.log('Exito');
-        var artists=response.data;
-        $scope.listas=artists;
+        var listas=response.data;
+
+        for(var i=0;i<listas.length;i++){
+            if(listas[i].songs.length==0){
+                listas[i]['imagen']='http://www.popelera.net/wp-content/uploads/2016/10/melendi-quitate-las-gafas.jpg';
+            }
+            else{
+                listas[i]['imagen']=server+'songs/'+listas[i].songs[0].id+'/image';
+            }
+           
+        }
+
+        $scope.listas=listas;
     }, function errorCallback(response) {
         console.log('Fracaso');
     });
@@ -136,7 +188,7 @@ cierzoApp.controller("peopleController",['$scope', function ( $scope) {
 
 
 
-cierzoApp.controller("loginController",['$scope','$cookieStore', 'authProvider', '$location', function ($scope,$cookieStore,authProvider,$location) {
+cierzoApp.controller("loginController",['$scope','$cookieStore', 'authProvider', '$location','$http', function ($scope,$cookieStore,authProvider,$location,$http) {
     console.log("login");
     $scope.loginn = function() {
 
@@ -149,6 +201,32 @@ cierzoApp.controller("loginController",['$scope','$cookieStore', 'authProvider',
                 $location.path('/songs');
                 $cookieStore.put("conectado", true);
                 $cookieStore.put("id", 'id'+$scope.nick2);
+            }
+            else{
+
+                var data2={
+                    "mail": $scope.nick2,
+                    "pass": $scope.pass2
+                  }
+
+
+
+                $http({
+                    method: 'POST',
+                    url: 'http://192.168.44.128:8080/api/login',
+                    data: data2
+                }).then(function successCallback(response) {
+                    console.log('entro');
+                    authProvider.setUser(true);
+                    $cookieStore.put("conectado", true);
+                    $cookieStore.put("nombre", 'id'+$scope.nick2);
+                    $cookieStore.put("id", response.data.id);
+                    $location.path('/songs');
+                }, function errorCallback(response) {
+                    console.log('no entrooo');
+                    alert("Te has equivocado ajja");
+                });  
+
             }
 
         }

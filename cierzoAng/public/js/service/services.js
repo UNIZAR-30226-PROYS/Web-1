@@ -22,13 +22,17 @@ cierzoApp.run(['$rootScope', '$cookieStore', '$location', 'authProvider', functi
     }
 
     $rootScope.$on('$routeChangeStart', function (event) {
-        if (!authProvider.isLoggedIn()) {
+        if (!authProvider.isLoggedIn() && $location.url()!='/sign') {
             console.log('DENY : Redirecting to Login');
+            console.log($location.url());
             event.preventDefault();
             $location.path('/login');
         }
         else {
             console.log('ALLOW');
+            if($location.url()=='/'){
+                $location.path('/songs');
+            }
         }
     });
     
@@ -239,7 +243,7 @@ cierzoApp.service('music', function() {
 
 
         curtime = audio.currentTime;
-        console.log(curtime);
+        //console.log(curtime);
 
         percent = Math.round((curtime * 100) / duration);
         wProgress.style.width = percent + '%';
