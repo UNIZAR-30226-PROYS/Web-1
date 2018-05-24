@@ -23,6 +23,8 @@
           <ul class="left hide-on-med-and-down">
             <li><a href="javascript:history.back()" class="btn-floating btn-large waves-effect waves-light light-green accent-4 valign-wrapper" style="left: 15px"><i class="medium material-icons">arrow_back</i></a></li>
             <li><span style="font-size:250%">&nbsp;Perfil</span></li>
+            <li><a ng-click="salir()" class="btn-floating btn-large waves-effect waves-light light-green accent-4 valign-wrapper" style="left: 15px"><i class="medium material-icons">exit_to_app</i></a></li>
+            <li><a ng-click="borrar()" class="btn-floating btn-large waves-effect waves-light light-green accent-4 valign-wrapper" style="left: 15px"><i class="medium material-icons">delete_forever</i></a></li>
           </ul>
     </div>
   </nav>
@@ -37,10 +39,10 @@
             </div>
             <div class="col s10">
               <ul class="collection">
-                <li class="collection-item">Nombre<h5 id="nombreUser">Pepe Villuela</h5></li>
-                <li class="collection-item">Usuario<h5 id="usuarioUser">Calvo</h5></li>
+                <li class="collection-item">Nombre<h5 id="nombreUser">{{user.name}}</h5></li>
+                <li class="collection-item">Usuario<h5 id="usuarioUser">{{user.username}}</h5></li>
                 <li class="collection-item">Email<h5 id="emailUser">pepe@gmail.com</h5></li>
-                <li class="collection-item">Desc<h6 id="descUser">En AIDA se salió</h6></li>
+                <li class="collection-item">Desc<h6 id="descUser">{{user.name}}</h6></li>
               </ul>
             </div>
           </div>
@@ -51,18 +53,22 @@
   <div class="col s12 m8 offset-m2 l6 offset-l3">
     <h4>Lista de Amigos</h4>
         <div class="card-panel grey lighten-5 z-depth-1">
-            <ul class="collection" id="listaAmigos">
-
-            </ul>
+            <div class="collection" id="listaAmigos">
+              <div ng-repeat="friend in user.friends">
+                <a href="#!" class="collection-item">{{friend.name}}</a>
+              </div>  
+            </div>
         </div>
   </div>
   <!-- LISTA REPRODUCCION -->
   <div class="col s12 m8 offset-m2 l6 offset-l3">
     <h4>Listas de Reproduccion</h4>
         <div class="card-panel grey lighten-5 z-depth-1">
-            <ul class="collection" id="listaRepro">
-
-            </ul>
+            <div class="collection" id="listaRepro">
+                <div ng-repeat="lista in user.playlists">
+                    <a href="#songs/{{lista.id}}" class="collection-item">{{lista.name}}- {{lista.songs.length}} canciones</a>
+                </div>
+            </div>
         </div>
   </div>
 

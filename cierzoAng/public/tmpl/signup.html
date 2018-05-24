@@ -62,7 +62,7 @@
                 <div class='row'>
                     <div class='input-field col s12'>
                         <input class='validate' type='text' ng-model="sur1" />
-                        <label for='surname'>Enter your bio</label>
+                        <label for='surname'>Enter your username</label>
                     </div>
                 </div>
 
@@ -93,7 +93,7 @@
               <br />
               <center>
                 <div class='row'>
-                  <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect indigo'>Create</button>
+                  <button type='submit' name='btn_login' ng-click='sign()' class='col s12 btn btn-large waves-effect indigo'>Create</button>
                 </div>
               </center>
             </form>

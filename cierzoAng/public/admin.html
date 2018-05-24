@@ -40,19 +40,19 @@
               <h5 class="left-align">Cancion</h5>
             </div>
             <div class="input-field col s10 offset-s1">
-              <input id="a_title" type="text" class="validate">
+              <input id="a_title" type="text" class="validate" ng-model="titleS">
               <label for="a_title">Titulo</label>
             </div>
             <div class="input-field col s10 offset-s1">
-              <input id="a_artista" type="number" class="validate">
+              <input id="a_artista" type="number" class="validate" ng-model="idArtS">
               <label for="a_artista">IDartista</label>
             </div>
             <div class="input-field col s10 offset-s1">
-              <input id="a_album" type="number" class="validate">
+              <input id="a_album" type="number" class="validate" ng-model="idAlbS">
               <label for="a_album">IDalbum</label>
             </div>
             <div class="input-field col s10 offset-s1">
-              <input id="a_genero" type="text" class="validate">
+              <input id="a_genero" type="text" class="validate" ng-model="genS">
               <label for="a_genero">Genero/s</label>
             </div>
             <div class="col s10 offset-s1">
@@ -60,17 +60,17 @@
               <div class="file-field input-field">
                 <div class="btn light-blue accent-4">
                   <span>Fichero</span>
-                  <input id="a_file" type="file" accept=".mp3,audio/*">
+                  <input id="a_file" type="file" accept=".mp3,audio/*" >
                 </div>
                 <div class="file-path-wrapper">
-                  <input id="a_file2" class="file-path validate" type="text">
+                  <input id="a_file2" class="file-path validate" type="text" file-model="fileS">
                 </div>
               </div>
               </form>
             </div>
             <!-- Boton enviar -->
             <div class="col s3 offset-s7">
-              <button class="btn waves-effect waves-light  green darken-1" type="submit" id="envioCancion">Enviar</button>
+              <button class="btn waves-effect waves-light  green darken-1" type="submit" id="envioCancion" ng-click='envioS()'>Enviar</button>
               </br>
             </div>
           </div>
@@ -212,6 +212,6 @@
         </div><!-- FIN TARJETA 3 -->
 
     <script src="js/apps/materialize.js"></script>
-    <script src="js/apps/admin.js"></script>
+    <!--<script src="js/apps/admin.js"></script>-->
 </body>
 </html>

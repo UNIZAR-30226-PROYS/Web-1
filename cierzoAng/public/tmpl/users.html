@@ -1,0 +1,17 @@
+<ul class="collection with-header">
+    <li class="collection-header"><h4>Usuarios<a href="#!" class="secondary-content"><i class="material-icons medium">arrow_back</i></a></h4></li>
+    
+    
+
+    <li ng-repeat="user in users" class="collection-item">
+        <div>
+            <a href="#/user/{{user.id}}" >{{user.name}}</a>
+            <a class="secondary-content" href="javascript:"  ng-click="add(user.id)">
+                <i class="material-icons">add_circle_outline</i>
+            </a>
+        </div>
+    </li>  
+
+    
+    
+</ul>
