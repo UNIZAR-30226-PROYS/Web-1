@@ -5,7 +5,7 @@ cierzoApp.controller("principalController", ['$scope','$location','$cookieStore'
     $scope.usuario=$cookieStore.get('nombre');
 
     $scope.$on('$locationChangeSuccess', function(event){
-        if($location.url()=='/login' || $location.url()=='/' || $location.url()=='/sign' || $location.url()=='/admin' || $location.url()=='/user/*' || $location.url()=='/user' ){
+        if($location.url()=='/login' || $location.url()=='/' || $location.url()=='/sign' || $location.url()=='/admin' || $location.url()=='/user/*' || $location.url()=='/user' || $location.url()=='/crear' ){
             $scope.repro=true;
         }
         else{
@@ -194,6 +194,49 @@ cierzoApp.controller("usersController",['$scope','$http', function ( $scope,$htt
 
 
 
+cierzoApp.controller("crearlController",['$scope','$http', function ( $scope,$http) {
+    var nuevas=[];
+    $scope.num=0;
+    $http({
+        method: 'GET',
+        url: server+'songs?limit=50'
+    }).then(function successCallback(response) {
+        $scope.todas=response.data;
+    }, function errorCallback(response) {
+
+    });
+
+    $scope.addS = function(id){
+        nuevas.push(id);
+        console.log(nuevas);
+        $scope.num=$scope.num+1;
+        $scope.nuevas=nuevas;
+    }
+
+    $scope.quitarS = function(id){
+        nuevas.splice(id, 1);
+        $scope.num=$scope.num-1;
+        $scope.nuevas=nuevas;
+    }
+
+    $scope.crear = function(){
+       
+        if($scope.nameL==undefined || nuevas.length==0){
+            alert("No se puede crear.")
+        }
+        else{
+            console.log("Se crea la lista:")
+            console.log($scope.nameL);
+            console.log(nuevas);
+        }
+
+    }
+
+
+}]);
+
+
+
 cierzoApp.controller("loginController",['$scope','$cookieStore', 'authProvider', '$location','$http', function ($scope,$cookieStore,authProvider,$location,$http) {
 
 
@@ -227,6 +270,7 @@ cierzoApp.controller("loginController",['$scope','$cookieStore', 'authProvider',
                     $cookieStore.put("nombre",$scope.nick2);
                     $cookieStore.put("id", response.data.id);
                     $location.path('/songs');
+                    console.log(response.data);
                     
 
 
@@ -286,10 +330,16 @@ cierzoApp.controller("signController",['$scope','$http','$location', function ($
 
 
 
-cierzoApp.controller("userController", ['$scope','$http','$cookieStore','authProvider','$location', function ($scope,$http,$cookieStore,authProvider,$location) {
+cierzoApp.controller("userController", ['$scope','$http','$cookieStore','authProvider','$location','$routeParams', function ($scope,$http,$cookieStore,authProvider,$location,$routeParams) {
     
+    var param=$routeParams.param;
     
-    var finUrl=$cookieStore.get('id');
+    if(param==undefined){
+        var finUrl=$cookieStore.get('id');
+    }
+    else{
+        var finUrl=param;
+    }
     $http({
         method: 'GET',
         url: server+'profiles/'+finUrl

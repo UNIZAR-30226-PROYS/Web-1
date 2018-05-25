@@ -14,6 +14,10 @@ cierzoApp.config(function($routeProvider) {
         templateUrl : "admin.html",
         controller: 'adminController'
     })
+    .when("/crear", {
+        templateUrl : "tmpl/crearLista.html",
+        controller: 'crearlController'
+    })
     .when("/user", {
         templateUrl : "tmpl/user.html",
         controller: 'userController'
@@ -23,7 +27,7 @@ cierzoApp.config(function($routeProvider) {
         controller: 'usersController'
     })
     .when("/user/:param", {
-        templateUrl : "tmpl/user.html",
+        templateUrl : "tmpl/user2.html",
         controller: 'userController'
     })
     .when("/sign", {
