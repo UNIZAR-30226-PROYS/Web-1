@@ -80,12 +80,17 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
     var wArt      = document.getElementById('wArt');
     var wList      = document.getElementById('wLista');
 
+    var wShuffle      = document.getElementById('wShuffle');
+    var wRepeat     = document.getElementById('wRepeat');
+
     var cur       = document.getElementById('current');
     var final     = document.getElementById('final');
 
     var current_track = 0;
     var song, audio, duration;
     var playing = false;
+    var random=false;
+    var repeat=false;
 
     /* Canciones para probar */
 
@@ -211,18 +216,62 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
     }
 
     wPrev.onclick = function () {
-        current_track--;
-        current_track = (current_track == -1 ? (songs.length - 1) : current_track);
-        song = songs[current_track];
-        song.art= theUrl+'/'+song.id+'/image';
-        audio.src = theUrl+'/'+song.id+'/file';
-        audio.onloadeddata = function() {
-            actualizarInfoWeb();
-            if(playing){
-                audio.play();
+        if(repeat){
+            song.art= theUrl+'/'+song.id+'/image';
+            audio.src = theUrl+'/'+song.id+'/file';
+            audio.onloadeddata = function() {
+                actualizarInfoWeb();
+                if(playing){
+                    audio.play();
+                }
+                //actualizarInfoMovil();
             }
-            //actualizarInfoMovil();
         }
+        else if(random){
+            var num=(Math.floor(Math.random() * 100))%(songs.length);
+            while(num==current_track){
+                num=(Math.floor(Math.random() * 100))%(songs.length);
+            }
+            console.log(current_track);
+            console.log(num);
+            console.log(songs.length);
+            current_track=num;
+            song = songs[current_track];
+            song.art= theUrl+'/'+song.id+'/image';
+            audio.src = theUrl+'/'+song.id+'/file';
+            audio.onloadeddata = function() {
+                actualizarInfoWeb();
+                if(playing){
+                    audio.play();
+                }
+                //actualizarInfoMovil();
+            }
+        }
+        else{
+            current_track--;
+            current_track = (current_track == -1 ? (songs.length - 1) : current_track);
+            song = songs[current_track];
+            song.art= theUrl+'/'+song.id+'/image';
+            audio.src = theUrl+'/'+song.id+'/file';
+            audio.onloadeddata = function() {
+                actualizarInfoWeb();
+                if(playing){
+                    audio.play();
+                }
+                //actualizarInfoMovil();
+            }
+        }
+        
+    }
+
+    wShuffle.onclick = function () {
+        console.log("Ahora random")
+        random=!random;
+    }
+
+    wRepeat.onclick = function () {
+        console.log("Ahora repeat")
+        repeat=!repeat;
     }
 
 
@@ -281,7 +330,7 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
         handler.style.left = percent + '%';
 
         if(audio.currentTime==audio.duration){
-            siguienteTrackWeb();
+            wNext.click();
         }
     }
 
@@ -345,17 +394,51 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
 
     
     wNext.onclick = function () {
-        current_track++;
-        current_track = current_track % (songs.length);
-        song = songs[current_track];
-        song.art= theUrl+'/'+song.id+'/image';
-        audio.src = theUrl+'/'+song.id+'/file';
-        audio.onloadeddata = function() {
-            actualizarInfoWeb();
-            if(playing){
-                audio.play();
+
+        if(repeat){
+            song.art= theUrl+'/'+song.id+'/image';
+            audio.src = theUrl+'/'+song.id+'/file';
+            audio.onloadeddata = function() {
+                actualizarInfoWeb();
+                if(playing){
+                    audio.play();
+                }
+                //actualizarInfoMovil();
             }
-            //actualizarInfoMovil();
+        }
+        else if(random){
+            var num=(Math.floor(Math.random() * 100))%(songs.length);
+            while(num==current_track){
+                num=(Math.floor(Math.random() * 100))%(songs.length);
+            }
+            console.log(current_track);
+            console.log(num);
+            console.log(songs.length);
+            current_track=num;
+            song = songs[current_track];
+            song.art= theUrl+'/'+song.id+'/image';
+            audio.src = theUrl+'/'+song.id+'/file';
+            audio.onloadeddata = function() {
+                actualizarInfoWeb();
+                if(playing){
+                    audio.play();
+                }
+                //actualizarInfoMovil();
+            }
+        }
+        else{        
+            current_track++;
+            current_track = current_track % (songs.length);
+            song = songs[current_track];
+            song.art= theUrl+'/'+song.id+'/image';
+            audio.src = theUrl+'/'+song.id+'/file';
+            audio.onloadeddata = function() {
+                actualizarInfoWeb();
+                if(playing){
+                    audio.play();
+                }
+                //actualizarInfoMovil();
+            }
         }
 
     }

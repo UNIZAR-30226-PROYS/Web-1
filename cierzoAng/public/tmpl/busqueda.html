@@ -36,17 +36,17 @@
     </ul>
 
     <ul class="collection with-header">
-            <li class="collection-header"><h4>Canciones cuyo género es {{bu}}</h4></li>
-    
-            <li ng-repeat="cancion in cancionesG" class="collection-item">
-                <div>
-                    {{cancion.name}} - {{cancion.authorName}} - {{cancion.lenght}} s
-                    <a class="secondary-content" href="javascript:"  ng-click="prueba(cancion.id,cancion)">
-                        <i class="material-icons">play_circle_outline</i>
-                    </a>
-                </div>
-            </li>
-        </ul>
+        <li class="collection-header"><h4>Canciones cuyo género es {{bu}}</h4></li>
+
+        <li ng-repeat="cancion in cancionesG" class="collection-item">
+            <div>
+                {{cancion.name}} - {{cancion.authorName}} - {{cancion.lenght}} s
+                <a class="secondary-content" href="javascript:"  ng-click="prueba(cancion.id,cancion)">
+                    <i class="material-icons">play_circle_outline</i>
+                </a>
+            </div>
+        </li>
+    </ul>
 
 
 </div>
