@@ -5,9 +5,28 @@ cierzoApp.factory('authProvider', function() {
         return {
             setUser : function(aUser){
             user = aUser;
+            
         },
             isLoggedIn : function(){
             return(user)? user : false;
+        }
+    };
+});
+
+
+
+cierzoApp.factory('usuarioActual', function() {
+    var user={};
+        return {
+            setUser : function(aUser){
+            user = aUser;
+            console.log(user);
+        },
+            isLoggedIn : function(){
+            return(user)? user : false;
+        },
+        getId : function(){
+            return user.id;
         }
     };
 });
@@ -44,7 +63,7 @@ cierzoApp.run(['$rootScope', '$cookieStore', '$location', 'authProvider', functi
 
 
 
-cierzoApp.service('music', function() {
+cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
     /*************************************************************************
      * Script que controla el reproductor de musica de la Web
      *************************************************************************/
@@ -70,12 +89,17 @@ cierzoApp.service('music', function() {
 
     /* Canciones para probar */
 
+   
+    var theUrl2='http://192.168.44.128:8080/api/profiles/'+$cookieStore.get('id');
     var theUrl='http://192.168.44.128:8080/api/songs'
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+    xmlHttp.open( "GET", theUrl2, false ); // false for synchronous request
     xmlHttp.send( null );
 
-    songs = JSON.parse(xmlHttp.responseText);
+    var lis = JSON.parse(xmlHttp.responseText);
+
+    songs=lis.playlists[0].songs;
+    console.log(songs);
 
 
     var context,src;
@@ -95,17 +119,24 @@ cierzoApp.service('music', function() {
      * Funcion inicializadora de la pagina Web
      */
     function iniciarWeb() {
-        song = songs[current_track];
         audio = new Audio();
-        audio.crossOrigin = "anonymous";
-        wTitle.textContent = song.name;
-        wArtist.textContent = song.authorName;
-        wArt.src = theUrl+'/'+song.id+'/image';
-        song.art= theUrl+'/'+song.id+'/image';
-        wList.textContent = 'Lista: todas';
-        playing=false;
-        
-        audio.src=theUrl+'/'+song.id+'/file';
+        if(songs.length>0){  
+            console.log('puedo');      
+            song = songs[current_track];
+            audio.crossOrigin = "anonymous";
+            wTitle.textContent = song.name;
+            wArtist.textContent = song.authorName;
+            wArt.src = theUrl+'/'+song.id+'/image';
+            song.art= theUrl+'/'+song.id+'/image';
+            wList.textContent = 'Lista: Favoritos';
+            playing=false;
+            
+            audio.src=theUrl+'/'+song.id+'/file';
+        }
+        else{
+            wTitle.textContent = "Lista vacía.";
+
+        }
         
 
     }
@@ -371,4 +402,4 @@ cierzoApp.service('music', function() {
 
 
 
-});
+}]);

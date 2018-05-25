@@ -14,6 +14,10 @@ cierzoApp.config(function($routeProvider) {
         templateUrl : "admin.html",
         controller: 'adminController'
     })
+    .when("/search/:param", {
+        templateUrl : "tmpl/busqueda.html",
+        controller: 'searchController'
+    })
     .when("/crear", {
         templateUrl : "tmpl/crearLista.html",
         controller: 'crearlController'
