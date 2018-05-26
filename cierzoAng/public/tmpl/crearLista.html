@@ -24,6 +24,7 @@
             <li><a href="javascript:history.back()" class="btn-floating btn-large waves-effect waves-light light-green accent-4 valign-wrapper" style="left: 15px"><i class="medium material-icons">arrow_back</i></a></li>
             <li><span style="font-size:250%">&nbsp;Crear lista reproducción: </span></li>
             <li><a ng-click="crear()" class="btn-floating btn-large waves-effect waves-light light-green accent-4 valign-wrapper" style="left: 15px"><i class="medium material-icons">send</i></a></li>
+            <li><a ng-click="eliminar()" class="btn-floating btn-large waves-effect waves-light light-green accent-4 valign-wrapper" style="left: 15px"><i class="medium material-icons">delete_forever</i></a></li>
         </ul>
     </div>
   </nav>
@@ -35,8 +36,8 @@
             <div class="col s6">
                 <ul class="collection with-header">
                     <li class="collection-header">
-                        <h5>Lista nueva</h5>
-                        <h6>La lista {{nameL}} tiene {{num}} canciones.</h6>
+                        <h5> {{nameL2}} </h5>
+                        <h6>La lista tiene {{num}} canciones.</h6>
                         
                         <div class='input-field col s11'>
                             <input class="validate"  type='text' ng-model="nameL" />

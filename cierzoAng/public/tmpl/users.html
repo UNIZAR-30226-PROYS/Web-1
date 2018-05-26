@@ -1,17 +1,32 @@
 <ul class="collection with-header">
-    <li class="collection-header"><h4>Usuarios<a href="#!" class="secondary-content"><i class="material-icons medium">arrow_back</i></a></h4></li>
+    <li class="collection-header"><h4>Amigos<a href="#!" class="secondary-content"><i class="material-icons medium">arrow_back</i></a></h4></li>
     
     
 
-    <li ng-repeat="user in users" class="collection-item">
+    <li ng-repeat="user in amigos" class="collection-item">
         <div>
             <a href="#/user/{{user.id}}" >{{user.name}}</a>
-            <a class="secondary-content" href="javascript:"  ng-click="add(user.id)">
-                <i class="material-icons">add_circle_outline</i>
+            <a class="secondary-content" href="javascript:"  ng-click="eliminar(user.id)">
+                <i class="material-icons">remove_circle_outline</i>
             </a>
         </div>
-    </li>  
+    </li> 
+</ul> 
 
-    
-    
-</ul>
+
+
+    <ul class="collection with-header">
+        <li class="collection-header">
+            <h5>Usuarios</h5>
+            <form class='input-field col s12' ng-submit="buscar(search)">
+                <input  type='text'  data-ng-model="search"/>
+                <label for='surname'>Search</label>
+            </form>
+            <div ng-repeat="user in users" class="collection-item">
+                <a href="#/user/{{user.id}}" >{{user.name}}</a>
+                <a class="secondary-content" href="javascript:"  ng-click="add(user.id)">
+                    <i class="material-icons">add_circle_outline</i>
+                </a>
+            </div>
+        </li> 
+    </ul>

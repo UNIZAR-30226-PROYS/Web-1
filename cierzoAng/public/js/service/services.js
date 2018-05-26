@@ -34,8 +34,9 @@ cierzoApp.factory('usuarioActual', function() {
 
 
 
-cierzoApp.run(['$rootScope', '$cookieStore', '$location', 'authProvider', function ($rootScope, $cookieStore, $location,authProvider) {  
+cierzoApp.run(['$rootScope', '$cookieStore', '$location', 'authProvider','$http','$cookies', function ($rootScope, $cookieStore, $location,authProvider,$http,$cookies) {  
 
+    $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
     if($cookieStore.get('conectado')){
         authProvider.setUser(true);
     }

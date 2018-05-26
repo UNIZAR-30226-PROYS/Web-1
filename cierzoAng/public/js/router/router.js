@@ -1,3 +1,9 @@
+/*
+cierzoApp.config(['$httpProvider', function($httpProvider) {
+  $httpProvider.defaults.withCredentials = true;
+}])
+
+*/
 
 
 cierzoApp.config(function($routeProvider) {
@@ -18,9 +24,17 @@ cierzoApp.config(function($routeProvider) {
         templateUrl : "tmpl/busqueda.html",
         controller: 'searchController'
     })
+    .when("/camb", {
+        templateUrl : "tmpl/cambiar.html",
+        controller: 'cambiarController'
+    })
     .when("/crear", {
         templateUrl : "tmpl/crearLista.html",
         controller: 'crearlController'
+    })
+    .when("/modif/:param", {
+        templateUrl : "tmpl/crearLista.html",
+        controller: 'modifController'
     })
     .when("/user", {
         templateUrl : "tmpl/user.html",

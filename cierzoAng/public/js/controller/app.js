@@ -51,7 +51,10 @@ cierzoApp.controller("principalController", ['$scope','$location','$cookieStore'
 
     $scope.$on('$locationChangeSuccess', function(event){
         $scope.usuario=$cookieStore.get('nombre');
-        if($location.url()=='/login' || $location.url()=='/' || $location.url()=='/sign' || $location.url()=='/admin' || $location.url()=='/user/*' || $location.url()=='/user' || $location.url()=='/crear' ){
+        var pa=$location.url();
+        pa=pa.split("/");
+        //console.log(pa);
+        if($location.url()=='/login' || $location.url()=='/' || $location.url()=='/sign' || $location.url()=='/admin' || pa[1]=='user' || $location.url()=='/user' || $location.url()=='/crear' || pa[1]=='modif'  ){
             $scope.repro=true;
         }
         else{
@@ -151,6 +154,8 @@ cierzoApp.controller("artistsController", ['$scope','$http','$cookieStore', func
     $scope.artists=artists;
 
 }]);
+
+
 
 cierzoApp.controller("albumsController", ['$scope','$http','$routeParams','$cookieStore', function ($scope,$http,$routeParams,$cookieStore) {
     $scope.headerSrc = "tmpl/navbar.html";
@@ -270,22 +275,54 @@ cierzoApp.controller("listasRepController", ['$scope','$http','$cookieStore', fu
 
 
 
-cierzoApp.controller("usersController",['$scope','$http', function ( $scope,$http) {
+cierzoApp.controller("cambiarController", ['$scope','$http','$cookieStore', function ($scope,$http,$cookieStore) {
+    var id=$cookieStore.get('id');
+    
+    $scope.cambio = function(){
+        if($scope.pass1==$scope.pass12){
+            alert("cambio user "+id+" nuevo correo "+$scope.mail+" nuevo pass "+$scope.pass1);
+        }
+        else{
+            alert("Tienen que ser iguales las pass");
+        }
+    }
+
+}]);
+
+
+
+cierzoApp.controller("usersController",['$scope','$http','$cookieStore', function ( $scope,$http,$cookieStore) {
     $scope.headerSrc = "tmpl/navbar.html";
+    var finUrl=$cookieStore.get('id');
+    var users=[];
+    $scope.users=users;
     $http({
         method: 'GET',
-        url: server+'profiles'
+        url: server+'profiles/'+finUrl
     }).then(function successCallback(response) {
-
-        
-
-        $scope.users=response.data;
+        $scope.amigos=response.data.friends;
     }, function errorCallback(response) {
 
     });
 
     $scope.add = function(id){
         alert("añado user "+id);
+    }
+
+    $scope.eliminar = function(id){
+        alert("eliminado user "+id);
+    }
+
+    $scope.buscar = function(id){
+        $http({
+            method: 'GET',
+            url: server+'profiles?name='+id
+        }).then(function successCallback(response) {
+            $scope.users=response.data;
+        }, function errorCallback(response) {
+    
+        });
+
     }
 
 
@@ -296,6 +333,7 @@ cierzoApp.controller("usersController",['$scope','$http', function ( $scope,$htt
 cierzoApp.controller("crearlController",['$scope','$http', function ( $scope,$http) {
     var nuevas=[];
     $scope.num=0;
+    $scope.nameL2="Lista nueva";
     $http({
         method: 'GET',
         url: server+'songs?limit=50'
@@ -335,6 +373,73 @@ cierzoApp.controller("crearlController",['$scope','$http', function ( $scope,$ht
 
 
 
+cierzoApp.controller("modifController",['$scope','$http','$routeParams', function ( $scope,$http,$routeParams) {
+    var nuevas=[];
+    $scope.num=0;
+
+    $http({
+        method: 'GET',
+        url: server+'playlists/'+$routeParams.param
+    }).then(function successCallback(response) {
+        nuevas=response.data.songs;
+        $scope.nuevas=nuevas;
+        $scope.num=nuevas.length;
+        $scope.nameL2=response.data.name;
+        console.log(response.data);
+    }, function errorCallback(response) {
+
+    });
+
+
+
+    $http({
+        method: 'GET',
+        url: server+'songs?limit=50'
+    }).then(function successCallback(response) {
+        $scope.todas=response.data;
+    }, function errorCallback(response) {
+
+    });
+
+    $scope.addS = function(id){
+        nuevas.push(id);
+        $scope.num=$scope.num+1;
+        $scope.nuevas=nuevas;
+    }
+
+    $scope.quitarS = function(id){
+        nuevas.splice(id, 1);
+        $scope.num=$scope.num-1;
+        $scope.nuevas=nuevas;
+    }
+
+    $scope.crear = function(){
+       
+        if($scope.nameL==undefined || nuevas.length==0){
+            alert("No se puede crear.")
+        }
+        else{
+            console.log("Se crea la lista:")
+            console.log($scope.nameL);
+            console.log(nuevas);
+            alert("Se crea");
+        }
+
+    }
+
+
+    $scope.eliminar = function(){
+        console.log("Se elimina la lista:")
+        console.log($scope.nameL);
+        console.log(nuevas);
+        alert("Se elimina");
+    }
+
+
+}]);
+
+
+
 cierzoApp.controller("loginController",['$scope','$cookieStore', 'authProvider', '$location','$http', function ($scope,$cookieStore,authProvider,$location,$http) {
 
 
@@ -359,10 +464,11 @@ cierzoApp.controller("loginController",['$scope','$cookieStore', 'authProvider',
 
                 $http({
                     method: 'POST',
+                    //withCredentials: true ,
                     url: server+'login',
                     data: data2
                 }).then(function successCallback(response) {
-
+                    console.log(response);
                     authProvider.setUser(true);
                     $cookieStore.put("conectado", true);
                     $cookieStore.put("nombre",$scope.nick2);
