@@ -260,7 +260,6 @@ function actualizarInfoWeb() {
     wTitle.textContent = song.name;
     wArtist.textContent = song.authorName;
     wArt.src = song.art;
-    console.log(wTitle);
     
 }
 

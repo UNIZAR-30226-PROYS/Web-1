@@ -32,9 +32,9 @@
         </ul>
     </div>
     <div class="center hide-on-med-and-up" style="max-width: 90%; padding: 10px;margin-left: 20px">
-        <form>
-            <div class="center input-field" ng-controller="principalController">
-                <input id="search" type="text" ng-model="cadena">
+        <form ng-submit="hola2()" ng-controller="principalController">
+            <div class="center input-field">
+                <input type="text" ng-model="cadena" placeholder="Search" >
                 <label class="label-icon" for="search"><i class="material-icons">search</i></label>
             </div>
         </form>

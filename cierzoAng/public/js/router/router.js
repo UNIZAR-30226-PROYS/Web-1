@@ -52,6 +52,10 @@ cierzoApp.config(function($routeProvider) {
         templateUrl : "tmpl/signup.html",
         controller: 'signController'
     })
+    .when("/big", {
+        templateUrl : "song.html",
+        controller: 'bigController'
+    })
     .when("/artists", {
         templateUrl : "tmpl/artists.html",
         controller: 'artistsController'

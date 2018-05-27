@@ -84,8 +84,24 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
     var wShuffle      = document.getElementById('wShuffle');
     var wRepeat     = document.getElementById('wRepeat');
 
+    var mShuffle      = document.getElementById('mShuffle');
+    var mRepeat     = document.getElementById('mRepeat');
+
     var cur       = document.getElementById('current');
     var final     = document.getElementById('final');
+
+
+
+    var mTrack          = document.getElementById('track2');
+    var mProgress       = document.getElementById('progress2');
+    var mPlay          = document.getElementById('mPlay');
+    var mNext          = document.getElementById('mNext');
+    var mPrev          = document.getElementById('mPrev');
+    var mTitle         = document.getElementById('mTitle');
+    var mArtist        = document.getElementById('mArtist');
+
+    var mcur       = document.getElementById('current2');
+    var mfinal     = document.getElementById('final2');
 
     var current_track = 0;
     var song, audio, duration;
@@ -132,6 +148,8 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
             audio.crossOrigin = "anonymous";
             wTitle.textContent = song.name;
             wArtist.textContent = song.authorName;
+            mTitle.textContent = song.name;
+            mArtist.textContent = song.authorName;
             wArt.src = theUrl+'/'+song.id+'/image';
             song.art= theUrl+'/'+song.id+'/image';
             wList.textContent = 'Lista: Favoritos';
@@ -170,7 +188,9 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
         }
 
         cur.innerHTML=tfin;
+        mcur.innerHTML=tfin;
         final.innerHTML='00:00'
+        mfinal.innerHTML='00:00'
         duration = this.duration;
     }, false);
 
@@ -185,6 +205,19 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
     }
     */
     wTrack.onmousedown = function (e) {
+        holding = true;
+        console.log(e);
+        if(window.innerWidth>200){
+            moverTrackWeb(e);
+        }
+        else{
+            
+            moverTrackMovil(e);
+        }
+    }
+
+
+    mTrack.onmousedown = function (e) {
         holding = true;
         console.log(e);
         if(window.innerWidth>200){
@@ -216,7 +249,76 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
 
     }
 
+    /**
+     * Cuando el boton Play es pulsado, pausa/reproduce la cancion actual
+     */
+    mPlay.onclick = function () {
+
+        if(playing){
+            audio.pause();
+            playing=false;
+            mPlay.innerHTML = '<i class="material-icons">play_arrow</i>';
+        }
+        else{
+            playing=true;
+            audio.play();
+            mPlay.innerHTML = '<i class="material-icons">pause</i>';
+        }
+
+
+    }
+
     wPrev.onclick = function () {
+        if(repeat){
+            song.art= theUrl+'/'+song.id+'/image';
+            audio.src = theUrl+'/'+song.id+'/file';
+            audio.onloadeddata = function() {
+                actualizarInfoWeb();
+                if(playing){
+                    audio.play();
+                }
+                //actualizarInfoMovil();
+            }
+        }
+        else if(random){
+            var num=(Math.floor(Math.random() * 100))%(songs.length);
+            while(num==current_track){
+                num=(Math.floor(Math.random() * 100))%(songs.length);
+            }
+            console.log(current_track);
+            console.log(num);
+            console.log(songs.length);
+            current_track=num;
+            song = songs[current_track];
+            song.art= theUrl+'/'+song.id+'/image';
+            audio.src = theUrl+'/'+song.id+'/file';
+            audio.onloadeddata = function() {
+                actualizarInfoWeb();
+                if(playing){
+                    audio.play();
+                }
+                //actualizarInfoMovil();
+            }
+        }
+        else{
+            current_track--;
+            current_track = (current_track == -1 ? (songs.length - 1) : current_track);
+            song = songs[current_track];
+            song.art= theUrl+'/'+song.id+'/image';
+            audio.src = theUrl+'/'+song.id+'/file';
+            audio.onloadeddata = function() {
+                actualizarInfoWeb();
+                if(playing){
+                    audio.play();
+                }
+                //actualizarInfoMovil();
+            }
+        }
+        
+    }
+
+
+    mPrev.onclick = function () {
         if(repeat){
             song.art= theUrl+'/'+song.id+'/image';
             audio.src = theUrl+'/'+song.id+'/file';
@@ -275,6 +377,16 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
         repeat=!repeat;
     }
 
+    mShuffle.onclick = function () {
+        console.log("Ahora random")
+        random=!random;
+    }
+
+    mRepeat.onclick = function () {
+        console.log("Ahora repeat")
+        repeat=!repeat;
+    }
+
 
 
     /**
@@ -282,6 +394,7 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
      */
     audio.addEventListener("pause", function () {
         wPlay.innerHTML = '<i class="material-icons">play_arrow</i>';
+        mPlay.innerHTML = '<i class="material-icons">play_arrow</i>';
         playing = false;
 
     }, false);
@@ -292,6 +405,7 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
      */
     audio.addEventListener("play", function () {
         wPlay.innerHTML = '<i class="material-icons">pause</i>';
+        mPlay.innerHTML = '<i class="material-icons">pause</i>';
         playing = true;
     }, false);
 
@@ -321,19 +435,22 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
         }
 
         final.innerHTML=tfin;
-
+        mfinal.innerHTML=tfin
 
         curtime = audio.currentTime;
         //console.log(curtime);
 
         percent = Math.round((curtime * 100) / duration);
         wProgress.style.width = percent + '%';
+        mProgress.style.width = percent + '%';
         handler.style.left = percent + '%';
+        handler2.style.left = percent + '%';
 
         if(audio.currentTime==audio.duration){
             wNext.click();
         }
     }
+
 
     /** Funcion que pone a mueve el tiempo que se esta escuchando del track actual
      */
@@ -344,7 +461,29 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
         
         if (percent > 100) percent = 100;
         if (percent < 0) percent = 0;
-        wProgress.style.width = percent + '%';
+        mProgress.style.width = percent + '%';
+        handler2.style.left = percent + '%';
+        
+        audio.currentTime = (percent * duration) / 100;
+
+        /*
+        console.log(percent);
+        console.log(audio.duration);
+        console.log((percent * duration) / 100);
+        console.log(audio.currentTime);*/
+
+        audio.play();
+    }
+
+
+    function moverTracMovil(e) {
+        event = e || window.event;
+        var x = e.pageX - reproductorIndex.offsetLeft - mTrack.offsetLeft;
+        percent = Math.round((x * 100) / mTrack.offsetWidth);
+        
+        if (percent > 100) percent = 100;
+        if (percent < 0) percent = 0;
+        mProgress.style.width = percent + '%';
         handler.style.left = percent + '%';
         
         audio.currentTime = (percent * duration) / 100;
@@ -445,12 +584,66 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
     }
 
 
+
+    mNext.onclick = function () {
+
+        if(repeat){
+            song.art= theUrl+'/'+song.id+'/image';
+            audio.src = theUrl+'/'+song.id+'/file';
+            audio.onloadeddata = function() {
+                actualizarInfoWeb();
+                if(playing){
+                    audio.play();
+                }
+                //actualizarInfoMovil();
+            }
+        }
+        else if(random){
+            var num=(Math.floor(Math.random() * 100))%(songs.length);
+            while(num==current_track){
+                num=(Math.floor(Math.random() * 100))%(songs.length);
+            }
+            console.log(current_track);
+            console.log(num);
+            console.log(songs.length);
+            current_track=num;
+            song = songs[current_track];
+            song.art= theUrl+'/'+song.id+'/image';
+            audio.src = theUrl+'/'+song.id+'/file';
+            audio.onloadeddata = function() {
+                actualizarInfoWeb();
+                if(playing){
+                    audio.play();
+                }
+                //actualizarInfoMovil();
+            }
+        }
+        else{        
+            current_track++;
+            current_track = current_track % (songs.length);
+            song = songs[current_track];
+            song.art= theUrl+'/'+song.id+'/image';
+            audio.src = theUrl+'/'+song.id+'/file';
+            audio.onloadeddata = function() {
+                actualizarInfoWeb();
+                if(playing){
+                    audio.play();
+                }
+                //actualizarInfoMovil();
+            }
+        }
+
+    }
+
+
     /**
      * Funcion que actualiza la info del track seleccionado
      */
     function actualizarInfoWeb() {
         wTitle.textContent = song.name;
         wArtist.textContent = song.authorName;
+        mTitle.textContent = song.name;
+        mArtist.textContent = song.authorName;
         wArt.src = song.art;
         
     }

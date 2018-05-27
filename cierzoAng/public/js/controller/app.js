@@ -53,8 +53,8 @@ cierzoApp.controller("principalController", ['$scope','$location','$cookieStore'
         $scope.usuario=$cookieStore.get('nombre');
         var pa=$location.url();
         pa=pa.split("/");
-        //console.log(pa);
-        if($location.url()=='/login' || $location.url()=='/' || $location.url()=='/sign' || $location.url()=='/admin' || pa[1]=='user' || $location.url()=='/user' || $location.url()=='/crear' || pa[1]=='modif'  ){
+
+        if($location.url()=='/login' || $location.url()=='/' || $location.url()=='/sign' || $location.url()=='/admin' || pa[1]=='user' || $location.url()=='/user' || $location.url()=='/crear' || $location.url()=='/big' || pa[1]=='modif'  ){
             $scope.repro=true;
         }
         else{
@@ -66,6 +66,11 @@ cierzoApp.controller("principalController", ['$scope','$location','$cookieStore'
     $scope.hola = function(){
         //alert($scope.busq);
         $location.path('/search/'+$scope.busq);
+    }
+
+    $scope.hola2 = function(){
+        //alert($scope.cadena);
+        $location.path('/search/'+$scope.cadena);
     }
 }]);
 
@@ -202,7 +207,7 @@ cierzoApp.controller("searchController", ['$scope','$routeParams','$http','music
         url: server+'songs?name='+$routeParams.param
     }).then(function successCallback(response) {
         $scope.canciones=response.data;
-        console.log(response.data);
+
     }, function errorCallback(response) {
 
     });
@@ -212,7 +217,7 @@ cierzoApp.controller("searchController", ['$scope','$routeParams','$http','music
         url: server+'authors?name='+$routeParams.param
     }).then(function successCallback(response) {
         $scope.artists=response.data;
-        console.log(response.data);
+
     }, function errorCallback(response) {
 
     });
@@ -222,7 +227,7 @@ cierzoApp.controller("searchController", ['$scope','$routeParams','$http','music
         url: server+'albums?name='+$routeParams.param
     }).then(function successCallback(response) {
         $scope.albums=response.data;
-        console.log(response.data);
+
     }, function errorCallback(response) {
 
     });
@@ -233,7 +238,7 @@ cierzoApp.controller("searchController", ['$scope','$routeParams','$http','music
         url: server+'songs?genre='+$routeParams.param
     }).then(function successCallback(response) {
         $scope.cancionesG=response.data;
-        console.log(response.data);
+ 
     }, function errorCallback(response) {
 
     });
@@ -385,7 +390,6 @@ cierzoApp.controller("modifController",['$scope','$http','$routeParams', functio
         $scope.nuevas=nuevas;
         $scope.num=nuevas.length;
         $scope.nameL2=response.data.name;
-        console.log(response.data);
     }, function errorCallback(response) {
 
     });
@@ -468,7 +472,6 @@ cierzoApp.controller("loginController",['$scope','$cookieStore', 'authProvider',
                     url: server+'login',
                     data: data2
                 }).then(function successCallback(response) {
-                    console.log(response);
                     authProvider.setUser(true);
                     $cookieStore.put("conectado", true);
                     $cookieStore.put("nombre",$scope.nick2);
