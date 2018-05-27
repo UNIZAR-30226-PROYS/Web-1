@@ -1,3 +1,4 @@
+
   <!-- FOTO USUARIO -->
   <div class="col s12 m8 offset-m2 l6 offset-l3">
         <div class="card-panel grey lighten-5 z-depth-1">
@@ -23,7 +24,7 @@
         <div class="card-panel grey lighten-5 z-depth-1">
             <div class="collection" id="listaAmigos">
               <div ng-repeat="friend in user.friends">
-                <a href="#!" class="collection-item">{{friend.name}}</a>
+                <a href="#user/{{friend.id}}" class="collection-item">{{friend.name}}</a>
               </div>  
             </div>
         </div>

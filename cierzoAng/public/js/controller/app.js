@@ -56,7 +56,7 @@ cierzoApp.controller("principalController", ['$scope','$location','$cookieStore'
         if($location.url()=='/big'){
             $scope.repro='big';
         }
-        else if($location.url()=='/login' || $location.url()=='/' || $location.url()=='/sign' || $location.url()=='/admin' || pa[1]=='user' || $location.url()=='/user' || $location.url()=='/crear' || $location.url()=='/big' || pa[1]=='modif'  ){
+        else if($location.url()=='/login' || $location.url()=='/' || $location.url()=='/sign' || $location.url()=='/admin'  || $location.url()=='/user' || $location.url()=='/crear' || $location.url()=='/big' || pa[1]=='modif'  ){
             $scope.repro='no';
         }
         else{
