@@ -52,6 +52,19 @@ function pruebaVisualizer(canvasElement) {
 }
 
 
+function visu(canvasElement,audio) {
+	//var file = URL.createObjectURL(files[0])
+	/*
+	audioElemen=new Audio();
+	audioElemen.crossOrigin = "anonymous";
+	audioElemen.src = '/home/sherrero/Escritorio/Proyecto/Web/cierzoAng/public/songs/llamada.mp3';
+	audioElemen.play();*/
+	initializeVisualizer(canvasElement, audio);
+
+
+}
+
+
 
 
 

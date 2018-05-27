@@ -53,12 +53,14 @@ cierzoApp.controller("principalController", ['$scope','$location','$cookieStore'
         $scope.usuario=$cookieStore.get('nombre');
         var pa=$location.url();
         pa=pa.split("/");
-
-        if($location.url()=='/login' || $location.url()=='/' || $location.url()=='/sign' || $location.url()=='/admin' || pa[1]=='user' || $location.url()=='/user' || $location.url()=='/crear' || $location.url()=='/big' || pa[1]=='modif'  ){
-            $scope.repro=true;
+        if($location.url()=='/big'){
+            $scope.repro='big';
+        }
+        else if($location.url()=='/login' || $location.url()=='/' || $location.url()=='/sign' || $location.url()=='/admin' || pa[1]=='user' || $location.url()=='/user' || $location.url()=='/crear' || $location.url()=='/big' || pa[1]=='modif'  ){
+            $scope.repro='no';
         }
         else{
-            $scope.repro=false;
+            $scope.repro='si';
         }
     })
 
@@ -124,7 +126,6 @@ cierzoApp.controller("songsController", ['$scope', '$routeParams','$http','music
         }
 
         $scope.canciones=canciones;
-
         
         //reproducir cancion desde /songs
         //hacer llamada con num=id cancion y reproducir en funcion de la posicion.  
@@ -157,6 +158,12 @@ cierzoApp.controller("artistsController", ['$scope','$http','$cookieStore', func
     });
 
     $scope.artists=artists;
+
+}]);
+
+
+cierzoApp.controller("bigController", ['$scope','$http','$cookieStore', function ($scope,$http,$cookieStore) {
+    
 
 }]);
 
