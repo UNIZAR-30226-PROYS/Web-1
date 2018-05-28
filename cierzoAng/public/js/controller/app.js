@@ -1,4 +1,4 @@
-var server='http://localhost:8080/api/';
+var server='http://192.168.44.128:8080/api/';
 
 
 
@@ -56,7 +56,7 @@ cierzoApp.controller("principalController", ['$scope','$location','$cookieStore'
         if($location.url()=='/big'){
             $scope.repro='big';
         }
-        else if($location.url()=='/login' || $location.url()=='/' || $location.url()=='/sign' || $location.url()=='/admin' || pa[1]=='user' || $location.url()=='/user' || $location.url()=='/crear' || $location.url()=='/big' || pa[1]=='modif'  ){
+        else if($location.url()=='/login' || $location.url()=='/' || $location.url()=='/sign' || $location.url()=='/admin'  || $location.url()=='/user' || $location.url()=='/crear' || $location.url()=='/big' || pa[1]=='modif'  ){
             $scope.repro='no';
         }
         else{
@@ -346,7 +346,19 @@ cierzoApp.controller("usersController",['$scope','$http','$cookieStore', functio
     }
 
     $scope.eliminar = function(id){
-        alert("eliminado user "+id);
+
+        $http({
+            method: 'DELETE',
+            url: server+'profiles/'+id+'/follow'
+        }).then(function successCallback(response) {
+            alert("eliminado user "+id);
+        }, function errorCallback(response) {
+    
+        });
+
+
+        
+
     }
 
     $scope.buscar = function(id){
@@ -734,9 +746,8 @@ cierzoApp.controller("adminController",['$scope','$http','$location', function (
             $http({
                 method: 'POST',
                 url: server+"songs/"+id22+'/file',
-                data: formData
+                data: file
             }).then(function successCallback(response) {
-                var id=response.data.id;
                 console.log("meto file");
         
                 

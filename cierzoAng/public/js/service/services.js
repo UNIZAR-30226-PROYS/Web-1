@@ -137,8 +137,8 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
     /* Canciones para probar */
 
 
-    var theUrl2='http://localhost:8080/api/profiles/'+$cookieStore.get('id');
-    var theUrl='http://localhost:8080/api/songs'
+    var theUrl2='http://192.168.44.128:8080/api/profiles/'+$cookieStore.get('id');
+    var theUrl='http://192.168.44.128:8080/api/songs'
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "GET", theUrl2, false ); // false for synchronous request
     xmlHttp.send( null );
