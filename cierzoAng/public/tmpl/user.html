@@ -38,13 +38,13 @@
         <div class="card-panel grey lighten-5 z-depth-1">
           <div class="row valign-wrapper">
             <div class="col s2">
-              <img src="images/cover.jpg" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
+              <img src="images/account.png" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
             </div>
             <div class="col s10">
               <ul class="collection">
                 <li class="collection-item">Nombre<h5 id="nombreUser">{{user.name}}</h5></li>
                 <li class="collection-item">Usuario<h5 id="usuarioUser">{{user.username}}</h5></li>
-                <li class="collection-item">Email<h5 id="emailUser">{{user.email}}</h5></li>
+                <li class="collection-item">Email<h5 id="emailUser">alice@gmail.com</h5></li>
                 <li class="collection-item">Desc<h6 id="descUser">{{user.name}}</h6></li>
               </ul>
             </div>
@@ -58,8 +58,8 @@
         <div class="card-panel grey lighten-5 z-depth-1">
             <div class="collection" id="listaAmigos">
               <div ng-repeat="friend in user.friends">
-                <a href="#user/{{friend.id}}" class="collection-item">{{friend.name}}</a>
-              </div>  
+                <a href="#!" class="collection-item">{{friend.name}}</a>
+              </div>
             </div>
         </div>
   </div>

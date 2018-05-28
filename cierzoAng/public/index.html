@@ -11,7 +11,7 @@
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link href="css/miCss.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 
-    
+
     <script type="text/javascript" src="js/lib/angular.min.js"></script>
     <script type="text/javascript" src="js/lib/angular-resource.min.js"></script>
     <script type="text/javascript" src="js/lib/angular-route.min.js"></script>
@@ -26,7 +26,7 @@
 
 
 
-    
+
         <div ng-hide="repro!='no'">
             <!-- code to render a large video block-->
 
@@ -44,8 +44,8 @@
                                     <a id="logo-container " href="#" class=" left brand-logo"  >
                                         <img  src="images/logo_cierzo_1_white.png" style="display: inline-block;vertical-align: top;width: 180px;height: 50px;margin-right: 20px;margin-top: 15px; ">
                                     </a>
-                    
-                    
+
+
                                     <!-- BOTONES REPRODUCCION -->
                                     <ul id="nav-mobile" class="right hide-on-small-only">
                                         <li>
@@ -70,21 +70,19 @@
                                             <a id="cShuffle" class="btn-floating btn-medium waves-effect waves-light light-green accent-4"><i class="large material-icons">shuffle</i></a>
                                         </li>
                                     </ul>
-                    
+
                                 </div>
                             </nav>
                         </div>
                     </div>
-                    
+
                     <!--CONTENEDOR PRINCIPAL-->
                     <div class="row">
                       <!--IMAGEN-->
                       <div class="col l4 offset-l1">
                           <div class="card">
                             <div class="card-image">
-                                <a href="song.html">
                                     <img class="responsive-img" src="" id="cArt">
-                                </a>
                             </div>
                           </div>
                       </div>
@@ -111,7 +109,7 @@
                                   <p id="final3">
                                   </p>
                               </div>
-                    
+
                               <div class="col s1 offset-s10">
                                   <p id="current3">
                                   </p>
@@ -120,40 +118,40 @@
                           <br><br>
                       </div>
                     </div>
-                    
-                    
-                    
-                    
-                    
+
+
+
+
+
                     <a class="waves-effect waves-light btn" id="visual" style="left: 20px">Visualizador</a>
                     <div class="col l12 m12 s12">
                         <div id="visualizador">
                             <canvas id="canvas1" width="1500px" height="50px"></canvas>
                         </div>
                     </div>
-                
+
         </div>
-        
+
         <div ng-hide="repro!='si'">
             <!-- code to render the regular video block -->
             <div class="row">
 
-    
+
 
                     <!-- BARRA DE NAVEGACION-->
                     <div class="navb col l9 m9 s12" style="padding-left: 0px; margin:0px;padding-right: 0px">
-                          <div ng-include src="'tmpl/navbar.html'"></div> 
+                          <div ng-include src="'tmpl/navbar.html'"></div>
                     </div>
-              
-              
-                    
+
+
+
                     <div class="section no-pad-bot" id="index-banner">
-                      
+
                       <div ng-include src="'tmpl/barraOculta.html'"></div>
-              
-              
-              
-                      
+
+
+
+
                         <div class="col l9 m9 s12">
                           <!-- CONTENIDO PAGINA PRINCIPAL-->
                           <div ng-view></div>
@@ -165,23 +163,23 @@
 
                         </div>
                     </div>
-              
-              
-              
-              
-              
-              
-              
-              
+
+
+
+
+
+
+
+
                     <!-- REPRODUCTOR-->
                     <div class="reproductor col l3 m3 s12">  <!--  Reproductor de la pagina principal -->
                         <div id="reproductorIndex">
                           <div class="hide-on-small-only">     <!--  Reproductor para WEB Y TABLET-->
-              
+
                                 <div class="col s12">
                                     <h5 class="center-align">Reproduciendo ahora</h5><br>
                                 </div>
-              
+
                                 <!--PORTADA -->
                                 <div class="col s8 offset-s2">
                                     <div class="card" style="max-width: 150px;">
@@ -192,19 +190,19 @@
                                       </div>
                                     </div>
                                 </div>
-              
-              
+
+
                                 <!--ARTISTA Y CANCION-->
                                 <div class="col s12">
-                                      
+
                                     <h3 class="truncate center-align" id="wTitle"></h3>
                                     <h5 class="truncate center-align" id="wArtist"></h5>
                                     <h5 class="truncate center-align" id="wLista"></h5>
                                 </div>
-              
-              
-              
-              
+
+
+
+
                                  <!--BOTONES: PLAY/STOP ADELANTE Y ATRAS-->
                                 <div class="col s8 offset-l1 valign-wrapper">
                                     <div class="col s2">
@@ -223,9 +221,9 @@
                                         </a>
                                     </div>
                                 </div>
-              
+
                               <!--BARRA DE PROGRESO-->
-              
+
                               <div class="col s12">
                                   <br><br>
                                   <div id="track">
@@ -237,7 +235,7 @@
                                           <p id="final">
                                           </p>
                                       </div>
-              
+
                                       <div class="col s2 offset-s6">
                                           <p id="current">
                                           </p>
@@ -245,25 +243,25 @@
                                   </div>
                                   <br><br>
                               </div>
-              
-                                
-              
+
+
+
                                 <!--BOTONES: REPETIR Y RANDOM-->
                                 <div class="col s8 offset-l1 valign-wrapper">
-              
+
                                     <div class="col s2 offset-s3">
                                         <a id="wRepeat" class="btn-floating btn-medium waves-effect waves-light light-green accent-4"><i class="large material-icons">repeat</i></a>
-                                        
+
                                     </div>
                                     <div class="col s2 offset-s3">
                                         <a id="wShuffle" class="btn-floating btn-medium waves-effect waves-light light-green accent-4"><i class="large material-icons">shuffle</i></a>
-                                        
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div id="reproductorMovilIndex">
-                            <div class="hide-on-med-and-up">     
+                            <div class="hide-on-med-and-up">
                             <!--  Reproductor para MOVIL-->
                                 <div class="col s12">
                                           <!--  BARRA DE PROGRESO -->
@@ -277,20 +275,20 @@
                                                     <p id="final2">
                                                     </p>
                                                 </div>
-              
+
                                                 <div class="col s2 offset-s6">
                                                     <p id="current2">
                                                     </p>
                                                 </div>
                                               </div>
                                           </div>
-              
+
                                         <div class="col s10 offset-s1">
                                             <!--TITULO CANCION -->
                                             <div class="col s5">
                                                 <h6 class="truncate center-align" id="mTitle"></h6>
                                             </div>
-                                            
+
                                             <!--BOTONES: PLAY/STOP ADELANTE Y ATRAS-->
                                             <div class="col s1 offset-s2">
                                                 <a class="btn-floating btn-medium waves-effect waves-light light-green accent-4" id="mPrev"><i class="material-icons">fast_rewind</i></a>
@@ -322,13 +320,13 @@
                         </div>
 
 
-                    
-              
+
+
                     </div>
                 </div>
 
         </div>
-    
+
 
 
   <!--  Scripts-->
@@ -337,7 +335,7 @@
   <script src="js/apps/init.js"></script>
   <!--<script src="js/apps/musica.js"></script>
   <script src="js/apps/musica2.js"></script>-->
-  
+
 
 
   </body>

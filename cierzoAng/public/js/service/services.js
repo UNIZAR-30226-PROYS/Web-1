@@ -5,7 +5,7 @@ cierzoApp.factory('authProvider', function() {
         return {
             setUser : function(aUser){
             user = aUser;
-            
+
         },
             isLoggedIn : function(){
             return(user)? user : false;
@@ -34,7 +34,7 @@ cierzoApp.factory('usuarioActual', function() {
 
 
 
-cierzoApp.run(['$rootScope', '$cookieStore', '$location', 'authProvider','$http','$cookies', function ($rootScope, $cookieStore, $location,authProvider,$http,$cookies) {  
+cierzoApp.run(['$rootScope', '$cookieStore', '$location', 'authProvider','$http','$cookies', function ($rootScope, $cookieStore, $location,authProvider,$http,$cookies) {
 
     $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
     if($cookieStore.get('conectado')){
@@ -55,7 +55,7 @@ cierzoApp.run(['$rootScope', '$cookieStore', '$location', 'authProvider','$http'
             }
         }
     });
-    
+
 }])
 
 
@@ -102,7 +102,7 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
     var mPrev          = document.getElementById('mPrev');
     var mTitle         = document.getElementById('mTitle');
     var mArtist        = document.getElementById('mArtist');
-    
+
 
     var cTrack          = document.getElementById('track3');
     var cProgress       = document.getElementById('progress3');
@@ -116,6 +116,8 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
     var cCan      = document.getElementById('canvas1');
     var canvas      = document.getElementById('canvas1');
 
+    var ccur       = document.getElementById('current3');
+    var cfinal     = document.getElementById('final3');
 
     var mcur       = document.getElementById('current2');
     var mfinal     = document.getElementById('final2');
@@ -126,11 +128,17 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
     var random=false;
     var repeat=false;
 
+    var limpiarBusqueda = document.getElementById('cancione');
+
+    limpiarBusqueda.onclick = function () {
+      document.getElementById('busqueda').value="";
+    }
+
     /* Canciones para probar */
 
-   
-    var theUrl2='http://192.168.44.128:8080/api/profiles/'+$cookieStore.get('id');
-    var theUrl='http://192.168.44.128:8080/api/songs'
+
+    var theUrl2='http://localhost:8080/api/profiles/'+$cookieStore.get('id');
+    var theUrl='http://localhost:8080/api/songs'
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "GET", theUrl2, false ); // false for synchronous request
     xmlHttp.send( null );
@@ -159,8 +167,8 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
      */
     function iniciarWeb() {
         audio = new Audio();
-        if(songs.length>0){  
-            console.log('puedo');      
+        if(songs.length>0){
+            console.log('puedo');
             song = songs[current_track];
             audio.crossOrigin = "anonymous";
             wTitle.textContent = song.name;
@@ -174,14 +182,14 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
             song.art= theUrl+'/'+song.id+'/image';
             wList.textContent = 'Lista: Favoritos';
             playing=false;
-            
+
             audio.src=theUrl+'/'+song.id+'/file';
         }
         else{
             wTitle.textContent = "Lista vacía.";
 
         }
-        
+
 
     }
 
@@ -209,8 +217,10 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
 
         cur.innerHTML=tfin;
         mcur.innerHTML=tfin;
+        ccur.innerHTML=tfin;
         final.innerHTML='00:00'
         mfinal.innerHTML='00:00'
+        cfinal.innerHTML='00:00'
         duration = this.duration;
     }, false);
 
@@ -222,7 +232,7 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
             moverTrackWeb(e);
         }
         else{
-            
+
             moverTrackMovil(e);
         }
     }
@@ -235,7 +245,7 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
             moverTrackWeb(e);
         }
         else{
-            
+
             moverTrackMovil(e);
         }
     }
@@ -247,7 +257,7 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
             moverTrackWeb(e);
         }
         else{
-            
+
             moverTrackMovil(e);
         }
     }
@@ -354,7 +364,7 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
                 //actualizarInfoMovil();
             }
         }
-        
+
     }
 
     visual.onclick = function () {
@@ -407,7 +417,7 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
                 //actualizarInfoMovil();
             }
         }
-        
+
     }
 
 
@@ -457,7 +467,7 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
                 //actualizarInfoMovil();
             }
         }
-        
+
     }
 
     wShuffle.onclick = function () {
@@ -529,7 +539,8 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
         }
 
         final.innerHTML=tfin;
-        mfinal.innerHTML=tfin
+        mfinal.innerHTML=tfin;
+        cfinal.innerHTML=tfin;
 
         curtime = audio.currentTime;
         //console.log(curtime);
@@ -554,14 +565,14 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
         event = e || window.event;
         var x = e.pageX - reproductorIndex.offsetLeft - wTrack.offsetLeft;
         percent = Math.round((x * 100) / wTrack.offsetWidth);
-        
+
         if (percent > 100) percent = 100;
         if (percent < 0) percent = 0;
         mProgress.style.width = percent + '%';
         cProgress.style.width = percent + '%';
         handler2.style.left = percent + '%';
         handler3.style.left = percent + '%';
-        
+
         audio.currentTime = (percent * duration) / 100;
 
         /*
@@ -577,12 +588,12 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
         event = e || window.event;
         var x = e.pageX - reproductorIndex.offsetLeft - cTrack.offsetLeft;
         percent = Math.round((x * 100) / cTrack.offsetWidth);
-        
+
         if (percent > 100) percent = 100;
         if (percent < 0) percent = 0;
         cProgress.style.width = percent + '%';
         handler3.style.left = percent + '%';
-        
+
         audio.currentTime = (percent * duration) / 100;
 
         /*
@@ -599,12 +610,12 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
         event = e || window.event;
         var x = e.pageX - reproductorIndex.offsetLeft - mTrack.offsetLeft;
         percent = Math.round((x * 100) / mTrack.offsetWidth);
-        
+
         if (percent > 100) percent = 100;
         if (percent < 0) percent = 0;
         mProgress.style.width = percent + '%';
         handler.style.left = percent + '%';
-        
+
         audio.currentTime = (percent * duration) / 100;
 
         /*
@@ -616,10 +627,10 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
         audio.play();
     }
 
-    
 
 
-    
+
+
     wNext.onclick = function () {
 
         if(repeat){
@@ -653,7 +664,7 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
                 //actualizarInfoMovil();
             }
         }
-        else{        
+        else{
             current_track++;
             current_track = current_track % (songs.length);
             song = songs[current_track];
@@ -705,7 +716,7 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
                 //actualizarInfoMovil();
             }
         }
-        else{        
+        else{
             current_track++;
             current_track = current_track % (songs.length);
             song = songs[current_track];
@@ -756,7 +767,7 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
                 //actualizarInfoMovil();
             }
         }
-        else{        
+        else{
             current_track++;
             current_track = current_track % (songs.length);
             song = songs[current_track];
@@ -786,7 +797,7 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
         cArtist.textContent = song.authorName;
         wArt.src = song.art;
         cArt.src = song.art;
-        
+
     }
 
     this.playSongId=function(id) {
@@ -853,7 +864,7 @@ var binWidth;
 var magicConstant = 42; //Meaning of everything. I don't know why this works.
 
 
-    
+
 function visu(canvasElement,audio) {
 	//var file = URL.createObjectURL(files[0])
 	/*
@@ -880,7 +891,7 @@ function initializeVisualizer(canvasElement, audioElement) {
 		if (ctxt) {
             console.log(canvasElement);
             initCanvas(canvasElement);
-            
+
 			audioContext = new ctxt();
 			setupAudioApi(audioElement);
 		}

@@ -23,7 +23,7 @@ var playing = false;
 
 /* Canciones para probar */
 
-var theUrl='http://192.168.44.128:8080/api/songs'
+var theUrl='http://localhost:8080/api/songs'
 var xmlHttp = new XMLHttpRequest();
 xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
 xmlHttp.send( null );
@@ -37,7 +37,7 @@ var songs = [{
     url: 'songs/llamada.mp3',
     art: 'http://abarcarodriguez.com/365/files/offspring.jpg'
 },
-    
+
 {
     title: 'Bribriblibli',
     artist: 'Extremoduro',
@@ -51,7 +51,7 @@ var songs = [{
     url: 'songs/Deltoya.mp3',
     art: 'http://abarcarodriguez.com/365/files/rainbow.jpg'
 },
-    
+
 {
     title: 'Felices los 4',
     artist: 'Maluma',
@@ -260,7 +260,7 @@ function actualizarInfoWeb() {
     wTitle.textContent = song.name;
     wArtist.textContent = song.authorName;
     wArt.src = song.art;
-    
+
 }
 
 
@@ -272,10 +272,3 @@ function playSong(num){
       actualizarInfoMovil();
     }
 }
-
-
-
-
-
-
-

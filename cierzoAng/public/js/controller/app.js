@@ -1,4 +1,4 @@
-var server='http://192.168.44.128:8080/api/';
+var server='http://localhost:8080/api/';
 
 
 
@@ -22,7 +22,7 @@ function getArtists(listaC){
         if(!existe(artists,meter)){
             artists.push(meter);
         }
-        
+
     }
     return artists;
 }
@@ -38,7 +38,7 @@ function getAlbums(listaC){
         if(!existe(artists,meter)){
             artists.push(meter);
         }
-        
+
     }
     return artists;
 }
@@ -56,7 +56,7 @@ cierzoApp.controller("principalController", ['$scope','$location','$cookieStore'
         if($location.url()=='/big'){
             $scope.repro='big';
         }
-        else if($location.url()=='/login' || $location.url()=='/' || $location.url()=='/sign' || $location.url()=='/admin'  || $location.url()=='/user' || $location.url()=='/crear' || $location.url()=='/big' || pa[1]=='modif'  ){
+        else if($location.url()=='/login' || $location.url()=='/' || $location.url()=='/sign' || $location.url()=='/admin' || pa[1]=='user' || $location.url()=='/user' || $location.url()=='/crear' || $location.url()=='/big' || pa[1]=='modif'  ){
             $scope.repro='no';
         }
         else{
@@ -101,7 +101,7 @@ cierzoApp.controller("songsController", ['$scope', '$routeParams','$http','music
         method: 'GET',
         url: url2
     }).then(function successCallback(response) {
-        
+
         if(param==undefined){
             var lis=response.data.playlists[0];
             canciones=lis.songs;
@@ -112,7 +112,7 @@ cierzoApp.controller("songsController", ['$scope', '$routeParams','$http','music
         else if(param=='album'){
             var lis=response.data;
             canciones=lis.songs;
-            
+
             nLista=lis.name;
             $scope.titulo='Album: '+nLista+' de '+lis.authorName;
         }
@@ -122,13 +122,13 @@ cierzoApp.controller("songsController", ['$scope', '$routeParams','$http','music
             nLista=lis.name;
             canciones=lis.songs;
             $scope.titulo='Lista: '+nLista;
-            
+
         }
 
         $scope.canciones=canciones;
-        
+
         //reproducir cancion desde /songs
-        //hacer llamada con num=id cancion y reproducir en funcion de la posicion.  
+        //hacer llamada con num=id cancion y reproducir en funcion de la posicion.
         $scope.prueba = function(num,lista) {
             music.cambiarSongs(lista,nLista);
             music.playSongId(num);
@@ -163,7 +163,7 @@ cierzoApp.controller("artistsController", ['$scope','$http','$cookieStore', func
 
 
 cierzoApp.controller("bigController", ['$scope','$http','$cookieStore', function ($scope,$http,$cookieStore) {
-    
+
 
 }]);
 
@@ -245,7 +245,7 @@ cierzoApp.controller("searchController", ['$scope','$routeParams','$http','music
         url: server+'songs?genre='+$routeParams.param
     }).then(function successCallback(response) {
         $scope.cancionesG=response.data;
- 
+
     }, function errorCallback(response) {
 
     });
@@ -275,21 +275,21 @@ cierzoApp.controller("listasRepController", ['$scope','$http','$cookieStore', fu
             else{
                 listas[i]['imagen']=server+'songs/'+listas[i].songs[0].id+'/image';
             }
-           
+
         }
 
         $scope.listas=listas;
     }, function errorCallback(response) {
 
     });
-    
+
 }]);
 
 
 
 cierzoApp.controller("cambiarController", ['$scope','$http','$cookieStore', function ($scope,$http,$cookieStore) {
     var id=$cookieStore.get('id');
-    
+
     $scope.cambio = function(){
         if($scope.pass1==$scope.pass12){
             var data1={
@@ -356,7 +356,7 @@ cierzoApp.controller("usersController",['$scope','$http','$cookieStore', functio
         }).then(function successCallback(response) {
             $scope.users=response.data;
         }, function errorCallback(response) {
-    
+
         });
 
     }
@@ -392,7 +392,7 @@ cierzoApp.controller("crearlController",['$scope','$http', function ( $scope,$ht
     }
 
     $scope.crear = function(){
-       
+
         if($scope.nameL==undefined || nuevas.length==0){
             alert("No se puede crear.")
         }
@@ -531,7 +531,7 @@ cierzoApp.controller("loginController",['$scope','$cookieStore', 'authProvider',
 
     $scope.loginn = function() {
         if($scope.nick2!=undefined && $scope.pass2!=undefined){
-            
+
             if($scope.nick2=='root' && $scope.pass2=='toor' ){
 
                 authProvider.setUser(true);
@@ -565,7 +565,7 @@ cierzoApp.controller("loginController",['$scope','$cookieStore', 'authProvider',
                 }, function errorCallback(response) {
 
                     alert("Te has equivocado ajja");
-                });  
+                });
 
             }
 
@@ -603,13 +603,13 @@ cierzoApp.controller("signController",['$scope','$http','$location', function ($
                 alert("Te has registrado, ahora entra.");
                 $location.path('/login');
 
-               
+
             }, function errorCallback(response) {
                 alert("Te has equivocado ajja");
             });
         }
     }
-    
+
 
 }]);
 
@@ -617,9 +617,9 @@ cierzoApp.controller("signController",['$scope','$http','$location', function ($
 
 
 cierzoApp.controller("userController", ['$scope','$http','$cookieStore','authProvider','$location','$routeParams', function ($scope,$http,$cookieStore,authProvider,$location,$routeParams) {
-    
+
     var param=$routeParams.param;
-    
+
     if(param==undefined){
         var finUrl=$cookieStore.get('id');
     }
@@ -632,9 +632,9 @@ cierzoApp.controller("userController", ['$scope','$http','$cookieStore','authPro
     }).then(function successCallback(response) {
         $scope.user=response.data;
 
-       
+
     }, function errorCallback(response) {
-        
+
     });
 
     $scope.salir = function() {
@@ -661,7 +661,7 @@ cierzoApp.controller("userController", ['$scope','$http','$cookieStore','authPro
             $location.path('/songs');
            
         }, function errorCallback(response) {
-            
+
         });
 
     }
@@ -1100,7 +1100,6 @@ cierzoApp.controller("adminController",['$scope','$http','$location', function (
     alert('No se puede eliminar artista..');
     document.getElementById("el_Idautor").value = "";
     }
-  
+
 
 }]);
-

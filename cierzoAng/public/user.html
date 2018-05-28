@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Usuario</title>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="css/miCss.css" type="text/css" rel="stylesheet">
+    <link href="css/style.css" type="text/css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script type="text/javascript" src="js/lib/angular.min.js"></script>
+    <script type="text/javascript" src="js/lib/angular-resource.min.js"></script>
+    <script type="text/javascript" src="js/lib/angular-route.min.js"></script>
+    <script type="text/javascript" src="js/lib/jquery.min.js"></script>
+</head>
+<body>
+
+  <!-- BARRA NAVEGACION -->
+  <nav>
+    <div class="nav-wrapper light-blue accent-4">
+          <ul class="left hide-on-med-and-down">
+            <li><a href="javascript:history.back()" class="btn-floating btn-large waves-effect waves-light light-green accent-4 valign-wrapper" style="left: 15px"><i class="medium material-icons">arrow_back</i></a></li>
+            <li><span style="font-size:250%">&nbsp;Perfil</span></li>
+          </ul>
+    </div>
+  </nav>
+<br/>
+
+  <!-- FOTO USUARIO -->
+  <div class="col s12 m8 offset-m2 l6 offset-l3">
+        <div class="card-panel grey lighten-5 z-depth-1">
+          <div class="row valign-wrapper">
+            <div class="col s2">
+              <img src="images/cover.jpg" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
+            </div>
+            <div class="col s10">
+              <ul class="collection">
+                <li class="collection-item">Nombre<h5 id="nombreUser">Pepe Villuela</h5></li>
+                <li class="collection-item">Usuario<h5 id="usuarioUser">Calvo</h5></li>
+                <li class="collection-item">Email<h5 id="emailUser">pepe@gmail.com</h5></li>
+                <li class="collection-item">Desc<h6 id="descUser">En AIDA se salió</h6></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+  </div>
+
+  <!-- AMIGOS -->
+  <div class="col s12 m8 offset-m2 l6 offset-l3">
+    <h4>Lista de Amigos</h4>
+        <div class="card-panel grey lighten-5 z-depth-1">
+            <ul class="collection" id="listaAmigos">
+
+            </ul>
+        </div>
+  </div>
+  <!-- LISTA REPRODUCCION -->
+  <div class="col s12 m8 offset-m2 l6 offset-l3">
+    <h4>Listas de Reproduccion</h4>
+        <div class="card-panel grey lighten-5 z-depth-1">
+            <ul class="collection" id="listaRepro">
+
+            </ul>
+        </div>
+  </div>
+
+
+    <script src="js/apps/materialize.js"></script>
+    <script src="js/apps/user.js"></script>
+</body>
+</html>
