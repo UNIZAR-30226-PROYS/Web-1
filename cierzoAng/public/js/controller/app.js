@@ -136,7 +136,22 @@ cierzoApp.controller("songsController", ['$scope', '$routeParams','$http','music
 
 
     }, function errorCallback(response) {
+
     });
+
+    $scope.ordenNombre = function() {
+        var lista=$scope.canciones;
+        lista.sort(function(a, b){return a.name>b.name})
+        console.log(lista);
+    }
+
+    $scope.ordenNormal = function() {
+        var lista=$scope.canciones;
+        lista.sort(function(a, b){return a.name<b.name})
+        $scope.canciones=lista;
+        console.log(lista);
+    }
+
 
 }]);
 
@@ -702,6 +717,22 @@ cierzoApp.controller("adminController",['$scope','$http','$location', function (
     /********************* INSERTAR FICHEROS ***********************************/
     /***************************************************************************/
 
+    var iden;
+    $scope.enviar=function(){
+        alert("intento enviar");
+        console.log($scope.archivo);
+        $http({
+            method: 'POST',
+            url: server+'songs/56/file',
+            data: $scope.archivo
+        }).then(function successCallback(response) {
+            alert('envio');
+            console.log($scope.archivo);
+            
+        }, function errorCallback(response) {
+            
+        });
+    }
     /**
      * Cuando el boton enviarCancion es pulsado
      */
@@ -709,7 +740,9 @@ cierzoApp.controller("adminController",['$scope','$http','$location', function (
         var titulo  = document.getElementById("a_title").value;
         var artista = document.getElementById("a_artista").value;
         var album   = document.getElementById("a_album").value;
-        
+        var fors   = document.getElementById("fofof");
+
+        /*
         var fichero = document.getElementById("a_file").value;
 
 
@@ -719,12 +752,10 @@ cierzoApp.controller("adminController",['$scope','$http','$location', function (
         formData.append('songFile',fichero,"pepe.mp3");
         
        console.log(formData);
-        
+        */
         var genero  = document.getElementById("a_genero").value;
-        /*console.log(fichero_url);
-        console.log(fichero);
-        console.log(file);
-        console.log(formData);*/
+        
+
         // Subir cancion
         var data1={
             "albumID": album,
@@ -739,29 +770,24 @@ cierzoApp.controller("adminController",['$scope','$http','$location', function (
             url: server+"songs",
             data: data1
         }).then(function successCallback(response) {
-            console.log('creoSong');
-            var id22=response.data.id;
+            alert('creo Song, ahora envia el archivo');
             
-            console.log(formData);
-            $http({
-                method: 'POST',
-                url: server+"songs/"+id22+'/file',
-                data: file
-            }).then(function successCallback(response) {
-                console.log("meto file");
-        
-                
-            }, function errorCallback(response) {
-                
-            });
+            fors.action=server+'songs/'+response.data.id+'/file';
+            fors.submit();
+            iden=response.data.id;
+            //$scope.actionURL=server+'songs/'+response.data.id+'/file';
+            //console.log($scope.actionURL);
+
+            
     
             
-        }, function errorCallback(response) {
-                
-           
-        }, function errorCallback(response) {
+        },function errorCallback(response) {
             
         });
+        
+
+
+       
         /*
         var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
         xmlhttp.open("POST", server+"songs", true);
