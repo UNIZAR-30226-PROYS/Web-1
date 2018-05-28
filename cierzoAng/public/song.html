@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cancion</title>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="css/miCss.css" type="text/css" rel="stylesheet">
+    <link href="css/style.css" type="text/css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="js/apps/visualizer.js"></script>
+    <script type="text/javascript">
+        var initialized = false;
+        window.onload = function() {
+            fileinput.onchange = function() {
+                var files = this.files;
+                var file = URL.createObjectURL(files[0]);
+                player.src = file;
+                console.log(files[0]);
+                //console.log(file);
+                player.play();
+                if (!initialized) {
+                    initializeVisualizer($("canvas")[0], $("audio")[0]);
+                    initialized = true;
+                }
+                updateSongText(files[0].name);
+            }
+        };
+    </script>
+</head>
+<body>
+
+<div class="row">
+
+    <!-- BARRA DE NAVEGACION-->
+    <div class="navb col l12 m12 s12" style="padding-left: 0px; margin:0px;padding-right: 0px">
+        <nav class="nav-extended  " role="navigation" style="background-color: #0091EA">
+            <!-- ICONO -->
+            <div class="nav-wrapper"  style="padding-left: 23px; margin:0px; padding-right: 0px;width: 100%">
+                <a id="logo-container " href="#" class=" left brand-logo"  >
+                    <img  src="images/logo_cierzo_1_white.png" style="display: inline-block;vertical-align: top;width: 180px;height: 50px;margin-right: 20px;margin-top: 15px; ">
+                </a>
+
+
+                <!-- BOTONES REPRODUCCION -->
+                <ul id="nav-mobile" class="right hide-on-small-only">
+                    <li>
+                        <a class="btn-floating btn-medium waves-effect waves-light light-green accent-4" id="cPrev">
+                            <i class="material-icons">fast_rewind</i>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="btn-floating btn-large waves-effect waves-light light-green accent-4" id="cPlay">
+                            <i class="material-icons">play_arrow</i>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="btn-floating btn-medium waves-effect waves-light light-green accent-4" id="cNext">
+                            <i class="material-icons">fast_forward</i>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="btn-floating btn-medium waves-effect waves-light light-green accent-4"><i class="large material-icons">repeat</i></a>
+                    </li>
+                    <li>
+                        <a class="btn-floating btn-medium waves-effect waves-light light-green accent-4"><i class="large material-icons">shuffle</i></a>
+                    </li>
+                </ul>
+
+            </div>
+        </nav>
+    </div>
+</div>
+
+<!--CONTENEDOR PRINCIPAL-->
+<div class="row">
+  <!--IMAGEN-->
+  <div class="col l4 offset-l1">
+      <div class="card">
+        <div class="card-image">
+            <img class="responsive-img" src="" id="cArt">
+        </div>
+      </div>
+  </div>
+  <!--NOMBRE CANCION-->
+  <div class="col l7">
+    <h3 class="truncate" id="cTitle">NOMBRE CANCION</h3>
+  </div>
+  <!--ALBUM-->
+  <div class="col l7">
+    <h4 class="truncate" id="cAlbum">ALBUM</h4>
+  </div>
+  <!--AUTOR-->
+  <div class="col l7">
+    <h4 class="truncate" id="cArtist">AUTOR</h4>
+  </div>
+  <!--BARRA DE PROGRESO-->
+  <div class="col l7" id="barra">
+      <div class="col l11" id="track3">
+          <div id="progress3"></div>
+          <div id="handler3"></div>
+      </div>
+      <div class="col l11">
+          <div class="col s1">
+              <p id="final3">
+              </p>
+          </div>
+
+          <div class="col s1 offset-s10">
+              <p id="current3">
+              </p>
+          </div>
+      </div>
+      <br><br>
+  </div>
+</div>
+
+
+
+
+
+    <button type="button" onclick="pruebaVisualizer($('canvas')[0]);">Click Me!</button>
+    <input id="fileinput" style="color:white;" type="file" accept="audio/*" />
+    <audio id="player"></audio>
+    <div class="col l12 m12 s12">
+        <div id="visualizador">
+            <canvas id="canvas" width="1500px" height="50px"></canvas>
+        </div>
+    </div>
+    <script src="js/apps/materialize.js"></script>
+</body>
+</html>

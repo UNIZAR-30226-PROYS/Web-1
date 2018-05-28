@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel Administracion</title>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="css/miCss.css" type="text/css" rel="stylesheet">
+    <link href="css/style.css" type="text/css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script type="text/javascript" src="js/lib/angular.min.js"></script>
+    <script type="text/javascript" src="js/lib/angular-resource.min.js"></script>
+    <script type="text/javascript" src="js/lib/angular-route.min.js"></script>
+    <script type="text/javascript" src="js/lib/jquery.min.js"></script>
+</head>
+<body>
+
+  <!-- BARRA NAVEGACION -->
+  <nav>
+    <div class="nav-wrapper light-blue accent-4">
+          <ul class="left hide-on-med-and-down">
+            <li><a href="javascript:history.back()" class="btn-floating btn-large waves-effect waves-light light-green accent-4 valign-wrapper" style="left: 15px"><i class="medium material-icons">arrow_back</i></a></li>
+            <li><span style="font-size:250%">&nbsp;Panel de Control</span></li>
+          </ul>
+    </div>
+  </nav>
+<br/>
+
+
+  <!-- PANTALLA PRINCIPAL -->
+  <div class="row">
+        <!-- Tarjeta 1: Añadir cancion -->
+        <div class="col s4" style="border-right: 2px solid black">
+          <h4 class="center-align">Añadir</h4>
+          <!-- Añadir cancion -->
+          <div class="row" style="border: 1px solid black">
+            <div class="col s10 offset-s1">
+              <h5 class="left-align">Cancion</h5>
+            </div>
+            <div class="input-field col s10 offset-s1">
+              <input id="a_title" type="text" class="validate" ng-model="titleS">
+              <label for="a_title">Titulo</label>
+            </div>
+            <div class="input-field col s10 offset-s1">
+              <input id="a_artista" type="number" class="validate" ng-model="idArtS">
+              <label for="a_artista">IDartista</label>
+            </div>
+            <div class="input-field col s10 offset-s1">
+              <input id="a_album" type="number" class="validate" ng-model="idAlbS">
+              <label for="a_album">IDalbum</label>
+            </div>
+            <div class="input-field col s10 offset-s1">
+              <input id="a_genero" type="text" class="validate" ng-model="genS">
+              <label for="a_genero">Genero/s</label>
+            </div>
+            <div class="col s10 offset-s1">
+              <form action="#">
+              <div class="file-field input-field">
+                <div class="btn light-blue accent-4">
+                  <span>Fichero</span>
+                  <input id="a_file" type="file" accept=".mp3,audio/*" >
+                </div>
+                <div class="file-path-wrapper">
+                  <input id="a_file2" class="file-path validate" type="text" file-model="fileS">
+                </div>
+              </div>
+              </form>
+            </div>
+            <!-- Boton enviar -->
+            <div class="col s3 offset-s7">
+              <button class="btn waves-effect waves-light  green darken-1" type="submit" id="envioCancion" ng-click='envioS()'>Enviar</button>
+              </br>
+            </div>
+          </div>
+
+          <!-- Añadir album -->
+          <div class="row" style="border: 1px solid black">
+            <div class="col s10 offset-s1">
+              <h5 class="left-align">Album</h5>
+            </div>
+            <div class="input-field col s10 offset-s1">
+              <input id="al_title" type="text" class="validate">
+              <label for="al_title">Titulo</label>
+            </div>
+            <div class="input-field col s10 offset-s1">
+              <input id="al_artista" type="number" class="validate">
+              <label for="al_artista">IDartista</label>
+            </div>
+            <div class="input-field col s10 offset-s1">
+              <input id="al_desc" type="text" class="validate">
+              <label for="al_desc">Descripcion</label>
+            </div>
+            <div class="input-field col s10 offset-s1">
+              <input id="al_time" type="date" class="validate">
+              <label for="al_time"></label>
+            </div>
+            <!-- Boton enviar -->
+            <div class="col s3 offset-s7">
+              <button class="btn waves-effect waves-light  green darken-1" type="submit" name="action" id="envioAlbum">Enviar</button>
+              </br>
+            </div>
+          </div>
+
+        </div> <!-- FIN TARJETA 1 -->
+
+
+        <!-- Tarjeta 2: Cambiar info cancion -->
+        <div class="col s4" style="border-right: 2px solid black">
+          <h4 class="center-align">Cambiar Info</h4>
+          <!-- Cambiar titulo -->
+          <div class="row" style="border: 1px solid black">
+            <div class="input-field col s10 offset-s1">
+              <input id="ca_Idsong" type="number" class="validate">
+              <label for="ca_Idsong">IDsong</label>
+            </div>
+            <div class="input-field col s10 offset-s1">
+              <input id="ca_title" type="text" class="validate">
+              <label for="ca_title">Title</label>
+            </div>
+            <!-- Boton enviar -->
+            <div class="col s3 offset-s6">
+              <button class="btn waves-effect waves-light yellow darken-4" type="submit" name="action" id="modTitulo">Modificar</button>
+              </br>
+            </div>
+          </div>
+          <!-- Cambiar Album -->
+          <div class="row" style="border: 1px solid black">
+            <div class="input-field col s10 offset-s1">
+              <input id="ca_Idsong2" type="number" class="validate">
+              <label for="ca_Idsong2">IDsong</label>
+            </div>
+            <div class="input-field col s10 offset-s1">
+              <input id="ca_album" type="text" class="validate">
+              <label for="ca_album">Album ID</label>
+            </div>
+            <div class="input-field col s10 offset-s1">
+              <input id="ca_albumna" type="text" class="validate">
+              <label for="ca_albumna">Album Name</label>
+            </div>
+            <!-- Boton enviar -->
+            <div class="col s3 offset-s6">
+              <button class="btn waves-effect waves-light yellow darken-4" type="submit" name="action" id="modAlbum">Modificar</button>
+              </br>
+            </div>
+          </div>
+          <!-- Cambiar Artista -->
+          <div class="row" style="border: 1px solid black">
+            <div class="input-field col s10 offset-s1">
+              <input id="ca_Idsong" type="number" class="validate">
+              <label for="ca_Idsong">IDsong</label>
+            </div>
+            <div class="input-field col s10 offset-s1">
+              <input id="ca_artist" type="text" class="validate">
+              <label for="ca_artist">Artista ID</label>
+            </div>
+            <div class="input-field col s10 offset-s1">
+              <input id="ca_artistna" type="text" class="validate">
+              <label for="ca_artistna">Artista Name</label>
+            </div>
+            <!-- Boton enviar -->
+            <div class="col s3 offset-s6">
+              <button class="btn waves-effect waves-light yellow darken-4" type="submit" name="action" id="modArtista">Modificar</button>
+              </br>
+            </div>
+          </div>
+
+        </div><!-- FIN TARJETA 2 -->
+
+
+        <!-- Tarjeta 3: Eliminar cancion -->
+        <div class="col s4">
+          <h4 class="center-align">Eliminar</h4>
+          <!-- Eliminar cancion -->
+          <div class="row" style="border: 1px solid black">
+            <div class="input-field col s10 offset-s1">
+              <input id="el_Idsong" type="number" class="validate">
+              <label for="el_Idsong">IDsong</label>
+            </div>
+            <!-- Boton eliminar -->
+            <div class="col s2 offset-s7">
+              <button class="btn waves-effect waves-light red" type="submit" name="action" id="eliminarSong">Eliminar</button>
+              </br>
+            </div>
+          </div>
+          <!-- Eliminar album -->
+          <div class="row" style="border: 1px solid black">
+            <div class="input-field col s10 offset-s1">
+              <input id="el_Idalbum" type="number" class="validate">
+              <label for="el_Idalbum">IDalbum</label>
+            </div>
+            <!-- Boton eliminar -->
+            <div class="col s2 offset-s7">
+              <button class="btn waves-effect waves-light red" type="submit" name="action" id="eliminarAlbum">Eliminar</button>
+              </br>
+            </div>
+          </div>
+          <!-- Eliminar autor-->
+          <div class="row" style="border: 1px solid black">
+            <div class="input-field col s10 offset-s1">
+              <input id="el_Idautor" type="number" class="validate">
+              <label for="el_Idautor">IDautor</label>
+            </div>
+            <!-- Boton eliminar -->
+            <div class="col s2 offset-s7">
+              <button class="btn waves-effect waves-light red" type="submit" name="action" id="eliminarAutor">Eliminar</button>
+              </br>
+            </div>
+          </div>
+
+        </div><!-- FIN TARJETA 3 -->
+
+    <script src="js/apps/materialize.js"></script>
+    <!--<script src="js/apps/admin.js"></script>-->
+</body>
+</html>

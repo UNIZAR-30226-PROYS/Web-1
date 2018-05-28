@@ -1,0 +1,29 @@
+<div>
+    <div class="container" style="width: 100%;">
+        <ul class="collection with-header">
+                <li class="collection-header"><h4>Listas de reproducción<a href="#/crear" class="secondary-content"><i class="material-icons medium">add_circle_outline</i></a></h4></li>
+        </ul>
+        <div class="row">
+            <div ng-repeat="lista in listas">
+                <div class="col s5 m3">
+                    <div class="card" style="width: 95%;">
+                        <div class="card-image">
+                            <img class="activator" ng-src="{{lista.imagen}}">
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title activator grey-text text-darken-4">{{lista.name}}<i class="material-icons right">more_vert</i></span>
+                            <p><a href="#songs/{{lista.id}}">Ir a la lista</a></p>
+                            <p><a href="#modif/{{lista.id}}">Modificar</a></p>
+                            <p>{{lista.songs.length}} canciones</p>
+                        </div>
+                        <div class="card-reveal">
+                            <span class="card-title grey-text text-darken-4">{{lista.name}}<i class="material-icons right">close</i></span>
+                            <p>{{lista.description}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>	
+</div>

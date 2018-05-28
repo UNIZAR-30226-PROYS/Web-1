@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Cierzo</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/miCss.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body>
+  <div class="row">
+
+      <!-- BARRA DE NAVEGACION-->
+      <div class="navb col l9 m9 s12" style="padding-left: 0px; margin:0px;padding-right: 0px">
+        <nav class="nav-extended  " role="navigation" style="background-color: #0091EA">
+
+          <div class="nav-wrapper"  style="padding-left: 23px; margin:0px; padding-right: 0px;width: 99%">
+            <a id="logo-container" href="#" class=" left brand-logo"  >
+              <img  src="images/logo_cierzo_1_white.png" style="display: inline-block;vertical-align: top;width: 180px;height: 50px;margin-right: 20px;margin-top: 15px; ">
+            </a>
+
+            
+            <!-- BARRA DE BUSQUEDA -->
+
+            <ul id="nav-mobile" class="right hide-on-small-only" style="max-height: 60px">
+              <li>
+                <input type="text" name="Search" class="header-search-input z-depth-2" placeholder="Búsqueda" />
+              </li>
+              <li>
+                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+              </li>
+            </ul>
+          </div>
+
+          <div class="nav-content hide-on-small-only" style="overflow: hidden;">
+            <ul class="tabs tabs-transparent tabs-fixed-width">
+              <li class="tab left" > 
+                <a target="_self" href="https://github.com/UNIZAR-30226-2018-05">
+                  <div class="chip">
+                      PEPE
+                  </div>
+                </a>
+              </li>
+              <li class="tab"><a class="active" href="#ListasRep">PlayLists</a></li>
+              <li class="tab"><a href="#Songs">Songs</a></li>
+              <li class="tab"><a href="#Albums">Albums</a></li>
+              <li class="tab"><a href="#Artists">Artists</a></li>
+              <li class="tab"><a href="#Genres">Genres</a></li>
+              <li class="tab"><a href="#People">People</a></li>
+              
+            </ul>
+          </div>
+            
+            <div class="center hide-on-med-and-up" style="max-width: 90%; padding: 10px;margin-left: 20px">
+                <form>
+                  <div class="center input-field" >
+                    <input id="search" type="search" required>
+                    <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                    <i class="material-icons">close</i>
+                  </div>
+                </form>
+            </div>
+      </div>
+
+
+      
+      <div class="section no-pad-bot" id="index-banner">
+        
+          <div class="center hide-on-med-and-up">
+                <br>
+                <br>
+                <br>
+            <hr/>
+            <a target="_self" href="https://github.com/UNIZAR-30226-2018-05">
+                    <div class="chip">
+                        PEPE
+                    </div>
+                  </a>
+            
+            <a class="waves-effect waves-light btn" href="#ListasRep" style="padding: 5px">Playlist</a>
+            <a class="waves-effect waves-light btn" href="#Songs" style="padding: 5px">Songs</a>
+            <a class="waves-effect waves-light btn" href="#Albums" style="padding: 5px">Albums</a>
+            <a class="waves-effect waves-light btn" href="#Artists" style="padding: 5px">Artists</a>
+            <a class="waves-effect waves-light btn" href="#Genres" style="padding: 5px">Genres</a>
+            <a class="waves-effect waves-light btn" href="#People" style="padding: 5px">People</a>
+
+          </div>
+
+
+
+        
+          <div class="col l9 m9 s12">
+            <!-- CONTENIDO PAGINA PRINCIPAL-->
+
+            
+            <div id="Songs">
+
+                <ul class="collection with-header">
+                    <li class="collection-header"><h4>Todas (Nombre del album // Criterio de busqueda) <a href="#!" class="secondary-content"><i class="material-icons medium">arrow_back</i></a></h4></li>
+                    
+                    <li class="collection-item"><div>La llamada - Leiva -- 4:15 <a href="#!" class="secondary-content" onclick="playSong(0)"><i class="material-icons">play_circle_outline</i></a></div></li>
+                    <li class="collection-item"><div>BriBriBliBli - Extremoduro -- 4:15 <a href="#!" class="secondary-content" onclick="playSong(1)"><i class="material-icons">play_circle_outline</i></a></div></li>
+                    <li class="collection-item"><div>Cuatro babys - Maluma -- 4:15 <a href="#!" class="secondary-content" onclick="playSong(2)"><i class="material-icons">play_circle_outline</i></a></div></li>
+                    <li class="collection-item"><div>Deltoya - Extremoduro -- 4:15 <a href="#!" class="secondary-content" onclick="playSong()"><i class="material-icons">play_circle_outline</i></a></div></li>
+                </ul>
+
+
+                <!-- FIN SONGS-->
+            </div>
+            <div id="Albums"> 
+                
+                    <div class="container" style="width: 100%;">
+                            <div class="row">
+                            
+                                <div class="col s5 m3">
+                                    <div class="card z-depth-4" style="width: 200px">
+                                    <a href="#">
+                                        <div class="card-image">
+                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeV-OSRu3Vju4JEA4kvp65HHaxQUal2SwxjsotxKQGYx1Kkkv5tQ">
+                                            <span class="card-title">Pretty Boy, Dirty Boy (2015)</span>
+                                        </div>
+                                        <div class="card-content">
+                                            <p>Maluma</p>
+                                        </div>
+                                    </a>
+                                    </div>
+                                </div>
+
+
+                                <div class="col s5 m3">
+                                        <div class="card z-depth-4" style="width: 200px">
+                                        <a href="#">
+                                            <div class="card-image">
+                                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeV-OSRu3Vju4JEA4kvp65HHaxQUal2SwxjsotxKQGYx1Kkkv5tQ">
+                                                <span class="card-title">Pretty Boy, Dirty Boy (2015)</span>
+                                            </div>
+                                            <div class="card-content">
+                                                <p>Maluma</p>
+                                            </div>
+                                        </a>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col s5 m3">
+                                            <div class="card z-depth-4" style="width: 200px">
+                                            <a href="#">
+                                                <div class="card-image">
+                                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeV-OSRu3Vju4JEA4kvp65HHaxQUal2SwxjsotxKQGYx1Kkkv5tQ">
+                                                    <span class="card-title">Pretty Boy, Dirty Boy (2015)</span>
+                                                </div>
+                                                <div class="card-content">
+                                                    <p>Maluma</p>
+                                                </div>
+                                            </a>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col s5 m3">
+                                                <div class="card z-depth-4" style="width: 200px">
+                                                <a href="#">
+                                                    <div class="card-image">
+                                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeV-OSRu3Vju4JEA4kvp65HHaxQUal2SwxjsotxKQGYx1Kkkv5tQ">
+                                                        <span class="card-title">Pretty Boy, Dirty Boy (2015)</span>
+                                                    </div>
+                                                    <div class="card-content">
+                                                        <p>Maluma</p>
+                                                    </div>
+                                                </a>
+                                                </div>
+                                            </div>
+
+                            </div>
+                        </div>
+
+
+
+            </div>
+            <div id="Artists">
+                    <div class="container" style="width: 100%;">
+                            <div class="row">
+                            
+                                <div class="col s5 m3">
+                                    <div class="card z-depth-4" style="width: 200px">
+                                    <a href="#">
+                                        <div class="card-image">
+                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeV-OSRu3Vju4JEA4kvp65HHaxQUal2SwxjsotxKQGYx1Kkkv5tQ">
+                                            <span class="card-title">Maluma</span>
+                                        </div>
+                                        <div class="card-content">
+                                            <p>Artista internacional colombiano.</p>
+                                        </div>
+                                    </a>
+                                    </div>
+                                </div>
+
+
+                                <div class="col s5 m3">
+                                        <div class="card z-depth-4" style="width: 200px">
+                                        <a href="#">
+                                            <div class="card-image">
+                                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeV-OSRu3Vju4JEA4kvp65HHaxQUal2SwxjsotxKQGYx1Kkkv5tQ">
+                                                <span class="card-title">Maluma</span>
+                                            </div>
+                                            <div class="card-content">
+                                                <p>Artista internacional colombiano.</p>
+                                            </div>
+                                        </a>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col s5 m3">
+                                            <div class="card z-depth-4" style="width: 200px">
+                                            <a href="#">
+                                                <div class="card-image">
+                                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeV-OSRu3Vju4JEA4kvp65HHaxQUal2SwxjsotxKQGYx1Kkkv5tQ">
+                                                    <span class="card-title">Maluma</span>
+                                                </div>
+                                                <div class="card-content">
+                                                    <p>Artista internacional colombiano.</p>
+                                                </div>
+                                            </a>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col s5 m3">
+                                                <div class="card z-depth-4" style="width: 200px">
+                                                <a href="#">
+                                                    <div class="card-image">
+                                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeV-OSRu3Vju4JEA4kvp65HHaxQUal2SwxjsotxKQGYx1Kkkv5tQ">
+                                                        <span class="card-title">Maluma</span>
+                                                    </div>
+                                                    <div class="card-content">
+                                                        <p>Artista internacional colombiano.</p>
+                                                    </div>
+                                                </a>
+                                                </div>
+                                            </div>
+
+
+
+
+
+                            </div>
+                        </div>	
+        
+        
+        
+
+
+            </div>
+            <div id="Genres" class="col s12 green">Genres</div>
+            <div id="People" class="col s12 green">People</div>
+            <div id="ListasRep">
+                <div class="container" style="width: 100%;">
+                    <div class="row">
+                        <div class="col s5 m3">
+                            <div class="card z-depth-4" style="width: 200px">
+                            <a href="#">
+                                <div class="card-image">
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeV-OSRu3Vju4JEA4kvp65HHaxQUal2SwxjsotxKQGYx1Kkkv5tQ">
+                                    <span class="card-title">Favoritas</span>
+                                </div>
+                                <div class="card-content">
+                                    <p>Lista de reproducción de las canciones favoritas del gran Pepe Viyuela.</p>
+                                </div>
+                                <div class="card-action">
+                                    <p>
+                                    20 canciones
+                                    </p>
+                                </div>
+                            </a>
+                            </div>
+                        </div>
+
+
+                        <div class="col s5 m3">
+                                <div class="card z-depth-4" style="width: 200px">
+                                <a href="#">
+                                    <div class="card-image">
+                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeV-OSRu3Vju4JEA4kvp65HHaxQUal2SwxjsotxKQGYx1Kkkv5tQ">
+                                        <span class="card-title">Favoritas</span>
+                                    </div>
+                                    <div class="card-content">
+                                        <p>Lista de reproducción de las canciones favoritas del gran Pepe Viyuela.</p>
+                                    </div>
+                                    <div class="card-action">
+                                        <p>
+                                        20 canciones
+                                        </p>
+                                    </div>
+                                </a>
+                                </div>
+                            </div>
+                        
+                        
+                        <div class="col s5 m3">
+                            <div class="card z-depth-4" style="width: 200px">
+                            <a href="#">
+                                <div class="card-image">
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeV-OSRu3Vju4JEA4kvp65HHaxQUal2SwxjsotxKQGYx1Kkkv5tQ">
+                                    <span class="card-title">Favoritas</span>
+                                </div>
+                                <div class="card-content">
+                                    <p>Lista de reproducción de las canciones favoritas del gran Pepe Viyuela.</p>
+                                </div>
+                                <div class="card-action">
+                                    <p>
+                                    20 canciones
+                                    </p>
+                                </div>
+                            </a>
+                            </div>
+                        </div>
+                        
+                        
+                        
+                        <div class="col s5 m3">
+                            <div class="card z-depth-4" style="width: 200px">
+                            <a href="#">
+                                <div class="card-image">
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeV-OSRu3Vju4JEA4kvp65HHaxQUal2SwxjsotxKQGYx1Kkkv5tQ">
+                                    <span class="card-title">Favoritas</span>
+                                </div>
+                                <div class="card-content">
+                                    <p>Lista de reproducción de las canciones favoritas del gran Pepe Viyuela.</p>
+                                </div>
+                                <div class="card-action">
+                                    <p>
+                                    20 canciones
+                                    </p>
+                                </div>
+                            </a>
+                            </div>
+                        </div>
+
+
+                        <div class="col s5 m3">
+                                <div class="card z-depth-4" style="width: 200px">
+                                <a href="#">
+                                    <div class="card-image">
+                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeV-OSRu3Vju4JEA4kvp65HHaxQUal2SwxjsotxKQGYx1Kkkv5tQ">
+                                        <span class="card-title">Favoritas</span>
+                                    </div>
+                                    <div class="card-content">
+                                        <p>Lista de reproducción de las canciones favoritas del gran Pepe Viyuela.</p>
+                                    </div>
+                                    <div class="card-action">
+                                        <p>
+                                        20 canciones
+                                        </p>
+                                    </div>
+                                </a>
+                                </div>
+                            </div>
+
+
+                            <div class="col s5 m3">
+                                    <div class="card z-depth-4" style="width: 200px">
+                                    <a href="#">
+                                        <div class="card-image">
+                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeV-OSRu3Vju4JEA4kvp65HHaxQUal2SwxjsotxKQGYx1Kkkv5tQ">
+                                            <span class="card-title">Favoritas</span>
+                                        </div>
+                                        <div class="card-content">
+                                            <p>Lista de reproducción de las canciones favoritas del gran Pepe Viyuela.</p>
+                                        </div>
+                                        <div class="card-action">
+                                            <p>
+                                            20 canciones
+                                            </p>
+                                        </div>
+                                    </a>
+                                    </div>
+                                </div>
+                            
+                            
+                            <div class="col s5 m3">
+                                <div class="card z-depth-4" style="width: 200px">
+                                <a href="#">
+                                    <div class="card-image">
+                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeV-OSRu3Vju4JEA4kvp65HHaxQUal2SwxjsotxKQGYx1Kkkv5tQ">
+                                        <span class="card-title">Favoritas</span>
+                                    </div>
+                                    <div class="card-content">
+                                        <p>Lista de reproducción de las canciones favoritas del gran Pepe Viyuela.</p>
+                                    </div>
+                                    <div class="card-action">
+                                        <p>
+                                        20 canciones
+                                        </p>
+                                    </div>
+                                </a>
+                                </div>
+                            </div>
+                            
+                            
+                            
+                            <div class="col s5 m3">
+                                <div class="card z-depth-4" style="width: 200px">
+                                <a href="#">
+                                    <div class="card-image">
+                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeV-OSRu3Vju4JEA4kvp65HHaxQUal2SwxjsotxKQGYx1Kkkv5tQ">
+                                        <span class="card-title">Favoritas</span>
+                                    </div>
+                                    <div class="card-content">
+                                        <p>Lista de reproducción de las canciones favoritas del gran Pepe Viyuela.</p>
+                                    </div>
+                                    <div class="card-action">
+                                        <p>
+                                        20 canciones
+                                        </p>
+                                    </div>
+                                </a>
+                                </div>
+                            </div>
+
+
+
+
+                    </div>
+                </div>	
+
+                <!--FIN LISTAS REP-->
+            </div>
+          </div>
+      </div>
+
+
+
+
+
+
+
+
+      <!-- REPRODUCTOR-->
+      <div class="reproductor col l3 m3 s12">  <!--  Reproductor de la pagina principal -->
+          <div id="reproductorIndex">
+            <div class="hide-on-small-only">     <!--  Reproductor para WEB Y TABLET-->
+
+                  <div class="col s12">
+                      <h5 class="center-align">Reproduciendo ahora</h5><br>
+                  </div>
+
+                  <!--PORTADA -->
+                  <div class="col s8 offset-s2">
+                      <div class="card">
+                        <div class="card-image">
+                            <a href="song.html">
+                                <img class="responsive-img" src="" id="wArt">
+                            </a>
+                        </div>
+                      </div>
+                  </div>
+
+
+                  <!--ARTISTA Y CANCION-->
+                  <div class="col s12">
+                      <h3 class="truncate center-align" id="wTitle"></h3>
+                      <h5 class="truncate center-align" id="wArtist"></h5>
+                  </div>
+
+
+
+
+                   <!--BOTONES: PLAY/STOP ADELANTE Y ATRAS-->
+                  <div class="col s8 offset-l1 valign-wrapper">
+                      <div class="col s2">
+                          <a class="btn-floating btn-medium waves-effect waves-light light-green accent-4" id="wPrev">
+                            <i class="material-icons">fast_rewind</i>
+                          </a>
+                      </div>
+                      <div class="col s2 offset-s2">
+                          <a class="btn-floating btn-large waves-effect waves-light light-green accent-4" id="wPlay">
+                            <i class="material-icons">play_arrow</i>
+                          </a>
+                      </div>
+                      <div class="col s2 offset-s3">
+                          <a class="btn-floating btn-medium waves-effect waves-light light-green accent-4" id="wNext">
+                            <i class="material-icons">fast_forward</i>
+                          </a>
+                      </div>
+                  </div>
+
+                <!--BARRA DE PROGRESO-->
+
+                <div class="col s12">
+                    <br><br>
+                    <div id="track">
+                        <div id="progress"></div>
+                        <div id="handler"></div>
+                    </div>
+                    <div class="col s12 offset-s1">
+                        <div class="col s1">
+                            <p id="final">
+                            </p>
+                        </div>
+
+                        <div class="col s2 offset-s6">
+                            <p id="current">
+                            </p>
+                        </div>
+                    </div>
+                    <br><br>
+                </div>
+
+                  
+
+                  <!--BOTONES: REPETIR Y RANDOM-->
+                  <div class="col s8 offset-l1 valign-wrapper">
+
+                      <div class="col s2 offset-s3">
+                          <a class="btn-floating btn-medium waves-effect waves-light light-green accent-4"><i class="large material-icons">repeat</i></a>
+                      </div>
+                      <div class="col s2 offset-s3">
+                          <a class="btn-floating btn-medium waves-effect waves-light light-green accent-4"><i class="large material-icons">shuffle</i></a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div id="reproductorMovilIndex">
+              <div class="hide-on-med-and-up">     
+              <!--  Reproductor para MOVIL-->
+                  <div class="col s12">
+                            <!--  BARRA DE PROGRESO -->
+                            <div class="col s12">
+                                <div id="track2">
+                                  <div id="progress2"></div>
+                                  <div id="handler2"></div>
+                                </div>
+                                <div class="col s12 offset-s1">
+                                  <div class="col s1">
+                                      <p id="final2">
+                                      </p>
+                                  </div>
+
+                                  <div class="col s2 offset-s6">
+                                      <p id="current2">
+                                      </p>
+                                  </div>
+                                </div>
+                            </div>
+
+                          <div class="col s10 offset-s1">
+                              <!--TITULO CANCION -->
+                              <div class="col s5">
+                                  <h6 class="truncate center-align" id="mTitle"></h6>
+                              </div>
+                              
+                              <!--BOTONES: PLAY/STOP ADELANTE Y ATRAS-->
+                              <div class="col s1 offset-s2">
+                                  <a class="btn-floating btn-medium waves-effect waves-light light-green accent-4" id="mPrev"><i class="material-icons">fast_rewind</i></a>
+                              </div>
+                              <div class="col s1 offset-s1">
+                                  <a class="btn-floating btn-medium waves-effect waves-light light-green accent-4" id="mPlay"><i class="material-icons">play_arrow</i></a>
+                              </div>
+                              <div class="col s1 offset-s1">
+                                  <a class="btn-floating btn-medium waves-effect waves-light light-green accent-4" id="mNext"><i class="material-icons">fast_forward</i></a>
+                              </div>
+                          </div>
+                  </div>
+                  <div class="col s12">
+                      <div class="col s10 offset-s1">
+                          <!--ARTISTA-->
+                          <div class="col s5">
+                              <h5 class="truncate center-align" id="mArtist"></h5>
+                          </div>
+                          <!--BOTONES: REPETIR Y RANDOM-->
+                          <div class="col s1 offset-s2">
+                              <a class="btn-floating btn-medium waves-effect waves-light light-green accent-4"><i class="material-icons">repeat</i></a>
+                          </div>
+                          <div class="col s1 offset-s3">
+                              <a class="btn-floating btn-medium waves-effect waves-light light-green accent-4"><i class="material-icons">shuffle</i></a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+      </div>
+  </div>
+
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+  <script src="js/musica.js"></script>
+  <script src="js/musica2.js"></script>
+  
+
+
+  </body>
+</html>
