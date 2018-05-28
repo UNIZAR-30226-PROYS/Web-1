@@ -46,7 +46,7 @@
                     </li>
                     <li ng-repeat="cancion in nuevas track by $index" class="collection-item">
                         <div>{{cancion.name}} - {{cancion.authorName}}
-                            <a class="secondary-content" href="javascript:"  ng-click="quitarS($index)">
+                            <a class="secondary-content" href="javascript:"  ng-click="quitarS(cancion.id,$index)">
                                 <i class="material-icons">remove_circle_outline</i>
                             </a>
                         </div>

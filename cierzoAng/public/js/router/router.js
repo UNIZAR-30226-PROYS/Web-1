@@ -1,9 +1,9 @@
-/*
+
 cierzoApp.config(['$httpProvider', function($httpProvider) {
   $httpProvider.defaults.withCredentials = true;
 }])
 
-*/
+
 
 
 cierzoApp.config(function($routeProvider) {

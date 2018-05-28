@@ -292,7 +292,21 @@ cierzoApp.controller("cambiarController", ['$scope','$http','$cookieStore', func
     
     $scope.cambio = function(){
         if($scope.pass1==$scope.pass12){
-            alert("cambio user "+id+" nuevo correo "+$scope.mail+" nuevo pass "+$scope.pass1);
+            var data1={
+                "mail": $scope.mail1.toString(),
+                "pass": $scope.pass1.toString()
+            }
+            $http({
+                method: 'PUT',
+                url: server+'account/credentials',
+                data: data1
+            }).then(function successCallback(response) {
+                alert("Has cambiado correctamente.")
+               
+            }, function errorCallback(response) {
+        
+            });
+            //alert("cambio user "+id+" nuevo correo "+$scope.mail+" nuevo pass "+$scope.pass1);
         }
         else{
             alert("Tienen que ser iguales las pass");
@@ -319,6 +333,16 @@ cierzoApp.controller("usersController",['$scope','$http','$cookieStore', functio
 
     $scope.add = function(id){
         alert("añado user "+id);
+
+        $http({
+            method: 'POST',
+            url: server+'profiles/'+id+'/follow'
+        }).then(function successCallback(response) {
+            console.log(response);
+        }, function errorCallback(response) {
+    
+        });
+
     }
 
     $scope.eliminar = function(id){
@@ -373,6 +397,21 @@ cierzoApp.controller("crearlController",['$scope','$http', function ( $scope,$ht
             alert("No se puede crear.")
         }
         else{
+            var datos={
+                "description": "Descripción de la nueva lista",
+                "name": $scope.nameL
+              }
+            $http({
+                method: 'POST',
+                url: server+'playlists',
+                data: datos
+            }).then(function successCallback(response) {
+
+                
+            }, function errorCallback(response) {
+        
+            });
+
             console.log("Se crea la lista:")
             console.log($scope.nameL);
             console.log(nuevas);
@@ -413,37 +452,73 @@ cierzoApp.controller("modifController",['$scope','$http','$routeParams', functio
     });
 
     $scope.addS = function(id){
-        nuevas.push(id);
-        $scope.num=$scope.num+1;
-        $scope.nuevas=nuevas;
+       
+        $http({
+            method: 'POST',
+            url: server+'playlists'+$routeParams.param+'/songs',
+            data: "\""+id.id+"\""
+        }).then(function successCallback(response) {
+            nuevas.push(id);
+            $scope.num=$scope.num+1;
+            $scope.nuevas=nuevas;
+        }, function errorCallback(response) {
+            alert("Algo ha ido mal");
+        });
+
     }
 
-    $scope.quitarS = function(id){
-        nuevas.splice(id, 1);
-        $scope.num=$scope.num-1;
-        $scope.nuevas=nuevas;
+    $scope.quitarS = function(id,ind){
+        console.log(id);
+        $http({
+            method: 'DELETE',
+            url: server+'playlists/'+$routeParams.param+'/songs/'+id,
+        }).then(function successCallback(response) {
+            nuevas.pop(ind);
+            $scope.num=$scope.num-1;
+            $scope.nuevas=nuevas;
+        }, function errorCallback(response) {
+            alert("Algo ha ido mal");
+        });
     }
 
     $scope.crear = function(){
        
-        if($scope.nameL==undefined || nuevas.length==0){
-            alert("No se puede crear.")
+        if($scope.nameL==undefined){
+            alert("No se puede modificar.")
         }
         else{
-            console.log("Se crea la lista:")
-            console.log($scope.nameL);
-            console.log(nuevas);
-            alert("Se crea");
+            var datos={
+                "description": "Descripción de la nueva lista",
+                "name": $scope.nameL
+              }
+            $http({
+                method: 'PUT',
+                url: server+'playlists/'+$routeParams.param,
+                data: datos
+            }).then(function successCallback(response) {
+                alert("Se modifica");
+                
+            }, function errorCallback(response) {
+        
+            });
+
+            
         }
 
     }
 
 
     $scope.eliminar = function(){
-        console.log("Se elimina la lista:")
-        console.log($scope.nameL);
-        console.log(nuevas);
-        alert("Se elimina");
+        $http({
+            method: 'DELETE',
+            url: server+'playlists/'+$routeParams.param
+        }).then(function successCallback(response) {
+            alert("Se BORRA");
+            
+        }, function errorCallback(response) {
+    
+        });
+        
     }
 
 
@@ -514,12 +589,12 @@ cierzoApp.controller("signController",['$scope','$http','$location', function ($
         else{
             var data3={
                 "mail": $scope.mail1,
-                "name": $scope.name,
+                "name": $scope.name1,
                 "pass": $scope.pass1,
                 "username": $scope.sur1
               }
 
-
+            console.log(data3);
             $http({
                 method: 'POST',
                 url: server+'signup',
@@ -572,27 +647,23 @@ cierzoApp.controller("userController", ['$scope','$http','$cookieStore','authPro
 
 
     $scope.borrar = function() {
-        /*
-        authProvider.setUser(false);
-        $cookieStore.put("conectado", false);
-        $cookieStore.remove("nombre");
-        $cookieStore.remove("id");
+        
+        
 
         $http({
-            method: 'GET',
+            method: 'DELETE',
             url: server+'account'
         }).then(function successCallback(response) {
-            console.log(response.data);
-    
+            authProvider.setUser(false);
+            $cookieStore.put("conectado", false);
+            $cookieStore.remove("nombre");
+            $cookieStore.remove("id");
+            $location.path('/songs');
            
         }, function errorCallback(response) {
             
         });
 
-
-        $location.path('/songs');
-        */
-       alert("Esto no va");
     }
 
 }]);
@@ -623,130 +694,208 @@ cierzoApp.controller("adminController",['$scope','$http','$location', function (
      * Cuando el boton enviarCancion es pulsado
      */
     enviarCancion.onclick = function () {
-    var titulo  = document.getElementById("a_title").value;
-    var artista = document.getElementById("a_artista").value;
-    var album   = document.getElementById("a_album").value;
-    var fichero_url = document.getElementById("a_file");
-    var file = fichero_url.files[0];
-    var formData = new FormData();
-    formData.append('file',file);
-    var fichero = document.getElementById("a_file").value;
-    var genero  = document.getElementById("a_genero").value;
-    console.log(fichero);
-    // Subir cancion
-    var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
-    xmlhttp.open("POST", server+"songs", false);
-    xmlhttp.setRequestHeader("Content-Type", "application/json");
-    xmlhttp.send(JSON.stringify({"albumID": album, "authorID": artista,
-                                "genre": ["rock"], "lenght": "01:10","name": titulo}));
+        var titulo  = document.getElementById("a_title").value;
+        var artista = document.getElementById("a_artista").value;
+        var album   = document.getElementById("a_album").value;
+        
+        var fichero = document.getElementById("a_file").value;
 
-    if(xmlhttp.status < 400){ //Respuesta valida, ha ido todo bien
-        alert('Cancion añadida!');
-        console.log("Añadida cancion--->");
-        console.log("Titulo : " + titulo);
-        console.log("Artista: " + artista);
-        console.log("Album  : " + album);
-        console.log("File   : " + fichero);
 
-        //Subir fichero
-        var cancion = JSON.parse(xmlhttp.responseText); //para obtener el id
-        xmlhttp.open("POST", server+"songs/"+cancion.id+"/file", false);
+        var fichero_url = document.getElementById("a_file");
+        var file = fichero_url.files[0];
+        var formData = new FormData();
+        formData.append('songFile',fichero,"pepe.mp3");
+        
+       console.log(formData);
+        
+        var genero  = document.getElementById("a_genero").value;
+        /*console.log(fichero_url);
+        console.log(fichero);
+        console.log(file);
+        console.log(formData);*/
+        // Subir cancion
+        var data1={
+            "albumID": album,
+            "authorID": artista,
+            "genre": [genero],
+            "lenght": "150",
+            "name": titulo
+        };
+        console.log(data1);
+        $http({
+            method: 'POST',
+            url: server+"songs",
+            data: data1
+        }).then(function successCallback(response) {
+            console.log('creoSong');
+            var id22=response.data.id;
+            
+            console.log(formData);
+            $http({
+                method: 'POST',
+                url: server+"songs/"+id22+'/file',
+                data: formData
+            }).then(function successCallback(response) {
+                var id=response.data.id;
+                console.log("meto file");
+        
+                
+            }, function errorCallback(response) {
+                
+            });
+    
+            
+        }, function errorCallback(response) {
+                
+           
+        }, function errorCallback(response) {
+            
+        });
+        /*
+        var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
+        xmlhttp.open("POST", server+"songs", true);
+        xmlhttp.withCredentials=true;
         xmlhttp.setRequestHeader("Content-Type", "application/json");
-        xmlhttp.send(formData);
+        var data={
+            "\"albumID\"": album.toString(),
+            "\"authorID\"": artista.toString(),
+            "\"genre\"": [genero.toString()],
+            "\"lenght\"": "03:05",
+            "\"name\"": titulo
+        };
+        console.log(data);
+        xmlhttp.send(data);
 
-        //Limpio los campos
-        document.getElementById("a_title").value = "";
-        document.getElementById("a_artista").value = "";
-        document.getElementById("a_album").value = "";
-        document.getElementById("a_file").value = "";
-        document.getElementById("a_file2").value = "";
-        document.getElementById("a_genero").value = "";
-    }else{
-        alert('No he podido: ' + xmlhttp.statusText);
-        console.log("Problemas...");
-        console.log(xmlhttp.statusText);
-    }
+        if(xmlhttp.status < 400){ //Respuesta valida, ha ido todo bien
+            alert('Cancion añadida!');
+            console.log("Añadida cancion--->");
+            console.log("Titulo : " + titulo);
+            console.log("Artista: " + artista);
+            console.log("Album  : " + album);
+            console.log("File   : " + fichero);
 
+            //Subir fichero
+            var cancion = JSON.parse(xmlhttp.responseText); //para obtener el id
+            xmlhttp.open("POST", server+"songs/"+cancion.id+"/file", false);
+            xmlhttp.setRequestHeader("Content-Type", "application/json");
+            xmlhttp.send(formData);
+
+            //Limpio los campos
+            document.getElementById("a_title").value = "";
+            document.getElementById("a_artista").value = "";
+            document.getElementById("a_album").value = "";
+            document.getElementById("a_file").value = "";
+            document.getElementById("a_file2").value = "";
+            document.getElementById("a_genero").value = "";
+        }else{
+            alert('No he podido: ' + xmlhttp.statusText);
+            console.log("Problemas...");
+            console.log(xmlhttp.statusText);
+        }
+*/
     }
     /**
      * Cuando el boton enviar2 es pulsado
      */
     enviarAlbum.onclick = function(){
-    var titulo  = document.getElementById("al_title").value;
-    var artista = document.getElementById("al_artista").value;
-    var desc    = document.getElementById("al_desc").value;
-    var publi   = document.getElementById("al_time").value;
-    // Subir album
-    var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
-    xmlhttp.open("POST", server+"albums", false);
-    xmlhttp.setRequestHeader("Content-Type", "application/json");
-    xmlhttp.send(JSON.stringify({"authorID": artista, "description": desc,
-                                "name": titulo, "publishDate": publi+"T00:00:00.000Z"}));
+        var titulo  = document.getElementById("al_title").value;
+        var artista = document.getElementById("al_artista").value;
+        var desc    = document.getElementById("al_desc").value;
+        var publi   = document.getElementById("al_time").value;
+        // Subir album
+        var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
+        xmlhttp.open("POST", server+"albums", false);
+        xmlhttp.setRequestHeader("Content-Type", "application/json");
+        xmlhttp.withCredentials=true;
+        xmlhttp.send(JSON.stringify({"authorID": artista, "description": desc,
+                                    "name": titulo, "publishDate": publi+"T00:00:00.000Z"}));
 
-    if(xmlhttp.status < 400){ //Respuesta valida, ha ido todo bien
-        alert('Album añadido!');
-        console.log("Añadida album--->");
-        console.log("Titulo : " + titulo);
-        console.log("Artista: " + artista);
-        console.log("Desc   : " + desc);
-        console.log("public : " + publi);
-        //Limpio los campos
-        document.getElementById("al_title").value = "";
-        document.getElementById("al_artista").value = "";
-        document.getElementById("al_desc").value = "";
-        document.getElementById("a_time").value = "";
-    }else{
-        alert('No he podido: ' + xmlhttp.statusText);
-        console.log("Problemas...");
-        console.log(xmlhttp.statusText);
-    }
+        if(xmlhttp.status < 400){ //Respuesta valida, ha ido todo bien
+            alert('Album añadido!');
+            console.log("Añadida album--->");
+            console.log("Titulo : " + titulo);
+            console.log("Artista: " + artista);
+            console.log("Desc   : " + desc);
+            console.log("public : " + publi);
+            //Limpio los campos
+            document.getElementById("al_title").value = "";
+            document.getElementById("al_artista").value = "";
+            document.getElementById("al_desc").value = "";
+            document.getElementById("a_time").value = "";
+        }else{
+            alert('No he podido: ' + xmlhttp.statusText);
+            console.log("Problemas...");
+            console.log(xmlhttp.statusText);
+        }
     }
 
     /***************************************************************************/
     /********************* MODIFICAR CANCION ***********************************/
     /***************************************************************************/
 
+
+    function getDatosSong(id){
+        $http({
+            method: 'GET',
+            url: server+"songs/"+id
+        }).then(function successCallback(response) {
+            console.log(response.data);
+            return response.data;
+
+           
+        }, function errorCallback(response) {
+            alert("Te has equivocado ajja");
+        });
+    }
+
+
     /*
     * Boton modificar titulo pulsado
     */
     modifTitulo.onclick = function(){
-    var titulo = document.getElementById("ca_title").value;
-    var idSong = document.getElementById("ca_Idsong").value;
 
-    var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
-    xmlhttp.open("GET", server+"songs/"+idSong, false);
-    xmlhttp.send(null);
-    if (xmlhttp.status == 200){
-        var cancion = JSON.parse(xmlhttp.responseText);
-        var min = "0" + Math.trunc(parseInt(cancion.lenght)/60);
-        var sec = function(){
-        if(Math.trunc(parseInt(cancion.lenght)%60) < 10){
-            return "0" + Math.trunc(parseInt(cancion.lenght)%60);
+        var idSong = document.getElementById("ca_Idsong").value;
+        var titulo = document.getElementById("ca_title").value;
+        
+        var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
+        xmlhttp.open("GET", server+"songs/"+idSong, false);
+        xmlhttp.send(null);
+        if (xmlhttp.status == 200){
+            var cancion = JSON.parse(xmlhttp.responseText);
+            var min = "0" + Math.trunc(parseInt(cancion.lenght)/60);
+            var sec = function(){
+                if(Math.trunc(parseInt(cancion.lenght)%60) < 10){
+                    return "0" + Math.trunc(parseInt(cancion.lenght)%60);
+                }else{
+                    return Math.trunc(parseInt(cancion.lenght)%60);
+                }
+            };
+            var tiempo=min+":"+sec();
+            //xmlhttp.setRequestHeader("Content-Type", "application/json");
+            var data1={
+                "albumID": cancion.albumID.toString(),
+                "authorID": cancion.authorID.toString(),
+                "genre": cancion.genre,
+                "lenght": cancion.lenght.toString(),
+                "name": titulo
+            };
+            console.log(data1);
+            $http({
+                method: 'PUT',
+                url: server+"songs/"+idSong,
+                data: data1
+            }).then(function successCallback(response) {
+                console.log(response.data);
+    
+               
+            }, function errorCallback(response) {
+                alert("DEP");
+            });
+
         }else{
-            return Math.trunc(parseInt(cancion.lenght)%60);
-        }};
-        xmlhttp.open("PUT", server+"songs/"+idSong, false);
-        xmlhttp.setRequestHeader("Content-Type", "application/json");
-        xmlhttp.send(JSON.stringify({"albumID":cancion.albumID.toString(),"albumName":cancion.albumName,"authorID":cancion.authorID.toString(),
-                                    "authorName":cancion.authorName,"genre":[cancion.genre],"id": idSong.toString(),"lenght":min+":"+sec(),
-                                    "name":titulo}));
-
-        if(xmlhttp.status < 400){ //Respuesta valida, ha ido todo bien
-        alert('Info cambiada!');
-
-        //Limpio los campos
-        document.getElementById("ca_title").value = "";
-        document.getElementById("ca_Idsong").value = "";
-
-        }else{
-        alert('No he podido: ' + xmlhttp.statusText);
-        console.log("Problemas...");
-        console.log(xmlhttp.statusText);
+            alert('Algo ha ido mal...');
         }
-    }else{
-        alert('Algo ha ido mal...');
-    }
-
+        
 
     }
 
@@ -756,13 +905,15 @@ cierzoApp.controller("adminController",['$scope','$http','$location', function (
     modifAlbum.onclick = function(){
     var albumID = document.getElementById("ca_album").value;
     var albumNa = document.getElementById("ca_albumna").value;
-    var idSong = document.getElementById("ca_Idsong").value;
+    var idSong = document.getElementById("ca_Idsong2").value;
+    console.log(idSong);
 
     var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
     xmlhttp.open("GET", server+"songs/"+idSong, false);
     xmlhttp.send(null);
     if (xmlhttp.status == 200){
         var cancion = JSON.parse(xmlhttp.responseText);
+        /*
         var min = "0" + Math.trunc(parseInt(cancion.lenght)/60);
         var sec = function(){
         if(Math.trunc(parseInt(cancion.lenght)%60) < 10){
@@ -776,6 +927,44 @@ cierzoApp.controller("adminController",['$scope','$http','$location', function (
                                     "authorName":cancion.authorName,"genre":[cancion.genre],"id": idSong.toString(),"lenght":min+":"+sec(),
                                     "name":cancion.name}));
 
+
+        */
+        var data1={
+            "albumID": albumID,
+            "authorID": cancion.authorID.toString(),
+            "genre": cancion.genre,
+            "lenght": cancion.lenght.toString(),
+            "name": cancion.name
+        };
+        //console.log(data1);
+        $http({
+            method: 'PUT',
+            url: server+"songs/"+idSong,
+            data: data1
+        }).then(function successCallback(response) {
+            console.log(response.data);
+
+            var data1="'"+idSong+"'";
+            console.log(data1);
+            $http({
+                method: 'POST',
+                url: server+"albums/"+albumID+'/songs',
+                data: data1
+            }).then(function successCallback(response) {
+                console.log(response.data);
+    
+                
+            }, function errorCallback(response) {
+                alert("DEP");
+            });
+
+
+            
+            
+        }, function errorCallback(response) {
+            alert("DEP");
+        });
+        /*
         if(xmlhttp.status < 400){ //Respuesta valida, ha ido todo bien
         alert('Info cambiada!');
 
@@ -789,6 +978,7 @@ cierzoApp.controller("adminController",['$scope','$http','$location', function (
         console.log("Problemas...");
         console.log(xmlhttp.statusText);
         }
+        */
     }else{
         alert('Algo ha ido mal...');
     }
@@ -848,23 +1038,37 @@ cierzoApp.controller("adminController",['$scope','$http','$location', function (
      * Cuando el boton eliminarCancion es pulsado
      */
     eliminarCancion.onclick = function () {
-    var idSong = document.getElementById("el_Idsong").value;
-    var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
-    xmlhttp.open("DELETE", server+"songs/"+idSong, false);
-    xmlhttp.send();
-    if(xmlhttp.status < 400){ //Respuesta valida, ha ido todo bien
-        xmlhttp.open("DELETE", server+"songs/"+idSong+"file", false);
+        var idSong = document.getElementById("el_Idsong").value;
+        /*
+        var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
+        xmlhttp.open("DELETE", server+"songs/"+idSong, false);
+        xmlhttp.withCredentials=true;
         xmlhttp.send();
+        if(xmlhttp.status < 400){ //Respuesta valida, ha ido todo bien
+            xmlhttp.open("DELETE", server+"songs/"+idSong+"file", false);
+            xmlhttp.send();
 
-        alert('Cancion eliminada!');
-        //Limpio los campos
-        document.getElementById("el_Idsong").value = "";
+            alert('Cancion eliminada!');
+            //Limpio los campos
+            document.getElementById("el_Idsong").value = "";
 
-    }else{
-        alert('No he podido: ' + xmlhttp.statusText);
-        console.log("Problemas...");
-        console.log(xmlhttp.statusText);
-    }
+        }else{
+            alert('No he podido: ' + xmlhttp.statusText);
+            console.log("Problemas...");
+            console.log(xmlhttp.statusText);
+        }
+        */
+
+       $http({
+            method: 'DELETE',
+            url: server+"songs/"+idSong
+        }).then(function successCallback(response) {
+            console.log(response.data);
+
+            
+        }, function errorCallback(response) {
+            alert("DEP");
+        });
     }
 
     /**
@@ -872,18 +1076,20 @@ cierzoApp.controller("adminController",['$scope','$http','$location', function (
      */
     eliminarAlbum.onclick = function () {
         var idAlbum = document.getElementById("el_Idalbum").value;
+        
         var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
         xmlhttp.open("DELETE", server+"albums/"+idAlbum, false);
+        xmlhttp.withCredentials=true;
         xmlhttp.send();
         if(xmlhttp.status < 400){ //Respuesta valida, ha ido todo bien
-        alert('Album eliminado!');
-        //Limpio los campos
-        document.getElementById("el_Idalbum").value = "";
+            alert('Album eliminado!');
+            //Limpio los campos
+            document.getElementById("el_Idalbum").value = "";
 
         }else{
-        alert('No he podido: ' + xmlhttp.statusText);
-        console.log("Problemas...");
-        console.log(xmlhttp.statusText);
+            alert('No he podido: ' + xmlhttp.statusText);
+            console.log("Problemas...");
+            console.log(xmlhttp.statusText);
         }
     }
 
