@@ -101,6 +101,24 @@
                       <div class="col l7">
                         <h4 class="truncate" id="cArtist">AUTOR</h4>
                       </div>
+                      <!-- BOTONES SOLO PARA MOVIL -->
+                      <div class="col s9 offset-s1 valign-wrapper hide-on-med-and-up" style="margin-bottom: 50px">
+                          <div class="col s2">
+                              <a class="btn-floating btn-medium waves-effect waves-light light-green accent-4" id="cPrev2">
+                                <i class="material-icons">fast_rewind</i>
+                              </a>
+                          </div>
+                          <div class="col s2 offset-s2">
+                              <a class="btn-floating btn-large waves-effect waves-light light-green accent-4" id="cPlay2">
+                                <i class="material-icons">play_arrow</i>
+                              </a>
+                          </div>
+                          <div class="col s2 offset-s3">
+                              <a class="btn-floating btn-medium waves-effect waves-light light-green accent-4" id="cNext2">
+                                <i class="material-icons">fast_forward</i>
+                              </a>
+                          </div>
+                      </div>
                       <!--BARRA DE PROGRESO-->
                       <div class="col l7 s12" id="barra">
                           <div class="col l11 s12" id="track3">
@@ -127,15 +145,9 @@
 
 
                     <a class="waves-effect waves-light btn" id="visual" style="left: 20px">Visualizador</a>
-                    <div class="col l12 hide-on-small-only">
+                    <div class="col l12 s12">
                         <div id="visualizador">
                             <canvas id="canvas1" width="1500px" height="50px"></canvas>
-                        </div>
-                    </div>
-                    <div class="col s12 hide-on-med-and-up">
-                        <br>
-                        <div id="visualizadorMovil">
-                            <canvas id="canvas1" width="100px" height="50px"></canvas>
                         </div>
                     </div>
 

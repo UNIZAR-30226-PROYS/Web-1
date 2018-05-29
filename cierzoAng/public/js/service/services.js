@@ -109,6 +109,9 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
     var cPlay          = document.getElementById('cPlay');
     var cNext          = document.getElementById('cNext');
     var cPrev          = document.getElementById('cPrev');
+    var cPlay2          = document.getElementById('cPlay2');
+    var cNext2          = document.getElementById('cNext2');
+    var cPrev2          = document.getElementById('cPrev2');
     var cTitle         = document.getElementById('cTitle');
     var cArtist        = document.getElementById('cArtist');
     var cArt      = document.getElementById('cArt');
@@ -330,8 +333,19 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
             audio.play();
             cPlay.innerHTML = '<i class="material-icons">pause</i>';
         }
+    }
+    cPlay2.onclick = function () {
 
-
+        if(playing){
+            audio.pause();
+            playing=false;
+            cPlay2.innerHTML = '<i class="material-icons">play_arrow</i>';
+        }
+        else{
+            playing=true;
+            audio.play();
+            cPlay2.innerHTML = '<i class="material-icons">pause</i>';
+        }
     }
 
     wPrev.onclick = function () {
@@ -525,6 +539,7 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
         wPlay.innerHTML = '<i class="material-icons">play_arrow</i>';
         mPlay.innerHTML = '<i class="material-icons">play_arrow</i>';
         cPlay.innerHTML = '<i class="material-icons">play_arrow</i>';
+        cPlay2.innerHTML = '<i class="material-icons">play_arrow</i>';
         playing = false;
 
     }, false);
@@ -537,6 +552,7 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
         wPlay.innerHTML = '<i class="material-icons">pause</i>';
         mPlay.innerHTML = '<i class="material-icons">pause</i>';
         cPlay.innerHTML = '<i class="material-icons">pause</i>';
+        cPlay2.innerHTML = '<i class="material-icons">pause</i>';
         playing = true;
     }, false);
 
