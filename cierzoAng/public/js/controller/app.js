@@ -285,7 +285,7 @@ cierzoApp.controller("listasRepController", ['$scope','$http','$cookieStore', fu
 
         for(var i=0;i<listas.length;i++){
             if(listas[i].songs.length==0){
-                listas[i]['imagen']='http://www.popelera.net/wp-content/uploads/2016/10/melendi-quitate-las-gafas.jpg';
+                listas[i]['imagen']="images/fondoPlaylistVacia.png";
             }
             else{
                 listas[i]['imagen']=server+'songs/'+listas[i].songs[0].id+'/image';
