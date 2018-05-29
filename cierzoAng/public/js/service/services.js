@@ -117,6 +117,7 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
     var cArt      = document.getElementById('cArt');
     var handler3      = document.getElementById('handler3');
     var cCan      = document.getElementById('canvas1');
+    var cCan2      = document.getElementById('canvas2');
     var canvas      = document.getElementById('canvas1');
 
     var ccur       = document.getElementById('current3');
@@ -186,6 +187,10 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
      */
     function iniciarWeb() {
         audio = new Audio();
+        if(window.innerWidth<400){ //Para poner el visualizador especializado para el movil
+          document.getElementById("visualizador").style.width= window.innerWidth+'px';
+          document.getElementById("visualizador").style.position='static';
+        }
         if(songs.length>0){
             console.log('puedo');
             song = songs[current_track];
