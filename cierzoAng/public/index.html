@@ -92,25 +92,25 @@
                       </div>
                       <!--ALBUM-->
                       <div class="col l7">
-                        <h4 class="truncate" id="cAlbum">ALBUM</h4>
+                        <h4 class="truncate" id="wLista"></h4>
                       </div>
                       <!--AUTOR-->
                       <div class="col l7">
                         <h4 class="truncate" id="cArtist">AUTOR</h4>
                       </div>
                       <!--BARRA DE PROGRESO-->
-                      <div class="col l7" id="barra">
-                          <div class="col l11" id="track3">
+                      <div class="col l7 s12" id="barra">
+                          <div class="col l11 s12" id="track3">
                               <div id="progress3"></div>
                               <div id="handler3"></div>
                           </div>
-                          <div class="col l11">
-                              <div class="col s1">
+                          <div class="col l11 s10">
+                              <div class="col l1 s1">
                                   <p id="final3">
                                   </p>
                               </div>
 
-                              <div class="col s1 offset-s10">
+                              <div class="col l1 offset-l10 s1 offset-s10">
                                   <p id="current3">
                                   </p>
                               </div>
@@ -124,9 +124,15 @@
 
 
                     <a class="waves-effect waves-light btn" id="visual" style="left: 20px">Visualizador</a>
-                    <div class="col l12 m12 s12">
+                    <div class="col l12 hide-on-small-only">
                         <div id="visualizador">
                             <canvas id="canvas1" width="1500px" height="50px"></canvas>
+                        </div>
+                    </div>
+                    <div class="col s12 hide-on-med-and-up">
+                        <br>
+                        <div id="visualizadorMovil">
+                            <canvas id="canvas1" width="100px" height="50px"></canvas>
                         </div>
                     </div>
 
@@ -181,8 +187,8 @@
                                 </div>
 
                                 <!--PORTADA -->
-                                <div class="col s8 offset-s2">
-                                    <div class="card" style="max-width: 150px;">
+                                <div class="col l12">
+                                    <div class="card" style="max-width: 150px; display: block;margin-left: auto; margin-right: auto;">
                                       <div class="card-image">
                                           <a href="#big">
                                               <img class="responsive-img"  src="" id="wArt">
@@ -286,7 +292,7 @@
                                         <div class="col s10 offset-s1">
                                             <!--TITULO CANCION -->
                                             <div class="col s5">
-                                                <h6 class="truncate center-align" id="mTitle"></h6>
+                                              <h6 class="truncate center-align" id="mTitle"><a href="#big"></a></h6>
                                             </div>
 
                                             <!--BOTONES: PLAY/STOP ADELANTE Y ATRAS-->
