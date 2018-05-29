@@ -20,7 +20,7 @@
   <!-- BARRA NAVEGACION -->
   <nav>
     <div class="nav-wrapper light-blue accent-4">
-          <ul class="left hide-on-med-and-down">
+          <ul class="left hide-on-small-only">
             <li><a href="javascript:history.back();" class="btn-floating btn-large waves-effect waves-light light-green accent-4 valign-wrapper" style="left: 15px"><i class="medium material-icons">arrow_back</i></a></li>
             <li><span style="font-size:250%">&nbsp;Perfil</span></li>
             <li><a ng-click="salir()" class="btn-floating btn-large waves-effect waves-light light-green accent-4 valign-wrapper" style="left: 15px"><i class="medium material-icons">exit_to_app</i></a></li>
@@ -28,7 +28,7 @@
             <li><a href="#admin" class="btn-floating btn-large waves-effect waves-light light-green accent-4 valign-wrapper" style="left: 15px"><i class="medium material-icons">build</i></a></li>
             <li><a href="#camb" class="btn-floating btn-large waves-effect waves-light light-green accent-4 valign-wrapper" style="left: 15px"><i class="medium material-icons">border_color</i></a></li>
           </ul>
-          <ul class="left hide-on-large-only">
+          <ul class="left hide-on-med-and-up">
             <li><a href="javascript:history.back();" class="btn-floating waves-effect waves-light light-green accent-4" style="left: 2px"><i class="medium material-icons">arrow_back</i></a></li>
             <li><span style="font-size:115%">&nbsp;Perfil</span></li>
             <li><a ng-click="salir()" class="btn-floating waves-effect waves-light light-green accent-4" style="left: 2px"><i class="medium material-icons">exit_to_app</i></a></li>
@@ -45,8 +45,11 @@
   <div class="col s12 m8 offset-m2 l6 offset-l3">
         <div class="card-panel grey lighten-5 z-depth-1">
           <div class="row valign-wrapper">
-            <div class="col s2">
+            <div class="col s2 hide-on-small-only">
               <i class="large material-icons">account_circle</i> <!-- notice the "circle" class -->
+            </div>
+            <div class="col s2 hide-on-med-and-up">
+              <i class="medium material-icons">account_circle</i> <!-- notice the "circle" class -->
             </div>
             <div class="col s10">
               <ul class="collection">
