@@ -64,7 +64,7 @@ cierzoApp.run(['$rootScope', '$cookieStore', '$location', 'authProvider','$http'
 
 
 
-cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
+cierzoApp.service('music',[ '$cookieStore','$http', function($cookieStore,$http) {
     /*************************************************************************
      * Script que controla el reproductor de musica de la Web
      *************************************************************************/
@@ -157,16 +157,109 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
     /* Canciones para probar */
 
 
-    var theUrl2='http://localhost:8080/api/profiles/'+$cookieStore.get('id');
-    var theUrl='http://localhost:8080/api/songs'
+    var theUrl2='http://192.168.44.128:8080/api/profiles/'+$cookieStore.get('id');
+    var theUrl='http://192.168.44.128:8080/api/songs'
+
+    //llamo sesion
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", theUrl2, false ); // false for synchronous request
+    xmlHttp.open( "GET",'http://192.168.44.128:8080/api/account/session' , false ); // false for synchronous request
+    xmlHttp.withCredentials=true;
     xmlHttp.send( null );
 
     var lis = JSON.parse(xmlHttp.responseText);
+    var cancID;
+    var listID;
 
-    songs=lis.playlists[0].songs;
-    console.log(songs);
+    //songs=lis.playlists[0].songs;
+    console.log(lis);
+    console.log(xmlHttp.responseText);
+    
+
+    if(jQuery.isEmptyObject(lis)){
+        var primeraVez=true;
+    }
+    else{
+        var primeraVez=false;
+    }
+
+    
+
+    function buscar(lis,atrib) {
+        for(var i=0;i<lis.length;i++){
+            if(lis[i].id==atrib){
+                return i;
+            }
+        }
+
+    }
+
+    if(primeraVez){
+        console.log("no sesion");
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", theUrl2, false ); // false for synchronous request
+        xmlHttp.send( null );
+
+        var lis = JSON.parse(xmlHttp.responseText);
+
+        songs=lis.playlists[0].songs;
+        console.log(lis);
+
+        if(songs.length>0){
+            cancID=lis.playlists[0].songs[current_track].id;
+            listID=lis.playlists[0].id;
+            var cuerpo={
+                "playlistID": lis.playlists[0].id.toString(),
+                "second": "0",
+                "songID": lis.playlists[0].songs[current_track].id.toString()
+              };
+            $http({
+                method: 'PUT',
+                url: 'http://192.168.44.128:8080/api/account/session',
+                data: cuerpo
+            }).then(function successCallback(response) {
+                console.log(response.data);
+    
+    
+            }, function errorCallback(response) {
+                alert("DEP");
+            });
+        }
+        else{
+            listID=lis.playlistID;
+            console.log("lista vacia");
+            var xmlHttp = new XMLHttpRequest();
+            //var theUrl2='http://192.168.44.128:8080/api/playlists/'+lis.playlistID;
+            xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+            xmlHttp.send( null );
+    
+            var lis2 = JSON.parse(xmlHttp.responseText);
+            
+            
+            songs=[];
+    
+            //current_track=buscar(songs,lis.songID);
+        }
+        
+
+    }
+    else{
+        console.log(lis);
+        listID=lis.playlistID;
+        console.log("si sesion");
+        var xmlHttp = new XMLHttpRequest();
+        var theUrl2='http://192.168.44.128:8080/api/playlists/'+lis.playlistID;
+        xmlHttp.open( "GET", theUrl2, false ); // false for synchronous request
+        xmlHttp.send( null );
+
+        var lis2 = JSON.parse(xmlHttp.responseText);
+
+        songs=lis2.songs;
+
+        current_track=buscar(songs,lis.songID);
+    }
+    
+
+
 
 
     var context,src;
@@ -223,7 +316,39 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
     //audio.addEventListener('timeupdate', this.actualizarTrackWeb, false);
 
 
-    audio.ontimeupdate = function() {actualizarTrackWeb()};
+    audio.ontimeupdate = function() {
+        actualizarTrackWeb();
+        cancID= songs[current_track].id;
+        //console.log(audio.currentTime);
+        //console.log(audio.currentTime%10);
+        if(audio.currentTime%10<1){
+            
+            if(listID!="no"){
+                console.log("envio sesion");
+                var cuerpo={
+                    "playlistID": listID.toString(),
+                    "second": parseInt(audio.duration).toString(),
+                    "songID": cancID.toString()
+                  };
+                  console.log(cuerpo);
+                $http({
+                    method: 'PUT',
+                    url: 'http://192.168.44.128:8080/api/account/session',
+                    data: cuerpo
+                }).then(function successCallback(response) {
+                    //console.log(response.data);
+        
+        
+                }, function errorCallback(response) {
+                    //alert("DEP");
+                });
+            }
+            else{
+                console.log("Es album");
+            }
+            
+        }
+    };
 
 
     /**
@@ -857,10 +982,17 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
 
     }
 
-    this.cambiarSongs=function(canci,nombre) {
+    this.cambiarSongs1=function(canci,nombre,id) {
+        console.log("cambio lista a"+ id);
         wList.textContent ='Lista: '+nombre;
         songs=canci;
+        listID=id;
+    }
 
+    this.cambiarSongs2=function(canci,nombre) {
+        wList.textContent ='Lista: '+nombre;
+        songs=canci;
+        listID="no";
     }
 
 

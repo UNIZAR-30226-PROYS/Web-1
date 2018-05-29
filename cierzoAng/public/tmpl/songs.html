@@ -18,7 +18,7 @@
             </h4>
         </li>
 
-        <li ng-repeat="cancion in canciones" class="collection-item">
+        <li ng-repeat="cancion in canciones.songs" class="collection-item">
             <div>{{cancion.name}} - {{cancion.authorName}} - {{cancion.lenght}} s
                 <a class="secondary-content" href="javascript:"  ng-click="prueba(cancion.id,canciones)">
                     <i class="material-icons">play_circle_outline</i>

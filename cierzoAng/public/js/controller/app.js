@@ -1,4 +1,4 @@
-var server='http://localhost:8080/api/';
+var server='http://192.168.44.128:8080/api/';
 
 
 
@@ -78,6 +78,7 @@ cierzoApp.controller("principalController", ['$scope','$location','$cookieStore'
 
 var canciones=[];
 var nLista='';
+var identi;
 
 cierzoApp.controller("songsController", ['$scope', '$routeParams','$http','music','$cookieStore', function($scope, $routeParams,$http,music,$cookieStore) {
     $scope.headerSrc = "tmpl/navbar.html";
@@ -107,20 +108,24 @@ cierzoApp.controller("songsController", ['$scope', '$routeParams','$http','music
             canciones=lis.songs;
             $scope.titulo='Lista: Favoritas';
             nLista='Todas';
+            identi=lis.id;
 
         }
         else if(param=='album'){
             var lis=response.data;
-            canciones=lis.songs;
+            canciones=lis;
 
             nLista=lis.name;
+            identi="no";
             $scope.titulo='Album: '+nLista+' de '+lis.authorName;
         }
         else{
             var lis=response.data;
 
             nLista=lis.name;
-            canciones=lis.songs;
+            console.log("IIIIII")
+            identi=lis.name.id;
+            canciones=lis;
             $scope.titulo='Lista: '+nLista;
 
         }
@@ -130,8 +135,18 @@ cierzoApp.controller("songsController", ['$scope', '$routeParams','$http','music
         //reproducir cancion desde /songs
         //hacer llamada con num=id cancion y reproducir en funcion de la posicion.
         $scope.prueba = function(num,lista) {
-            music.cambiarSongs(lista,nLista);
-            music.playSongId(num);
+            if(identi!="no"){
+                console.log("NO ALBUM");
+                console.log(identi);
+                music.cambiarSongs1(lista.songs,nLista,lista.id);
+                music.playSongId(num);
+            }
+            else{
+                console.log("album");
+                music.cambiarSongs2(lista.songs,nLista);
+                music.playSongId(num);
+            }
+           
         }
 
 
