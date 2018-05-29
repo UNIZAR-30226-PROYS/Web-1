@@ -324,7 +324,7 @@ cierzoApp.controller("cambiarController", ['$scope','$http','$cookieStore', func
             //alert("cambio user "+id+" nuevo correo "+$scope.mail+" nuevo pass "+$scope.pass1);
         }
         else{
-            alert("Tienen que ser iguales las pass");
+            alert("Las contraseñas tienen que ser identicas");
         }
     }
 
@@ -591,7 +591,7 @@ cierzoApp.controller("loginController",['$scope','$cookieStore', 'authProvider',
 
                 }, function errorCallback(response) {
 
-                    alert("Te has equivocado ajja");
+                    alert("Error en login");
                 });
 
             }
@@ -611,7 +611,7 @@ cierzoApp.controller("signController",['$scope','$http','$location', function ($
     $scope.sign = function(){
 
         if($scope.pass1!=$scope.pass12){
-            alert("Contraseñas distintas ajjaxd")
+            alert("Las contraseñas no coinciden")
         }
         else{
             var data3={
@@ -632,7 +632,7 @@ cierzoApp.controller("signController",['$scope','$http','$location', function ($
 
 
             }, function errorCallback(response) {
-                alert("Te has equivocado ajja");
+                alert("No has podido registrarte");
             });
         }
     }
@@ -881,7 +881,7 @@ cierzoApp.controller("adminController",['$scope','$http','$location', function (
 
            
         }, function errorCallback(response) {
-            alert("Te has equivocado ajja");
+            alert("No existe ese id..");
         });
     }
 
