@@ -1,4 +1,4 @@
-var server='http://192.168.44.128:8080/api/';
+var server='http://localhost:8080/api/';
 
 
 
@@ -317,9 +317,9 @@ cierzoApp.controller("cambiarController", ['$scope','$http','$cookieStore', func
                 data: data1
             }).then(function successCallback(response) {
                 alert("Has cambiado correctamente.")
-               
+
             }, function errorCallback(response) {
-        
+
             });
             //alert("cambio user "+id+" nuevo correo "+$scope.mail+" nuevo pass "+$scope.pass1);
         }
@@ -355,7 +355,7 @@ cierzoApp.controller("usersController",['$scope','$http','$cookieStore', functio
         }).then(function successCallback(response) {
             console.log(response);
         }, function errorCallback(response) {
-    
+
         });
 
     }
@@ -368,11 +368,11 @@ cierzoApp.controller("usersController",['$scope','$http','$cookieStore', functio
         }).then(function successCallback(response) {
             alert("eliminado user "+id);
         }, function errorCallback(response) {
-    
+
         });
 
 
-        
+
 
     }
 
@@ -434,9 +434,9 @@ cierzoApp.controller("crearlController",['$scope','$http', function ( $scope,$ht
                 data: datos
             }).then(function successCallback(response) {
 
-                
+
             }, function errorCallback(response) {
-        
+
             });
 
             console.log("Se crea la lista:")
@@ -479,7 +479,7 @@ cierzoApp.controller("modifController",['$scope','$http','$routeParams', functio
     });
 
     $scope.addS = function(id){
-       
+
         $http({
             method: 'POST',
             url: server+'playlists'+$routeParams.param+'/songs',
@@ -509,7 +509,7 @@ cierzoApp.controller("modifController",['$scope','$http','$routeParams', functio
     }
 
     $scope.crear = function(){
-       
+
         if($scope.nameL==undefined){
             alert("No se puede modificar.")
         }
@@ -524,12 +524,12 @@ cierzoApp.controller("modifController",['$scope','$http','$routeParams', functio
                 data: datos
             }).then(function successCallback(response) {
                 alert("Se modifica");
-                
+
             }, function errorCallback(response) {
-        
+
             });
 
-            
+
         }
 
     }
@@ -541,11 +541,11 @@ cierzoApp.controller("modifController",['$scope','$http','$routeParams', functio
             url: server+'playlists/'+$routeParams.param
         }).then(function successCallback(response) {
             alert("Se BORRA");
-            
+
         }, function errorCallback(response) {
-    
+
         });
-        
+
     }
 
 
@@ -674,8 +674,8 @@ cierzoApp.controller("userController", ['$scope','$http','$cookieStore','authPro
 
 
     $scope.borrar = function() {
-        
-        
+
+
 
         $http({
             method: 'DELETE',
@@ -686,7 +686,7 @@ cierzoApp.controller("userController", ['$scope','$http','$cookieStore','authPro
             $cookieStore.remove("nombre");
             $cookieStore.remove("id");
             $location.path('/songs');
-           
+
         }, function errorCallback(response) {
 
         });
@@ -728,9 +728,9 @@ cierzoApp.controller("adminController",['$scope','$http','$location', function (
         }).then(function successCallback(response) {
             alert('envio');
             console.log($scope.archivo);
-            
+
         }, function errorCallback(response) {
-            
+
         });
     }
     /**
@@ -750,11 +750,11 @@ cierzoApp.controller("adminController",['$scope','$http','$location', function (
         var file = fichero_url.files[0];
         var formData = new FormData();
         formData.append('songFile',fichero,"pepe.mp3");
-        
+
        console.log(formData);
         */
         var genero  = document.getElementById("a_genero").value;
-        
+
 
         // Subir cancion
         var data1={
@@ -771,23 +771,23 @@ cierzoApp.controller("adminController",['$scope','$http','$location', function (
             data: data1
         }).then(function successCallback(response) {
             alert('creo Song, ahora envia el archivo');
-            
+
             fors.action=server+'songs/'+response.data.id+'/file';
             fors.submit();
             iden=response.data.id;
             //$scope.actionURL=server+'songs/'+response.data.id+'/file';
             //console.log($scope.actionURL);
 
-            
-    
-            
+
+
+
         },function errorCallback(response) {
-            
+
         });
-        
 
 
-       
+
+
         /*
         var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
         xmlhttp.open("POST", server+"songs", true);
@@ -879,7 +879,7 @@ cierzoApp.controller("adminController",['$scope','$http','$location', function (
             console.log(response.data);
             return response.data;
 
-           
+
         }, function errorCallback(response) {
             alert("No existe ese id..");
         });
@@ -893,7 +893,7 @@ cierzoApp.controller("adminController",['$scope','$http','$location', function (
 
         var idSong = document.getElementById("ca_Idsong").value;
         var titulo = document.getElementById("ca_title").value;
-        
+
         var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
         xmlhttp.open("GET", server+"songs/"+idSong, false);
         xmlhttp.send(null);
@@ -923,8 +923,8 @@ cierzoApp.controller("adminController",['$scope','$http','$location', function (
                 data: data1
             }).then(function successCallback(response) {
                 console.log(response.data);
-    
-               
+
+
             }, function errorCallback(response) {
                 alert("DEP");
             });
@@ -932,7 +932,7 @@ cierzoApp.controller("adminController",['$scope','$http','$location', function (
         }else{
             alert('Algo ha ido mal...');
         }
-        
+
 
     }
 
@@ -989,15 +989,15 @@ cierzoApp.controller("adminController",['$scope','$http','$location', function (
                 data: data1
             }).then(function successCallback(response) {
                 console.log(response.data);
-    
-                
+
+
             }, function errorCallback(response) {
                 alert("DEP");
             });
 
 
-            
-            
+
+
         }, function errorCallback(response) {
             alert("DEP");
         });
@@ -1102,7 +1102,7 @@ cierzoApp.controller("adminController",['$scope','$http','$location', function (
         }).then(function successCallback(response) {
             console.log(response.data);
 
-            
+
         }, function errorCallback(response) {
             alert("DEP");
         });
@@ -1113,7 +1113,7 @@ cierzoApp.controller("adminController",['$scope','$http','$location', function (
      */
     eliminarAlbum.onclick = function () {
         var idAlbum = document.getElementById("el_Idalbum").value;
-        
+
         var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
         xmlhttp.open("DELETE", server+"albums/"+idAlbum, false);
         xmlhttp.withCredentials=true;

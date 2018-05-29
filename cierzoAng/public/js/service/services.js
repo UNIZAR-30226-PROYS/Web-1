@@ -128,17 +128,33 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
     var random=false;
     var repeat=false;
 
-    var limpiarBusqueda = document.getElementById('cancione');
-
-    limpiarBusqueda.onclick = function () {
+    /* Al ser pulsado cualquier pestaña tras aplicar un filtro, se limpia
+     * este */
+    document.getElementById('cancione').onclick = function () {
       document.getElementById('busqueda').value="";
     }
+    document.getElementById('listaR').onclick = function () {
+      document.getElementById('busqueda').value="";
+    }
+    document.getElementById('albums').onclick = function () {
+      document.getElementById('busqueda').value="";
+    }
+    document.getElementById('artists').onclick = function () {
+      document.getElementById('busqueda').value="";
+    }
+    document.getElementById('usuarios').onclick = function () {
+      document.getElementById('busqueda').value="";
+    }
+
+
+
+
 
     /* Canciones para probar */
 
 
-    var theUrl2='http://192.168.44.128:8080/api/profiles/'+$cookieStore.get('id');
-    var theUrl='http://192.168.44.128:8080/api/songs'
+    var theUrl2='http://localhost:8080/api/profiles/'+$cookieStore.get('id');
+    var theUrl='http://localhost:8080/api/songs'
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "GET", theUrl2, false ); // false for synchronous request
     xmlHttp.send( null );
