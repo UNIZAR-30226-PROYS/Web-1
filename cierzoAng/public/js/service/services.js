@@ -634,32 +634,44 @@ cierzoApp.service('music',[ '$cookieStore','$http', function($cookieStore,$http)
     }
 
     wShuffle.onclick = function () {
-        console.log("Ahora random")
+        console.log("Ahora random");
+	if(random == true) wShuffle.innerHTML = '<i class="large material-icons" style="color: #000">shuffle</i>';
+        else wShuffle.innerHTML = '<i class="large material-icons" style="color: #fff">shuffle</i>';
         random=!random;
     }
 
     wRepeat.onclick = function () {
-        console.log("Ahora repeat")
+        console.log("Ahora repeat");
+	if(repeat == true) wRepeat.innerHTML = '<i class="large material-icons" style="color: #000">repeat</i>';
+        else wRepeat.innerHTML = '<i class="large material-icons" style="color: #fff">repeat</i>';
         repeat=!repeat;
     }
 
     mShuffle.onclick = function () {
-        console.log("Ahora random")
+        console.log("Ahora random");
+	if(random == true) mShuffle.innerHTML = '<i class="material-icons" style="color: #000">shuffle</i>';
+        else mShuffle.innerHTML = '<i class="material-icons" style="color: #fff">shuffle</i>';
         random=!random;
     }
 
     mRepeat.onclick = function () {
-        console.log("Ahora repeat")
+        console.log("Ahora repeat");
+	if(repeat == true) mRepeat.innerHTML = '<i class="material-icons" style="color: #000">repeat</i>';
+        else mRepeat.innerHTML = '<i class="material-icons" style="color: #fff">repeat</i>';
         repeat=!repeat;
     }
 
     cShuffle.onclick = function () {
-        console.log("Ahora random")
+        console.log("Ahora random");
+	if(random == true) cShuffle.innerHTML = '<i class="large material-icons" style="color: #000">shuffle</i>';
+        else cShuffle.innerHTML = '<i class="large material-icons" style="color: #fff">shuffle</i>';
         random=!random;
     }
 
     cRepeat.onclick = function () {
-        console.log("Ahora repeat")
+        console.log("Ahora repeat");
+	if(repeat == true) cRepeat.innerHTML = '<i class="large material-icons" style="color: #000">repeat</i>';
+        else cRepeat.innerHTML = '<i class="large material-icons" style="color: #fff">repeat</i>';
         repeat=!repeat;
     }
 
