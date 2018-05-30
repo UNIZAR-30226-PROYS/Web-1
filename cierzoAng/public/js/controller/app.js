@@ -1,4 +1,4 @@
-var server='http://localhost:8080/api/';
+var server='http://192.168.44.128:8080/api/';
 
 
 
@@ -105,7 +105,8 @@ cierzoApp.controller("songsController", ['$scope', '$routeParams','$http','music
 
         if(param==undefined){
             var lis=response.data.playlists[0];
-            canciones=lis.songs;
+            canciones=lis;
+            
             $scope.titulo='Lista: Favoritas';
             nLista='Todas';
             identi=lis.id;
@@ -123,7 +124,6 @@ cierzoApp.controller("songsController", ['$scope', '$routeParams','$http','music
             var lis=response.data;
 
             nLista=lis.name;
-            console.log("IIIIII")
             identi=lis.name.id;
             canciones=lis;
             $scope.titulo='Lista: '+nLista;
@@ -131,18 +131,17 @@ cierzoApp.controller("songsController", ['$scope', '$routeParams','$http','music
         }
 
         $scope.canciones=canciones;
+        console.log(canciones);
 
         //reproducir cancion desde /songs
         //hacer llamada con num=id cancion y reproducir en funcion de la posicion.
         $scope.prueba = function(num,lista) {
             if(identi!="no"){
-                console.log("NO ALBUM");
                 console.log(identi);
                 music.cambiarSongs1(lista.songs,nLista,lista.id);
                 music.playSongId(num);
             }
             else{
-                console.log("album");
                 music.cambiarSongs2(lista.songs,nLista);
                 music.playSongId(num);
             }
@@ -155,15 +154,16 @@ cierzoApp.controller("songsController", ['$scope', '$routeParams','$http','music
     });
 
     $scope.ordenNombre = function() {
-        var lista=$scope.canciones;
+        var lista=$scope.canciones.songs;
         lista.sort(function(a, b){return a.name>b.name})
+        $scope.canciones.songs=lista;
         console.log(lista);
     }
 
     $scope.ordenNormal = function() {
-        var lista=$scope.canciones;
+        var lista=$scope.canciones.songs;
         lista.sort(function(a, b){return a.name<b.name})
-        $scope.canciones=lista;
+        $scope.canciones.songs=lista;
         console.log(lista);
     }
 
@@ -192,8 +192,11 @@ cierzoApp.controller("artistsController", ['$scope','$http','$cookieStore', func
 }]);
 
 
-cierzoApp.controller("bigController", ['$scope','$http','$cookieStore', function ($scope,$http,$cookieStore) {
-
+cierzoApp.controller("bigController", ['$scope','$http','$cookieStore','music', function ($scope,$http,$cookieStore,music) {
+    $scope.changeGain = function(num,lista) {
+        console.log(num);
+        music.changeGain(num,lista);
+    }
 
 }]);
 
@@ -282,7 +285,7 @@ cierzoApp.controller("searchController", ['$scope','$routeParams','$http','music
 
     $scope.prueba = function(num,lista) {
         var nueva=[lista];
-        music.cambiarSongs(nueva,"");
+        music.cambiarSongs2(nueva,"");
         music.playSongId(num);
     }
 
@@ -408,7 +411,7 @@ cierzoApp.controller("usersController",['$scope','$http','$cookieStore', functio
 
 
 
-cierzoApp.controller("crearlController",['$scope','$http', function ( $scope,$http) {
+cierzoApp.controller("crearlController",['$scope','$http','$location', function ( $scope,$http,$location) {
     var nuevas=[];
     $scope.num=0;
     $scope.nameL2="Lista nueva";
@@ -435,7 +438,7 @@ cierzoApp.controller("crearlController",['$scope','$http', function ( $scope,$ht
 
     $scope.crear = function(){
 
-        if($scope.nameL==undefined || nuevas.length==0){
+        if($scope.nameL==undefined){
             alert("No se puede crear.")
         }
         else{
@@ -448,8 +451,8 @@ cierzoApp.controller("crearlController",['$scope','$http', function ( $scope,$ht
                 url: server+'playlists',
                 data: datos
             }).then(function successCallback(response) {
-
-
+                alert("Lista creada");
+                $location.path('/songs');
             }, function errorCallback(response) {
 
             });
@@ -512,11 +515,13 @@ cierzoApp.controller("modifController",['$scope','$http','$routeParams', functio
 
     $scope.quitarS = function(id,ind){
         console.log(id);
+        console.log(ind);
+
         $http({
             method: 'DELETE',
             url: server+'playlists/'+$routeParams.param+'/songs/'+id,
         }).then(function successCallback(response) {
-            nuevas.pop(ind);
+            nuevas.splice(ind,1);
             $scope.num=$scope.num-1;
             $scope.nuevas=nuevas;
         }, function errorCallback(response) {
@@ -734,21 +739,7 @@ cierzoApp.controller("adminController",['$scope','$http','$location', function (
     /***************************************************************************/
 
     var iden;
-    $scope.enviar=function(){
-        alert("intento enviar");
-        console.log($scope.archivo);
-        $http({
-            method: 'POST',
-            url: server+'songs/56/file',
-            data: $scope.archivo
-        }).then(function successCallback(response) {
-            alert('envio');
-            console.log($scope.archivo);
-
-        }, function errorCallback(response) {
-
-        });
-    }
+    
     /**
      * Cuando el boton enviarCancion es pulsado
      */
@@ -757,7 +748,8 @@ cierzoApp.controller("adminController",['$scope','$http','$location', function (
         var artista = document.getElementById("a_artista").value;
         var album   = document.getElementById("a_album").value;
         var fors   = document.getElementById("fofof");
-
+        var fil   = document.getElementById("filecito").value;
+        console.log(fil);
         /*
         var fichero = document.getElementById("a_file").value;
 
@@ -770,7 +762,11 @@ cierzoApp.controller("adminController",['$scope','$http','$location', function (
        console.log(formData);
         */
         var genero  = document.getElementById("a_genero").value;
-
+        var aud=new Audio(document.getElementById("filecito").files[0].fileName);
+        aud.onloadedmetadata = function() {
+            console.log(au.duration)
+        };
+        //console.log(aud.duration);
 
         // Subir cancion
         var data1={

@@ -35,7 +35,7 @@ cierzoApp.config(function($routeProvider) {
         controller: 'cambiarController'
     })
     .when("/crear", {
-        templateUrl : "tmpl/crearLista.html",
+        templateUrl : "tmpl/crearL.html",
         controller: 'crearlController'
     })
     .when("/modif/:param", {

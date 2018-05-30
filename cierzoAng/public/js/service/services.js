@@ -69,7 +69,6 @@ cierzoApp.service('music',[ '$cookieStore','$http', function($cookieStore,$http)
      * Script que controla el reproductor de musica de la Web
      *************************************************************************/
 
-    console.log("MUSCIA")
     var wHolding   = false;
     var wTrack     = document.getElementById('track');
     var wProgress  = document.getElementById('progress');
@@ -157,12 +156,12 @@ cierzoApp.service('music',[ '$cookieStore','$http', function($cookieStore,$http)
     /* Canciones para probar */
 
 
-    var theUrl2='http://localhost:8080/api/profiles/'+$cookieStore.get('id');
-    var theUrl='http://localhost:8080/api/songs'
+    var theUrl2='http://192.168.44.128:8080/api/profiles/'+$cookieStore.get('id');
+    var theUrl='http://192.168.44.128:8080/api/songs'
 
     //llamo sesion
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET",'http://localhost:8080/api/account/session' , false ); // false for synchronous request
+    xmlHttp.open( "GET",'http://192.168.44.128:8080/api/account/session' , false ); // false for synchronous request
     xmlHttp.withCredentials=true;
     xmlHttp.send( null );
 
@@ -171,8 +170,6 @@ cierzoApp.service('music',[ '$cookieStore','$http', function($cookieStore,$http)
     var listID;
 
     //songs=lis.playlists[0].songs;
-    console.log(lis);
-    console.log(xmlHttp.responseText);
 
 
     if(jQuery.isEmptyObject(lis)){
@@ -202,7 +199,6 @@ cierzoApp.service('music',[ '$cookieStore','$http', function($cookieStore,$http)
         var lis = JSON.parse(xmlHttp.responseText);
 
         songs=lis.playlists[0].songs;
-        console.log(lis);
 
         if(songs.length>0){
             cancID=lis.playlists[0].songs[current_track].id;
@@ -214,10 +210,10 @@ cierzoApp.service('music',[ '$cookieStore','$http', function($cookieStore,$http)
               };
             $http({
                 method: 'PUT',
-                url: 'http://localhost:8080/api/account/session',
+                url: 'http://192.168.44.128:8080/api/account/session',
                 data: cuerpo
             }).then(function successCallback(response) {
-                console.log(response.data);
+               // console.log(response.data);
 
 
             }, function errorCallback(response) {
@@ -243,11 +239,10 @@ cierzoApp.service('music',[ '$cookieStore','$http', function($cookieStore,$http)
 
     }
     else{
-        console.log(lis);
         listID=lis.playlistID;
         console.log("si sesion");
         var xmlHttp = new XMLHttpRequest();
-        var theUrl2='http://localhost:8080/api/playlists/'+lis.playlistID;
+        var theUrl2='http://192.168.44.128:8080/api/playlists/'+lis.playlistID;
         xmlHttp.open( "GET", theUrl2, false ); // false for synchronous request
         xmlHttp.send( null );
 
@@ -301,6 +296,11 @@ cierzoApp.service('music',[ '$cookieStore','$http', function($cookieStore,$http)
             playing=false;
 
             audio.src=theUrl+'/'+song.id+'/file';
+
+
+
+
+
         }
         else{
             wTitle.textContent = "Lista vacía.";
@@ -322,18 +322,16 @@ cierzoApp.service('music',[ '$cookieStore','$http', function($cookieStore,$http)
         //console.log(audio.currentTime);
         //console.log(audio.currentTime%10);
         if(audio.currentTime%10<1){
-
             if(listID!="no"){
-                console.log("envio sesion");
+                //console.log("envio sesion");
                 var cuerpo={
                     "playlistID": listID.toString(),
-                    "second": parseInt(audio.duration).toString(),
+                    "second": parseInt(audio.currentTime).toString(),
                     "songID": cancID.toString()
                   };
-                  console.log(cuerpo);
                 $http({
                     method: 'PUT',
-                    url: 'http://localhost:8080/api/account/session',
+                    url: 'http://192.168.44.128:8080/api/account/session',
                     data: cuerpo
                 }).then(function successCallback(response) {
                     //console.log(response.data);
@@ -355,8 +353,8 @@ cierzoApp.service('music',[ '$cookieStore','$http', function($cookieStore,$http)
      * Cuando halla cargado los datos de la cancion
      */
     audio.addEventListener('loadedmetadata', function () {
-        var tfin='0'+Math.floor(audio.duration/60)+':';
-        var resto=Math.floor(audio.duration%60);
+        var tfin='0'+Math.floor(songs[current_track].lenght/60)+':';
+        var resto=Math.floor(songs[current_track].lenght%60);
         if(resto<10){
             tfin=tfin+'0'+resto;
         }
@@ -370,7 +368,7 @@ cierzoApp.service('music',[ '$cookieStore','$http', function($cookieStore,$http)
         final.innerHTML='00:00'
         mfinal.innerHTML='00:00'
         cfinal.innerHTML='00:00'
-        duration = this.duration;
+        duration = songs[current_track].lenght;
     }, false);
 
 
@@ -715,7 +713,7 @@ cierzoApp.service('music',[ '$cookieStore','$http', function($cookieStore,$http)
         handler2.style.left = percent + '%';
         handler3.style.left = percent + '%';
 
-        if(audio.currentTime==audio.duration){
+        if(audio.currentTime==songs[current_track].lenght){
             wNext.click();
         }
     }
@@ -739,7 +737,7 @@ cierzoApp.service('music',[ '$cookieStore','$http', function($cookieStore,$http)
 
         /*
         console.log(percent);
-        console.log(audio.duration);
+        console.log(songs[current_track].lenght);
         console.log((percent * duration) / 100);
         console.log(audio.currentTime);*/
 
@@ -760,7 +758,7 @@ cierzoApp.service('music',[ '$cookieStore','$http', function($cookieStore,$http)
 
         /*
         console.log(percent);
-        console.log(audio.duration);
+        console.log(songs[current_track].lenght);
         console.log((percent * duration) / 100);
         console.log(audio.currentTime);*/
 
@@ -782,7 +780,7 @@ cierzoApp.service('music',[ '$cookieStore','$http', function($cookieStore,$http)
 
         /*
         console.log(percent);
-        console.log(audio.duration);
+        console.log(songs[current_track].lenght);
         console.log((percent * duration) / 100);
         console.log(audio.currentTime);*/
 

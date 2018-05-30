@@ -23,7 +23,7 @@ var playing = false;
 
 /* Canciones para probar */
 
-var theUrl='http://localhost:8080/api/songs'
+var theUrl='http://192.168.44.128:8080/api/songs'
 var xmlHttp = new XMLHttpRequest();
 xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
 xmlHttp.send( null );
