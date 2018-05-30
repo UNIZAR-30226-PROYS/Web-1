@@ -22,7 +22,7 @@
     <div class="nav-wrapper light-blue accent-4">
         <ul class="left hide-on-med-and-down">
             <li><a href="javascript:history.back()" class="btn-floating btn-large waves-effect waves-light light-green accent-4 valign-wrapper" style="left: 15px"><i class="medium material-icons">arrow_back</i></a></li>
-            <li><span style="font-size:250%">&nbsp;Modificar lista reproducción: </span></li>
+            <li><span style="font-size:250%">&nbsp;Crear lista reproducción: </span></li>
             <li><a ng-click="crear()" class="btn-floating btn-large waves-effect waves-light light-green accent-4 valign-wrapper" style="left: 15px"><i class="medium material-icons">send</i></a></li>
             <li><a ng-click="eliminar()" class="btn-floating btn-large waves-effect waves-light light-green accent-4 valign-wrapper" style="left: 15px"><i class="medium material-icons">delete_forever</i></a></li>
         </ul>
@@ -31,20 +31,16 @@
     <br/>
     <div class="container">
         <div class="row">
-
-
-            <div class="col s6">
+            <div class="col s10">
                 <ul class="collection with-header">
                     <li class="collection-header">
                         <h5> {{nameL2}} </h5>
-                        <h6>La lista tiene {{num}} canciones.</h6>
                         
                         <div class='input-field col s11'>
                             <input class="validate"  type='text' ng-model="nameL" />
                             <label for='surname'>Enter a name</label>
                         </div>
                     </li>
-                    
                     <li ng-repeat="cancion in nuevas track by $index" class="collection-item">
                         <div>{{cancion.name}} - {{cancion.authorName}}
                             <a class="secondary-content" href="javascript:"  ng-click="quitarS(cancion.id,$index)">
@@ -56,27 +52,7 @@
                     
                 </ul>
             </div>
-            <div class="col s6">
-                <ul class="collection with-header">
-                    
-                    <li class="collection-header">
-                        <h5>Todas las canciones</h5>
-                        <div class='input-field col s12'>
-                            <input  type='text'  data-ng-model="search"/>
-                            <label for='surname'>Search</label>
-                        </div>
-                    </li>
-                    <li ng-repeat="cancion in todas | filter:search" class="collection-item">
-                        <div>{{cancion.name}} - {{cancion.authorName}}
-                            <a class="secondary-content" href="javascript:"  ng-click="addS(cancion)">
-                                <i class="material-icons">add_circle_outline</i>
-                            </a>
-                        </div>
-                    </li>
-                    
-                    
-                </ul>
-            </div>
+            
         </div>
     </div>
 

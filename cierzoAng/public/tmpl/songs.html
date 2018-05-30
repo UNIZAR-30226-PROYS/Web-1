@@ -1,8 +1,24 @@
 <div>
     <ul class="collection with-header">
-        <li class="collection-header"><h4>{{titulo}}<a href="javascript:history.back()" class="secondary-content"><i class="material-icons medium">arrow_back</i></a></h4></li>
+        <li class="collection-header">
+            <h4>{{titulo}}
+                <a target="_self" ng-click="ordenNombre()">
+                    <div class="chip">
+                            Orden por nombre
+                    </div>
+                </a>
+                <a target="_self" ng-click="ordenNormal()">
+                    <div class="chip">
+                            Orden inverso
+                    </div>
+                </a>
+                <a href="javascript:history.back()" class="secondary-content">
+                    <i class="material-icons medium">arrow_back</i>
+                </a>
+            </h4>
+        </li>
 
-        <li ng-repeat="cancion in canciones" class="collection-item">
+        <li ng-repeat="cancion in canciones.songs" class="collection-item">
             <div>{{cancion.name}} - {{cancion.authorName}} - {{cancion.lenght}} s
                 <a class="secondary-content" href="javascript:"  ng-click="prueba(cancion.id,canciones)">
                     <i class="material-icons">play_circle_outline</i>

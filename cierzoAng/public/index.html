@@ -41,8 +41,11 @@
                             <nav class="nav-extended  " role="navigation" style="background-color: #0091EA">
                                 <!-- ICONO -->
                                 <div class="nav-wrapper"  style="padding-left: 23px; margin:0px; padding-right: 0px;width: 100%">
-                                    <a id="logo-container " href="#" class=" left brand-logo"  >
-                                        <img  src="images/logo_cierzo_1_white.png" style="display: inline-block;vertical-align: top;width: 180px;height: 50px;margin-right: 20px;margin-top: 15px; ">
+                                    <a id="logo-container " href="#" class="left brand-logo hide-on-small-only"  >
+                                        <img  src="images/logo_cierzo_1_white.png" style="display: inline-block;vertical-align: top;width: 180px;height: 50px;margin-right: 20px;margin-top: 9px; ">
+                                    </a>
+                                    <a id="logo-container " href="#" class="brand-logo hide-on-med-and-up"  >
+                                        <img  src="images/logo_cierzo_1_white.png" style="display: block;display: block;margin-top: 3px;margin-left: auto;margin-right: auto;width: 180px;height: 50px;">
                                     </a>
 
 
@@ -92,25 +95,43 @@
                       </div>
                       <!--ALBUM-->
                       <div class="col l7">
-                        <h4 class="truncate" id="cAlbum">ALBUM</h4>
+                        <h4 class="truncate" id="wLista"></h4>
                       </div>
                       <!--AUTOR-->
                       <div class="col l7">
                         <h4 class="truncate" id="cArtist">AUTOR</h4>
                       </div>
+                      <!-- BOTONES SOLO PARA MOVIL -->
+                      <div class="col s9 offset-s1 valign-wrapper hide-on-med-and-up" style="margin-bottom: 50px; margin-top: 10px">
+                          <div class="col s2">
+                              <a class="btn-floating btn-medium waves-effect waves-light light-green accent-4" id="cPrev2">
+                                <i class="material-icons">fast_rewind</i>
+                              </a>
+                          </div>
+                          <div class="col s2 offset-s2">
+                              <a class="btn-floating btn-large waves-effect waves-light light-green accent-4" id="cPlay2">
+                                <i class="material-icons">play_arrow</i>
+                              </a>
+                          </div>
+                          <div class="col s2 offset-s3">
+                              <a class="btn-floating btn-medium waves-effect waves-light light-green accent-4" id="cNext2">
+                                <i class="material-icons">fast_forward</i>
+                              </a>
+                          </div>
+                      </div>
                       <!--BARRA DE PROGRESO-->
-                      <div class="col l7" id="barra">
-                          <div class="col l11" id="track3">
+                      <div class="col l7 s12" id="barra">
+                          <div class="col l11 s12" id="track3">
                               <div id="progress3"></div>
                               <div id="handler3"></div>
                           </div>
-                          <div class="col l11">
-                              <div class="col s1">
+                          <div class="col l11 s10">
+                              <div class="col l1 s1">
                                   <p id="final3">
                                   </p>
                               </div>
 
-                              <div class="col s1 offset-s10">
+                              <div class="col l1 offset-l10 s1 offset-s10">
                                   <p id="current3">
                                   </p>
                               </div>
@@ -121,13 +142,12 @@
 
 
 
-
-
-                    <a class="waves-effect waves-light btn" id="visual" style="left: 20px">Visualizador</a>
-                    <div class="col l12 m12 s12">
+                    <a class="waves-effect waves-light btn" id="visual" style="left: 20px;margin-bottom:10px">Visualizador</a>
+                    <div class="col l12 s12">
                         <div id="visualizador">
                             <canvas id="canvas1" width="1500px" height="50px"></canvas>
                         </div>
+
                     </div>
 
         </div>
@@ -181,8 +201,8 @@
                                 </div>
 
                                 <!--PORTADA -->
-                                <div class="col s8 offset-s2">
-                                    <div class="card" style="max-width: 150px;">
+                                <div class="col l12">
+                                    <div class="card" style="max-width: 150px; display: block;margin-left: auto; margin-right: auto;">
                                       <div class="card-image">
                                           <a href="#big">
                                               <img class="responsive-img"  src="" id="wArt">
@@ -193,7 +213,7 @@
 
 
                                 <!--ARTISTA Y CANCION-->
-                                <div class="col s12">
+                                <div class="col l11 offset-l1">
 
                                     <h3 class="truncate center-align" id="wTitle"></h3>
                                     <h5 class="truncate center-align" id="wArtist"></h5>
@@ -286,7 +306,9 @@
                                         <div class="col s10 offset-s1">
                                             <!--TITULO CANCION -->
                                             <div class="col s5">
-                                                <h6 class="truncate center-align" id="mTitle"></h6>
+                                              <a href="#big">
+                                                <h5 class="truncate center-align" id="mTitle"></h5>
+                                              </a>
                                             </div>
 
                                             <!--BOTONES: PLAY/STOP ADELANTE Y ATRAS-->
@@ -301,7 +323,7 @@
                                             </div>
                                         </div>
                                 </div>
-                                <div class="col s12">
+                                <div class="col s12 valign-wrapper" style="margin-top: 10px">
                                     <div class="col s10 offset-s1">
                                         <!--ARTISTA-->
                                         <div class="col s5">

@@ -64,12 +64,11 @@ cierzoApp.run(['$rootScope', '$cookieStore', '$location', 'authProvider','$http'
 
 
 
-cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
+cierzoApp.service('music',[ '$cookieStore','$http', function($cookieStore,$http) {
     /*************************************************************************
      * Script que controla el reproductor de musica de la Web
      *************************************************************************/
 
-    console.log("MUSCIA")
     var wHolding   = false;
     var wTrack     = document.getElementById('track');
     var wProgress  = document.getElementById('progress');
@@ -109,11 +108,15 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
     var cPlay          = document.getElementById('cPlay');
     var cNext          = document.getElementById('cNext');
     var cPrev          = document.getElementById('cPrev');
+    var cPlay2          = document.getElementById('cPlay2');
+    var cNext2          = document.getElementById('cNext2');
+    var cPrev2          = document.getElementById('cPrev2');
     var cTitle         = document.getElementById('cTitle');
     var cArtist        = document.getElementById('cArtist');
     var cArt      = document.getElementById('cArt');
     var handler3      = document.getElementById('handler3');
     var cCan      = document.getElementById('canvas1');
+    var cCan2      = document.getElementById('canvas2');
     var canvas      = document.getElementById('canvas1');
 
     var ccur       = document.getElementById('current3');
@@ -128,25 +131,130 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
     var random=false;
     var repeat=false;
 
-    var limpiarBusqueda = document.getElementById('cancione');
-
-    limpiarBusqueda.onclick = function () {
+    /* Al ser pulsado cualquier pestaña tras aplicar un filtro, se limpia
+     * este */
+    document.getElementById('cancione').onclick = function () {
       document.getElementById('busqueda').value="";
     }
+    document.getElementById('listaR').onclick = function () {
+      document.getElementById('busqueda').value="";
+    }
+    document.getElementById('albums').onclick = function () {
+      document.getElementById('busqueda').value="";
+    }
+    document.getElementById('artists').onclick = function () {
+      document.getElementById('busqueda').value="";
+    }
+    document.getElementById('usuarios').onclick = function () {
+      document.getElementById('busqueda').value="";
+    }
+
+
+
+
 
     /* Canciones para probar */
 
 
     var theUrl2='http://192.168.44.128:8080/api/profiles/'+$cookieStore.get('id');
     var theUrl='http://192.168.44.128:8080/api/songs'
+
+    //llamo sesion
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", theUrl2, false ); // false for synchronous request
+    xmlHttp.open( "GET",'http://192.168.44.128:8080/api/account/session' , false ); // false for synchronous request
+    xmlHttp.withCredentials=true;
     xmlHttp.send( null );
 
     var lis = JSON.parse(xmlHttp.responseText);
+    var cancID;
+    var listID;
 
-    songs=lis.playlists[0].songs;
-    console.log(songs);
+    //songs=lis.playlists[0].songs;
+
+
+    if(jQuery.isEmptyObject(lis)){
+        var primeraVez=true;
+    }
+    else{
+        var primeraVez=false;
+    }
+
+
+
+    function buscar(lis,atrib) {
+        for(var i=0;i<lis.length;i++){
+            if(lis[i].id==atrib){
+                return i;
+            }
+        }
+
+    }
+
+    if(primeraVez){
+        console.log("no sesion");
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", theUrl2, false ); // false for synchronous request
+        xmlHttp.send( null );
+
+        var lis = JSON.parse(xmlHttp.responseText);
+
+        songs=lis.playlists[0].songs;
+
+        if(songs.length>0){
+            cancID=lis.playlists[0].songs[current_track].id;
+            listID=lis.playlists[0].id;
+            var cuerpo={
+                "playlistID": lis.playlists[0].id.toString(),
+                "second": "0",
+                "songID": lis.playlists[0].songs[current_track].id.toString()
+              };
+            $http({
+                method: 'PUT',
+                url: 'http://192.168.44.128:8080/api/account/session',
+                data: cuerpo
+            }).then(function successCallback(response) {
+               // console.log(response.data);
+
+
+            }, function errorCallback(response) {
+                alert("DEP");
+            });
+        }
+        else{
+            listID=lis.playlistID;
+            console.log("lista vacia");
+            var xmlHttp = new XMLHttpRequest();
+            //var theUrl2='http://localhost:8080/api/playlists/'+lis.playlistID;
+            xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+            xmlHttp.send( null );
+
+            var lis2 = JSON.parse(xmlHttp.responseText);
+
+
+            songs=[];
+
+            //current_track=buscar(songs,lis.songID);
+        }
+
+
+    }
+    else{
+        listID=lis.playlistID;
+        console.log("si sesion");
+        var xmlHttp = new XMLHttpRequest();
+        var theUrl2='http://192.168.44.128:8080/api/playlists/'+lis.playlistID;
+        xmlHttp.open( "GET", theUrl2, false ); // false for synchronous request
+        xmlHttp.send( null );
+
+        var lis2 = JSON.parse(xmlHttp.responseText);
+
+        songs=lis2.songs;
+
+        current_track=buscar(songs,lis.songID);
+    }
+
+
+
 
 
     var context,src;
@@ -167,6 +275,10 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
      */
     function iniciarWeb() {
         audio = new Audio();
+        if(window.innerWidth<400){ //Para poner el visualizador especializado para el movil
+          document.getElementById("visualizador").style.width= window.innerWidth+'px';
+          document.getElementById("visualizador").style.position='static';
+        }
         if(songs.length>0){
             console.log('puedo');
             song = songs[current_track];
@@ -184,6 +296,11 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
             playing=false;
 
             audio.src=theUrl+'/'+song.id+'/file';
+
+
+
+
+
         }
         else{
             wTitle.textContent = "Lista vacía.";
@@ -193,21 +310,56 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
 
     }
 
+    this.cambiarVolumen = function(volu) {
+        audio.volume=volu;
+
+    }
+
     /**
      * Cada x tiempo, llama a la funcion actualizarTrackWeb para que actualize el estado
      */
     //audio.addEventListener('timeupdate', this.actualizarTrackWeb, false);
 
 
-    audio.ontimeupdate = function() {actualizarTrackWeb()};
+    audio.ontimeupdate = function() {
+        actualizarTrackWeb();
+        cancID= songs[current_track].id;
+        //console.log(audio.currentTime);
+        //console.log(audio.currentTime%10);
+        if(audio.currentTime%10<1){
+            if(listID!="no"){
+                //console.log("envio sesion");
+                var cuerpo={
+                    "playlistID": listID.toString(),
+                    "second": parseInt(audio.currentTime).toString(),
+                    "songID": cancID.toString()
+                  };
+                $http({
+                    method: 'PUT',
+                    url: 'http://192.168.44.128:8080/api/account/session',
+                    data: cuerpo
+                }).then(function successCallback(response) {
+                    //console.log(response.data);
+
+
+                }, function errorCallback(response) {
+                    //alert("DEP");
+                });
+            }
+            else{
+                console.log("Es album");
+            }
+
+        }
+    };
 
 
     /**
      * Cuando halla cargado los datos de la cancion
      */
     audio.addEventListener('loadedmetadata', function () {
-        var tfin='0'+Math.floor(audio.duration/60)+':';
-        var resto=Math.floor(audio.duration%60);
+        var tfin='0'+Math.floor(songs[current_track].lenght/60)+':';
+        var resto=Math.floor(songs[current_track].lenght%60);
         if(resto<10){
             tfin=tfin+'0'+resto;
         }
@@ -221,7 +373,7 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
         final.innerHTML='00:00'
         mfinal.innerHTML='00:00'
         cfinal.innerHTML='00:00'
-        duration = this.duration;
+        duration = songs[current_track].lenght;
     }, false);
 
 
@@ -314,8 +466,19 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
             audio.play();
             cPlay.innerHTML = '<i class="material-icons">pause</i>';
         }
+    }
+    cPlay2.onclick = function () {
 
-
+        if(playing){
+            audio.pause();
+            playing=false;
+            cPlay2.innerHTML = '<i class="material-icons">play_arrow</i>';
+        }
+        else{
+            playing=true;
+            audio.play();
+            cPlay2.innerHTML = '<i class="material-icons">pause</i>';
+        }
     }
 
     wPrev.onclick = function () {
@@ -471,32 +634,57 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
     }
 
     wShuffle.onclick = function () {
-        console.log("Ahora random")
+        console.log("Ahora random");
         random=!random;
+	    if(random ){
+            wShuffle.innerHTML = '<i class="large material-icons" style="color: #000">shuffle</i>';
+        } 
+        else{
+            wShuffle.innerHTML = '<i class="large material-icons" style="color: #fff">shuffle</i>';
+        } 
+        
+        
     }
 
     wRepeat.onclick = function () {
-        console.log("Ahora repeat")
+        console.log("Ahora repeat");
         repeat=!repeat;
+	    if(repeat == true) {
+            wRepeat.innerHTML = '<i class="large material-icons" style="color: #000">repeat</i>';
+        }
+        else{ 
+            wRepeat.innerHTML = '<i class="large material-icons" style="color: #fff">repeat</i>';
+        }
+        
     }
 
     mShuffle.onclick = function () {
-        console.log("Ahora random")
+        console.log("Ahora random");
         random=!random;
+	if(random == true) mShuffle.innerHTML = '<i class="material-icons" style="color: #000">shuffle</i>';
+        else mShuffle.innerHTML = '<i class="material-icons" style="color: #fff">shuffle</i>';
+        
     }
 
     mRepeat.onclick = function () {
-        console.log("Ahora repeat")
+        console.log("Ahora repeat");
         repeat=!repeat;
+	if(repeat == true) mRepeat.innerHTML = '<i class="material-icons" style="color: #000">repeat</i>';
+        else mRepeat.innerHTML = '<i class="material-icons" style="color: #fff">repeat</i>';
+        
     }
 
     cShuffle.onclick = function () {
-        console.log("Ahora random")
+        console.log("Ahora random");
+	if(random == true) cShuffle.innerHTML = '<i class="large material-icons" style="color: #000">shuffle</i>';
+        else cShuffle.innerHTML = '<i class="large material-icons" style="color: #fff">shuffle</i>';
         random=!random;
     }
 
     cRepeat.onclick = function () {
-        console.log("Ahora repeat")
+        console.log("Ahora repeat");
+	if(repeat == true) cRepeat.innerHTML = '<i class="large material-icons" style="color: #000">repeat</i>';
+        else cRepeat.innerHTML = '<i class="large material-icons" style="color: #fff">repeat</i>';
         repeat=!repeat;
     }
 
@@ -509,6 +697,7 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
         wPlay.innerHTML = '<i class="material-icons">play_arrow</i>';
         mPlay.innerHTML = '<i class="material-icons">play_arrow</i>';
         cPlay.innerHTML = '<i class="material-icons">play_arrow</i>';
+        cPlay2.innerHTML = '<i class="material-icons">play_arrow</i>';
         playing = false;
 
     }, false);
@@ -521,6 +710,7 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
         wPlay.innerHTML = '<i class="material-icons">pause</i>';
         mPlay.innerHTML = '<i class="material-icons">pause</i>';
         cPlay.innerHTML = '<i class="material-icons">pause</i>';
+        cPlay2.innerHTML = '<i class="material-icons">pause</i>';
         playing = true;
     }, false);
 
@@ -553,7 +743,11 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
         handler2.style.left = percent + '%';
         handler3.style.left = percent + '%';
 
-        if(audio.currentTime==audio.duration){
+        console.log(audio.currentTime);
+        console.log(songs[current_track].lenght);
+
+        if(audio.currentTime>=songs[current_track].lenght){
+            console.log("fin");
             wNext.click();
         }
     }
@@ -577,7 +771,7 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
 
         /*
         console.log(percent);
-        console.log(audio.duration);
+        console.log(songs[current_track].lenght);
         console.log((percent * duration) / 100);
         console.log(audio.currentTime);*/
 
@@ -598,7 +792,7 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
 
         /*
         console.log(percent);
-        console.log(audio.duration);
+        console.log(songs[current_track].lenght);
         console.log((percent * duration) / 100);
         console.log(audio.currentTime);*/
 
@@ -620,7 +814,7 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
 
         /*
         console.log(percent);
-        console.log(audio.duration);
+        console.log(songs[current_track].lenght);
         console.log((percent * duration) / 100);
         console.log(audio.currentTime);*/
 
@@ -820,10 +1014,17 @@ cierzoApp.service('music',[ '$cookieStore', function($cookieStore) {
 
     }
 
-    this.cambiarSongs=function(canci,nombre) {
+    this.cambiarSongs1=function(canci,nombre,id) {
+        console.log("cambio lista a"+ id);
         wList.textContent ='Lista: '+nombre;
         songs=canci;
+        listID=id;
+    }
 
+    this.cambiarSongs2=function(canci,nombre) {
+        wList.textContent ='Lista: '+nombre;
+        songs=canci;
+        listID="no";
     }
 
 

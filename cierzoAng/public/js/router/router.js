@@ -1,6 +1,12 @@
 
-cierzoApp.config(['$httpProvider', function($httpProvider) {
+cierzoApp.config(['$httpProvider','$sceDelegateProvider', function($httpProvider,$sceDelegateProvider) {
   $httpProvider.defaults.withCredentials = true;
+  $sceDelegateProvider.resourceUrlWhitelist([
+    // Allow same origin resource loads.
+    'self',
+    // Allow loading from our assets domain. **.
+    'http://192.168.44.128:8080/api/**'
+  ]);
 }])
 
 
@@ -29,7 +35,7 @@ cierzoApp.config(function($routeProvider) {
         controller: 'cambiarController'
     })
     .when("/crear", {
-        templateUrl : "tmpl/crearLista.html",
+        templateUrl : "tmpl/crearL.html",
         controller: 'crearlController'
     })
     .when("/modif/:param", {
