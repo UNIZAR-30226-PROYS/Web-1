@@ -310,6 +310,11 @@ cierzoApp.service('music',[ '$cookieStore','$http', function($cookieStore,$http)
 
     }
 
+    this.cambiarVolumen = function(volu) {
+        audio.volume=volu;
+
+    }
+
     /**
      * Cada x tiempo, llama a la funcion actualizarTrackWeb para que actualize el estado
      */
@@ -713,7 +718,11 @@ cierzoApp.service('music',[ '$cookieStore','$http', function($cookieStore,$http)
         handler2.style.left = percent + '%';
         handler3.style.left = percent + '%';
 
-        if(audio.currentTime==songs[current_track].lenght){
+        console.log(audio.currentTime);
+        console.log(songs[current_track].lenght);
+
+        if(audio.currentTime>=songs[current_track].lenght){
+            console.log("fin");
             wNext.click();
         }
     }

@@ -74,6 +74,7 @@ cierzoApp.controller("principalController", ['$scope','$location','$cookieStore'
         //alert($scope.cadena);
         $location.path('/search/'+$scope.cadena);
     }
+
 }]);
 
 var canciones=[];
@@ -193,10 +194,7 @@ cierzoApp.controller("artistsController", ['$scope','$http','$cookieStore', func
 
 
 cierzoApp.controller("bigController", ['$scope','$http','$cookieStore','music', function ($scope,$http,$cookieStore,music) {
-    $scope.changeGain = function(num,lista) {
-        console.log(num);
-        music.changeGain(num,lista);
-    }
+    
 
 }]);
 

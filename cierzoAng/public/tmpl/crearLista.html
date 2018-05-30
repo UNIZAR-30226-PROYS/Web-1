@@ -44,6 +44,7 @@
                             <label for='surname'>Enter a name</label>
                         </div>
                     </li>
+                    
                     <li ng-repeat="cancion in nuevas track by $index" class="collection-item">
                         <div>{{cancion.name}} - {{cancion.authorName}}
                             <a class="secondary-content" href="javascript:"  ng-click="quitarS(cancion.id,$index)">
