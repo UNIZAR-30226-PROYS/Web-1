@@ -1,4 +1,4 @@
-var server='http://192.168.44.128:8080/api/';
+var server='http://localhost:8080/api/';
 
 
 
@@ -146,7 +146,7 @@ cierzoApp.controller("songsController", ['$scope', '$routeParams','$http','music
                 music.cambiarSongs2(lista.songs,nLista);
                 music.playSongId(num);
             }
-           
+
         }
 
 
@@ -478,6 +478,7 @@ cierzoApp.controller("modifController",['$scope','$http','$routeParams', functio
         $scope.nuevas=nuevas;
         $scope.num=nuevas.length;
         $scope.nameL2=response.data.name;
+        $scope.nameL=response.data.name;
     }, function errorCallback(response) {
 
     });

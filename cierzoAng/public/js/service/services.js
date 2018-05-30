@@ -157,12 +157,12 @@ cierzoApp.service('music',[ '$cookieStore','$http', function($cookieStore,$http)
     /* Canciones para probar */
 
 
-    var theUrl2='http://192.168.44.128:8080/api/profiles/'+$cookieStore.get('id');
-    var theUrl='http://192.168.44.128:8080/api/songs'
+    var theUrl2='http://localhost:8080/api/profiles/'+$cookieStore.get('id');
+    var theUrl='http://localhost:8080/api/songs'
 
     //llamo sesion
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET",'http://192.168.44.128:8080/api/account/session' , false ); // false for synchronous request
+    xmlHttp.open( "GET",'http://localhost:8080/api/account/session' , false ); // false for synchronous request
     xmlHttp.withCredentials=true;
     xmlHttp.send( null );
 
@@ -173,7 +173,7 @@ cierzoApp.service('music',[ '$cookieStore','$http', function($cookieStore,$http)
     //songs=lis.playlists[0].songs;
     console.log(lis);
     console.log(xmlHttp.responseText);
-    
+
 
     if(jQuery.isEmptyObject(lis)){
         var primeraVez=true;
@@ -182,7 +182,7 @@ cierzoApp.service('music',[ '$cookieStore','$http', function($cookieStore,$http)
         var primeraVez=false;
     }
 
-    
+
 
     function buscar(lis,atrib) {
         for(var i=0;i<lis.length;i++){
@@ -214,12 +214,12 @@ cierzoApp.service('music',[ '$cookieStore','$http', function($cookieStore,$http)
               };
             $http({
                 method: 'PUT',
-                url: 'http://192.168.44.128:8080/api/account/session',
+                url: 'http://localhost:8080/api/account/session',
                 data: cuerpo
             }).then(function successCallback(response) {
                 console.log(response.data);
-    
-    
+
+
             }, function errorCallback(response) {
                 alert("DEP");
             });
@@ -228,18 +228,18 @@ cierzoApp.service('music',[ '$cookieStore','$http', function($cookieStore,$http)
             listID=lis.playlistID;
             console.log("lista vacia");
             var xmlHttp = new XMLHttpRequest();
-            //var theUrl2='http://192.168.44.128:8080/api/playlists/'+lis.playlistID;
+            //var theUrl2='http://localhost:8080/api/playlists/'+lis.playlistID;
             xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
             xmlHttp.send( null );
-    
+
             var lis2 = JSON.parse(xmlHttp.responseText);
-            
-            
+
+
             songs=[];
-    
+
             //current_track=buscar(songs,lis.songID);
         }
-        
+
 
     }
     else{
@@ -247,7 +247,7 @@ cierzoApp.service('music',[ '$cookieStore','$http', function($cookieStore,$http)
         listID=lis.playlistID;
         console.log("si sesion");
         var xmlHttp = new XMLHttpRequest();
-        var theUrl2='http://192.168.44.128:8080/api/playlists/'+lis.playlistID;
+        var theUrl2='http://localhost:8080/api/playlists/'+lis.playlistID;
         xmlHttp.open( "GET", theUrl2, false ); // false for synchronous request
         xmlHttp.send( null );
 
@@ -257,7 +257,7 @@ cierzoApp.service('music',[ '$cookieStore','$http', function($cookieStore,$http)
 
         current_track=buscar(songs,lis.songID);
     }
-    
+
 
 
 
@@ -322,7 +322,7 @@ cierzoApp.service('music',[ '$cookieStore','$http', function($cookieStore,$http)
         //console.log(audio.currentTime);
         //console.log(audio.currentTime%10);
         if(audio.currentTime%10<1){
-            
+
             if(listID!="no"){
                 console.log("envio sesion");
                 var cuerpo={
@@ -333,12 +333,12 @@ cierzoApp.service('music',[ '$cookieStore','$http', function($cookieStore,$http)
                   console.log(cuerpo);
                 $http({
                     method: 'PUT',
-                    url: 'http://192.168.44.128:8080/api/account/session',
+                    url: 'http://localhost:8080/api/account/session',
                     data: cuerpo
                 }).then(function successCallback(response) {
                     //console.log(response.data);
-        
-        
+
+
                 }, function errorCallback(response) {
                     //alert("DEP");
                 });
@@ -346,7 +346,7 @@ cierzoApp.service('music',[ '$cookieStore','$http', function($cookieStore,$http)
             else{
                 console.log("Es album");
             }
-            
+
         }
     };
 
